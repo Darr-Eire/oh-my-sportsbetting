@@ -16,8 +16,6 @@ import {
   MdOutlineSportsMma,
   MdSportsEsports,
   MdOutlineSportsTennis,
-  MdOutlineSportsCricket,
-  MdOutlineSportsVolleyball,
   MdOutlineListAlt,
 } from "react-icons/md";
 import { FaHorse, FaDog } from "react-icons/fa";
@@ -32,9 +30,6 @@ const sports = [
   { name: "Basketball", icon: MdOutlineSportsBasketball, slug: "basketball" },
   { name: "UFC", icon: MdOutlineSportsMma, slug: "ufc" },
   { name: "eSports", icon: MdSportsEsports, slug: "esports" },
-  { name: "Table Tennis", icon: MdOutlineSportsTennis, slug: "table-tennis" },
-  { name: "Cricket", icon: MdOutlineSportsCricket, slug: "cricket" },
-  { name: "Volleyball", icon: MdOutlineSportsVolleyball, slug: "volleyball" },
   { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
 ];
 
