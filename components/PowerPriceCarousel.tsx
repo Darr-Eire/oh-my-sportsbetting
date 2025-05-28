@@ -32,8 +32,8 @@ const powerPrices = [
 export default function PowerPriceCarousel() {
   const [index, setIndex] = useState(0);
 
-  const next = () => setIndex((prev) => (prev + 1) % powerPrices.length);
-  const prev = () => setIndex((prev - 1 + powerPrices.length) % powerPrices.length);
+  const next = () => setIndex(prev => (prev + 1) % powerPrices.length);
+  const prev = () => setIndex(prev => (prev - 1 + powerPrices.length) % powerPrices.length);
   const p = powerPrices[index];
 
   return (
