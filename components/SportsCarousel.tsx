@@ -30,16 +30,17 @@ export default function SportsCarousel() {
     <div className="max-w-4xl mx-auto my-6 px-2">
       <nav className="flex overflow-x-auto gap-4 justify-start py-4 scrollbar-thin scrollbar-thumb-electricCyan scrollbar-track-transparent">
         {sports.map(({ name, icon: Icon, slug }) => (
-          <Link
-            key={slug}
-            href={`/sports/${slug}`}
-            className="flex flex-col items-center justify-center text-white hover:text-electricCyan w-[70px] sm:w-[80px] flex-shrink-0"
-          >
-            <Icon className="text-3xl mb-1" />
-            <span className="text-xs sm:text-sm text-center leading-tight select-none whitespace-nowrap">
-              {name}
-            </span>
-          </Link>
+         <Link
+  key={slug}
+  href={`/sports/${slug}`}
+  className="flex flex-col items-center justify-center text-white hover:text-electricCyan w-[70px] sm:w-[80px]"
+>
+  <Icon className="text-3xl mb-1" />
+  <span className="text-xs text-center leading-tight select-none whitespace-nowrap">
+    {name}
+  </span>
+</Link>
+
         ))}
       </nav>
     </div>
