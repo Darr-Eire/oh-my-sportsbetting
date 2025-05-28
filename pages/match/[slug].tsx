@@ -13,10 +13,11 @@ const dummyMatchData = {
 
 export default function MatchDetail() {
   const router = useRouter();
-  const { slug } = router.query;
+  const { slug } = router.query; // Warning: slug is assigned but unused, keep if needed later
+
   const match = dummyMatchData;
 
-  const [activeMarket, setActiveMarket] = useState("");
+  const [activeMarket, setActiveMarket] = useState<string>("");
   const [view, setView] = useState<"markets" | "lineups" | "pitch">("markets");
 
   const toggleAccordion = (key: string) => {
@@ -66,7 +67,7 @@ export default function MatchDetail() {
                 className={`text-sm px-4 py-2 rounded ${
                   view === tab ? "bg-cyan-500 text-white" : "text-cyan-300 border border-cyan-500"
                 }`}
-                onClick={() => setView(tab as any)}
+                onClick={() => setView(tab as "markets" | "lineups" | "pitch")}
               >
                 {tab === "markets" ? "Betting Markets" : tab === "lineups" ? "View Lineups" : "Pitch View"}
               </button>
