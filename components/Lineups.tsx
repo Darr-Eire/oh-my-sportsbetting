@@ -1,17 +1,47 @@
-export default function Lineups({ homeTeam, awayTeam }) {
-  const dummyLineups = {
+type LineupsProps = {
+  homeTeam: string;
+  awayTeam: string;
+};
+
+export default function Lineups({ homeTeam, awayTeam }: LineupsProps) {
+  const dummyLineups: Record<
+    string,
+    {
+      starting: string[];
+      subs: string[];
+      manager: string;
+    }
+  > = {
     [homeTeam]: {
       starting: [
-        "Ederson", "Walker", "Dias", "Stones", "Gvardiol",
-        "Rodri", "De Bruyne", "Foden", "Silva", "Haaland", "Grealish",
+        "Ederson",
+        "Walker",
+        "Dias",
+        "Stones",
+        "Gvardiol",
+        "Rodri",
+        "De Bruyne",
+        "Foden",
+        "Silva",
+        "Haaland",
+        "Grealish",
       ],
       subs: ["Ortega", "Akanji", "Phillips", "Kovacic", "Alvarez", "Doku"],
       manager: "Pep Guardiola",
     },
     [awayTeam]: {
       starting: [
-        "Ramsdale", "White", "Saliba", "Gabriel", "Zinchenko",
-        "Rice", "Odegaard", "Havertz", "Saka", "Jesus", "Martinelli",
+        "Ramsdale",
+        "White",
+        "Saliba",
+        "Gabriel",
+        "Zinchenko",
+        "Rice",
+        "Odegaard",
+        "Havertz",
+        "Saka",
+        "Jesus",
+        "Martinelli",
       ],
       subs: ["Turner", "Tomiyasu", "Trossard", "Smith Rowe", "Vieira", "Nketiah"],
       manager: "Mikel Arteta",
