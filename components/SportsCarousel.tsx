@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Slider from "react-slick";
 import {
   MdSportsSoccer,
   MdAccessTime,
@@ -8,6 +7,7 @@ import {
   MdOutlineSportsBasketball,
   MdOutlineSportsMma,
   MdSportsEsports,
+  MdOutlineSportsTennis,
   MdOutlineListAlt,
 } from "react-icons/md";
 import { FaHorse, FaDog } from "react-icons/fa";
@@ -26,35 +26,32 @@ const sports = [
 ];
 
 export default function SportsCarousel() {
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 400,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    arrows: false,
-    swipeToSlide: true,
-    draggable: true,
-    touchThreshold: 10,
-  };
-
   return (
-    <div className="max-w-4xl mx-auto my-6 px-2">
-      <Slider {...settings}>
+    <div className="max-w-4xl mx-auto my-6 px-4">
+      <nav
+        className="
+          flex flex-wrap justify-center
+          gap-2 sm:gap-3 md:gap-4
+        "
+      >
         {sports.map(({ name, icon: Icon, slug }) => (
-          <div key={slug} className="flex justify-center">
-            <Link
-              href={`/sports/${slug}`}
-              className="flex flex-col items-center text-white hover:text-electricCyan cursor-pointer select-none"
-            >
-              <Icon className="text-2xl leading-none mb-1" />
-              <span className="text-xs text-center leading-tight whitespace-nowrap">
-                {name}
-              </span>
-            </Link>
-          </div>
+          <Link
+            key={slug}
+            href={`/sports/${slug}`}
+            className="
+              flex flex-col items-center text-white hover:text-electricCyan
+              w-[calc(20%-0.5rem)] min-w-[60px]
+              px-1 py-1
+              sm:w-[calc(16.66%-0.75rem)] sm:min-w-[72px]
+            "
+          >
+            <Icon className="text-2xl mb-1 leading-none" />
+            <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
+              {name}
+            </span>
+          </Link>
         ))}
-      </Slider>
+      </nav>
     </div>
   );
 }
