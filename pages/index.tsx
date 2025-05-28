@@ -34,12 +34,29 @@ const sports = [
   { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
 ];
 
+interface Match {
+  teams: string;
+  time: string;
+  odds: {
+    home: number;
+    draw?: number;
+    away: number;
+  };
+}
+
+interface LeagueMatches {
+  league: string;
+  countryCode?: string;
+  leagueLogo?: string;
+  matches: Match[];
+}
+
 export default function Home({
   todayMatches,
   basketballMatches,
 }: {
-  todayMatches: typeof todayMatches;
-  basketballMatches: typeof basketballMatches;
+  todayMatches: LeagueMatches[];
+  basketballMatches: LeagueMatches[];
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLeague, setOpenLeague] = useState<string | null>(null);
@@ -95,7 +112,7 @@ export default function Home({
 
         {/* Main content - add padding top so not hidden behind sticky header */}
         <main className="flex-1 px-4 py-2 pt-[72px] pb-28 flex flex-col items-center text-center">
-  <PromoCarousel className="mb-2" />
+          <PromoCarousel className="mb-2" />
           <SportsCarousel />
           <PowerPriceCarousel />
 
@@ -149,11 +166,11 @@ export default function Home({
                 {basketballMatches.map((block, i) => (
                   <div key={i}>
                     <h3 className="text-gold font-semibold mb-3 text-lg">{block.league}</h3>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {block.matches.map((match, j) => (
                         <div
                           key={j}
-                          className="flex justify-between items-center bg-[#12182f] p-3 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300"
+                          className="flex justify-between items-center bg-[#12182f] p-4 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300"
                         >
                           <div>
                             <div className="text-sm font-semibold">{match.teams}</div>
