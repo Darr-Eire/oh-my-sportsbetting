@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import BottomNav from "../components/BottomNav";
 import PromoCarousel from "../components/PromoCarousel";
 import PowerPriceCarousel from "../components/PowerPriceCarousel";
 import BetBuilderCarousel from "../components/BetBuilderCarousel";
@@ -142,44 +141,44 @@ export default function Home() {
 
         {/* Dropdown Menu */}
         {menuOpen && (
-          <div
+          <nav
             className="absolute top-[60px] left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg"
             role="menu"
             aria-label="Main navigation"
           >
             <ul className="flex flex-col px-4 py-4 space-y-3 text-sm font-medium text-white">
               <li>
-                <Link href="/">
+                <Link href="/" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>Home</a>
                 </Link>
               </li>
               <li>
-                <Link href="/sports">
+                <Link href="/sports" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>⚽ All Sports</a>
                 </Link>
               </li>
               <li>
-                <Link href="/in-play">
+                <Link href="/in-play" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>📊 Live In-Play</a>
                 </Link>
               </li>
               <li>
-                <Link href="/fixtures">
+                <Link href="/fixtures" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>📅 Upcoming Fixtures</a>
                 </Link>
               </li>
               <li>
-                <Link href="/my-bets">
+                <Link href="/my-bets" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>🧾 My Bets</a>
                 </Link>
               </li>
               <li>
-                <Link href="/competitions">
+                <Link href="/competitions" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>🏆 Competitions</a>
                 </Link>
               </li>
               <li>
-                <Link href="/power-prices">
+                <Link href="/power-prices" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>🎯 Boosted Odds</a>
                 </Link>
               </li>
@@ -202,27 +201,27 @@ export default function Home() {
 
                   <ul className="mt-2 ml-4 flex flex-col space-y-2">
                     <li>
-                      <Link href="/wallet">
+                      <Link href="/wallet" legacyBehavior>
                         <a className="hover:text-electricCyan" role="menuitem" tabIndex={0}>💼 Wallet</a>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/rewards">
+                      <Link href="/rewards" legacyBehavior>
                         <a className="hover:text-electricCyan" role="menuitem" tabIndex={0}>🎁 Rewards</a>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/referrals">
+                      <Link href="/referrals" legacyBehavior>
                         <a className="hover:text-electricCyan" role="menuitem" tabIndex={0}>📥 Refer & Earn</a>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/account-settings">
+                      <Link href="/account-settings" legacyBehavior>
                         <a className="hover:text-electricCyan" role="menuitem" tabIndex={0}>⚙️ Settings</a>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/bet-history">
+                      <Link href="/bet-history" legacyBehavior>
                         <a className="hover:text-electricCyan" role="menuitem" tabIndex={0}>🔄 Bet History</a>
                       </Link>
                     </li>
@@ -231,62 +230,62 @@ export default function Home() {
               </li>
 
               <li>
-                <Link href="/tips">
+                <Link href="/tips" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>💡 Betting Tips</a>
                 </Link>
               </li>
               <li>
-                <Link href="/stats">
+                <Link href="/stats" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>📈 Stats Center</a>
                 </Link>
               </li>
               <li>
-                <Link href="/how-to-play">
+                <Link href="/how-to-play" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>❓ How to Bet</a>
                 </Link>
               </li>
               <li>
-                <Link href="/rules">
+                <Link href="/rules" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>📘 Rules</a>
                 </Link>
               </li>
               <li>
-                <Link href="/support">
+                <Link href="/support" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>💬 Contact Support</a>
                 </Link>
               </li>
               <li>
-                <Link href="/faq">
+                <Link href="/faq" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>📄 FAQ</a>
                 </Link>
               </li>
               <li>
-                <Link href="/responsible-gambling">
+                <Link href="/responsible-gambling" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>🔐 Responsible Gambling</a>
                 </Link>
               </li>
               <li>
-                <Link href="/terms">
+                <Link href="/terms" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>👨‍⚖️ Terms & Conditions</a>
                 </Link>
               </li>
               <li>
-                <Link href="/privacy">
+                <Link href="/privacy" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>🔒 Privacy Policy</a>
                 </Link>
               </li>
               <li>
-                <Link href="/about">
-                  <a role="menuitem" tabIndex={0}>🙌 About</a>
+                <Link href="/about" legacyBehavior>
+                  <a className="hover:underline">About</a>
                 </Link>
               </li>
               <li>
-                <Link href="/roadmap">
+                <Link href="/roadmap" legacyBehavior>
                   <a role="menuitem" tabIndex={0}>🧭 Roadmap</a>
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
         )}
 
         <main className="flex-1 px-4 py-6 pb-28 flex flex-col items-center text-center">
@@ -323,7 +322,7 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="mt-4">
-                  <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`}>
+                  <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
                     <button className="text-sm text-electricCyan hover:underline font-medium">
                       View All Games
                     </button>
@@ -364,7 +363,7 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="mt-4">
-                  <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`}>
+                  <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
                     <button className="text-sm text-electricCyan hover:underline font-medium">
                       View All Matches
                     </button>
@@ -416,7 +415,7 @@ export default function Home() {
 
                 return (
                   <div key={idx} className="space-y-2">
-                    <Link href={`/racing/${slug}`}>
+                    <Link href={`/racing/${slug}`} legacyBehavior>
                       <a className="bg-[#0a1024] text-white p-4 rounded-xl border border-[#2a2a3d] hover:shadow-neon hover:bg-[#0f152e] transition-shadow cursor-pointer block">
                         <div className="font-semibold text-sm mb-1">
                           {race.track} – {race.time}
@@ -432,7 +431,7 @@ export default function Home() {
                     </Link>
 
                     <div className="text-center">
-                      <Link href={`/racing/${slug}`}>
+                      <Link href={`/racing/${slug}`} legacyBehavior>
                         <a className="mt-1 text-sm text-electricCyan hover:underline font-medium inline-block">
                           View All {race.track} Races
                         </a>
@@ -452,17 +451,17 @@ export default function Home() {
               <h4 className="font-bold mb-3 text-electricCyan">Company</h4>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/about">
+                  <Link href="/about" legacyBehavior>
                     <a className="hover:underline">About Us</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/roadmap">
+                  <Link href="/roadmap" legacyBehavior>
                     <a className="hover:underline">Roadmap</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact">
+                  <Link href="/contact" legacyBehavior>
                     <a className="hover:underline">Contact</a>
                   </Link>
                 </li>
@@ -472,17 +471,17 @@ export default function Home() {
               <h4 className="font-bold mb-3 text-electricCyan">Support</h4>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/how-to-play">
+                  <Link href="/how-to-play" legacyBehavior>
                     <a className="hover:underline">How to Bet with Pi</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/faq">
+                  <Link href="/faq" legacyBehavior>
                     <a className="hover:underline">FAQ</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/support">
+                  <Link href="/support" legacyBehavior>
                     <a className="hover:underline">Contact Support</a>
                   </Link>
                 </li>
@@ -492,17 +491,17 @@ export default function Home() {
               <h4 className="font-bold mb-3 text-electricCyan">Legal</h4>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/terms">
+                  <Link href="/terms" legacyBehavior>
                     <a className="hover:underline">Terms of Use</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy">
+                  <Link href="/privacy" legacyBehavior>
                     <a className="hover:underline">Privacy Policy</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/responsible-gambling">
+                  <Link href="/responsible-gambling" legacyBehavior>
                     <a className="hover:underline">Responsible Gambling</a>
                   </Link>
                 </li>
@@ -540,9 +539,10 @@ export default function Home() {
             © {new Date().getFullYear()} OhMySports. Built for Pioneers. Play smart. Bet responsibly.
           </div>
         </footer>
-
-        <BottomNav />
       </div>
     </>
   );
 }
+
+
+

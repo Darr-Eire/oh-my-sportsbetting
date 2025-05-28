@@ -1,27 +1,13 @@
-import React from 'react';
-import { FaHome, FaFutbol, FaTicketAlt, FaWallet } from 'react-icons/fa';
+// components/BottomNav.tsx
+import React from "react";
 
-const BottomNav: React.FC = () => {
+export default function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-[#0a0a23] border-t border-[#1f1f40] text-white flex justify-around py-3 z-50 md:hidden">
-      <button className="flex flex-col items-center text-xs hover:text-cyan-300">
-        <FaHome className="text-lg" />
-        Home
-      </button>
-      <button className="flex flex-col items-center text-xs hover:text-cyan-300">
-        <FaFutbol className="text-lg" />
-        Sports
-      </button>
-      <button className="flex flex-col items-center text-xs hover:text-cyan-300">
-        <FaTicketAlt className="text-lg" />
-        Bets
-      </button>
-      <button className="flex flex-col items-center text-xs hover:text-cyan-300">
-        <FaWallet className="text-lg" />
-        Wallet
-      </button>
+    <nav className="fixed bottom-0 left-0 right-0 bg-[#0a1024] border-t border-gray-700 p-3 flex justify-around text-white text-sm">
+      <button className="hover:text-electricCyan">Home</button>
+      <button className="hover:text-electricCyan">Sports</button>
+      <button className="hover:text-electricCyan">My Bets</button>
+      <button className="hover:text-electricCyan">Account</button>
     </nav>
   );
-};
-
-export default BottomNav;
+}
