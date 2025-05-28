@@ -32,7 +32,7 @@ const leagueInfo = [
   },
   {
     name: "Bundesliga",
-    logo: "/logos/bundesliga.png",
+    logo: "/bundesliga.png",
     flag: "/flags/germany.png",
     matches: bundesliga,
   },
@@ -92,62 +92,76 @@ export default function FootballPage() {
       <Head>
         <title>Football – OhMySportsbetting</title>
       </Head>
-      <div className="min-h-screen bg-[#0a0a23] text-white">
+
+      <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
-        {/* Banner */}
-        <div className="mx-4 mt-6 mb-8 p-6 rounded-xl bg-gradient-to-r from-[#0e1a2b] to-[#00324e] border border-cyan-700 shadow-lg text-center">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#00e5ff] tracking-wide animate-pulse drop-shadow-md">
-            Leagues From Around The World
-          </h1>
-          <p className="text-sm sm:text-base text-softText mt-3 max-w-2xl mx-auto">
-            Explore the biggest fixtures, fiercest rivalries, and Pi-powered betting action — all in one place.
-          </p>
-        </div>
+       {/* Compact Banner */}
+<div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] border border-white shadow text-center">
+  <h1 className="text-2xl sm:text-3xl font-semibold text-white tracking-wide">
+    Leagues From Around The World
+  </h1>
+  <p className="text-sm sm:text-base text-white mt-2 max-w-xl mx-auto">
+    Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.
+  </p>
+
+  {/* League Logos Row */}
+  <div className="mt-4 flex flex-wrap justify-center gap-4">
+    <img src="/logos/premier_league.png" alt="Premier League" className="w-10 h-10 object-contain" />
+    <img src="/logos/la_liga.png" alt="La Liga" className="w-10 h-10 object-contain" />
+    <img src="/bundesliga.png" alt="Bundesliga" className="w-10 h-10 object-contain" />
+    <img src="/logos/serie_a.png" alt="Serie A" className="w-10 h-10 object-contain" />
+    <img src="/logos/ligue_1.png" alt="Ligue 1" className="w-10 h-10 object-contain" />
+    <img src="/logos/brazilian_serie_a.png" alt="Brazilian Serie A" className="w-10 h-10 object-contain" />
+  </div>
+</div>
+
 
         {/* Carousel */}
         <div className="max-w-5xl mx-auto px-4 py-6">
           <PopularFootballBetsCarousel />
         </div>
 
-        {/* Collapsible League Sections */}
+        {/* League Dropdowns */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {leagueInfo.map((league) => (
-            <div key={league.name} className="mb-6 border-b border-cyan-800 pb-4">
+            <div key={league.name} className="mb-6 border border-white rounded-lg">
               <button
                 onClick={() => toggleLeague(league.name)}
-                className="flex flex-col sm:flex-row items-center justify-center sm:justify-between w-full py-3 px-3 bg-cyan-900 hover:bg-cyan-800 transition rounded text-center"
+                className="flex items-center gap-3 w-full px-4 py-3 text-left text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg"
                 aria-expanded={!!openLeagues[league.name]}
                 aria-controls={`${league.name}-matches`}
               >
-                <div className="flex-1 flex flex-col items-center justify-center">
-                  <div className="flex items-center space-x-3">
-                    <img
-                      src={league.flag}
-                      alt={`${league.name} flag`}
-                      className="w-5 h-5 rounded-sm"
-                      loading="lazy"
-                    />
-                    <img
-                      src={league.logo}
-                      alt={`${league.name} logo`}
-                      className="w-8 h-8 object-contain"
-                      loading="lazy"
-                    />
-                    <h2 className="text-lg font-bold text-cyan-300 whitespace-nowrap">
-                      {league.name}
-                    </h2>
-                  </div>
+                <div className="flex items-center gap-3">
+                  <img
+                    src={league.logo}
+                    alt={`${league.name} logo`}
+                    className="w-6 h-6 object-contain"
+                  />
+                  <span>{league.name}</span>
+                  <img
+                    src={league.flag}
+                    alt={`${league.name} flag`}
+                    className="w-5 h-5 rounded-sm"
+                  />
                 </div>
-                <span className="text-yellow-300 text-xl mt-2 sm:mt-0 flex items-center">
-                  {openLeagues[league.name] ? "−" : "+"}
-                </span>
+                <svg
+                  className={`ml-auto h-5 w-5 transition-transform ${
+                    openLeagues[league.name] ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
 
               {openLeagues[league.name] && (
                 <div
                   id={`${league.name}-matches`}
-                  className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"
+                  className="px-4 pb-4 space-y-3 bg-[#12182f] rounded-b-lg"
                 >
                   {league.matches.map((match, idx) => (
                     <MatchCard key={match.slug ?? idx} match={match} />
@@ -156,6 +170,16 @@ export default function FootballPage() {
               )}
             </div>
           ))}
+        </div>
+
+        {/* Back to Home Button */}
+        <div className="flex justify-center mb-8">
+          <a
+            href="/"
+            className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition"
+          >
+            Back to Home
+          </a>
         </div>
 
         <Footer />

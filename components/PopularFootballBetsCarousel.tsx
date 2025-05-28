@@ -3,30 +3,70 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 const popularBets = [
-  {
+ {
     match: "Manchester City vs Arsenal",
     bet: "Both Teams to Score",
-    odds: "1.75",
+    odds: "7/4",
   },
   {
     match: "Liverpool vs Chelsea",
     bet: "Over 2.5 Goals",
-    odds: "1.90",
+    odds: "10/11",
   },
   {
     match: "Real Madrid vs Barcelona",
     bet: "Bellingham to Score Anytime",
-    odds: "2.60",
+    odds: "8/5",
   },
   {
     match: "PSG vs Marseille",
     bet: "Mbappe to Score 2+ Goals",
-    odds: "3.50",
+    odds: "5/2",
   },
   {
     match: "Bayern vs Dortmund",
     bet: "BTTS & Over 2.5 Goals",
-    odds: "2.10",
+    odds: "11/10",
+  },
+  {
+    match: "Juventus vs Inter",
+    bet: "Over 1.5 Goals Each Half",
+    odds: "6/4",
+  },
+  {
+    match: "Napoli vs AC Milan",
+    bet: "Osimhen to Score First",
+    odds: "9/2",
+  },
+  {
+    match: "Ajax vs PSV",
+    bet: "Both Teams to Score & Draw",
+    odds: "3/1",
+  },
+  {
+    match: "Celtic vs Rangers",
+    bet: "Red Card Shown",
+    odds: "7/2",
+  },
+  {
+    match: "Galatasaray vs Fenerbahçe",
+    bet: "Over 3.5 Goals",
+    odds: "15/8",
+  },
+  {
+    match: "Benfica vs Porto",
+    bet: "BTTS & Benfica Win",
+    odds: "11/4",
+  },
+  {
+    match: "Sporting vs Braga",
+    bet: "Anytime Penalty Scored",
+    odds: "2/1",
+  },
+  {
+    match: "LA Galaxy vs Inter Miami",
+    bet: "Messi to Score Anytime",
+    odds: "7/5",
   },
 ];
 
@@ -52,9 +92,9 @@ const responsive = {
 export default function PopularFootballBetsCarousel() {
   return (
     <div>
-  <h2 className="text-xl font-bold text-cyan-500 mb-4 text-center">
-  Popular Football Bets
-</h2>
+      <h2 className="text-xl font-bold text-white mb-4 text-center">
+        Popular Football Bets
+      </h2>
 
       <Carousel
         responsive={responsive}
@@ -68,11 +108,11 @@ export default function PopularFootballBetsCarousel() {
         {popularBets.map((bet, idx) => (
           <div
             key={idx}
-            className="bg-[#1a1a2e] border border-cyan-500 rounded-lg p-4 shadow-lg flex flex-col items-center justify-center h-40 hover:bg-[#222245] transition-all text-center"
+            className="bg-[#0a1024] border border-white rounded-lg p-4 flex flex-col items-center justify-center h-40 hover:bg-[#12182f] transition-all text-center"
           >
-            <div className="text-sm text-cyan-300 font-semibold">{bet.match}</div>
-            <div className="text-white text-md mt-2">{bet.bet}</div>
-            <div className="mt-4 text-green-400 text-lg font-bold">
+            <div className="text-sm text-white font-medium">{bet.match}</div>
+            <div className="text-md text-softText mt-1">{bet.bet}</div>
+            <div className="mt-4 text-white text-lg font-bold">
               Odds: {bet.odds}
             </div>
           </div>
