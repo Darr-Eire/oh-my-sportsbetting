@@ -16,9 +16,9 @@ const sports = [
   { name: "Football", icon: MdSportsSoccer, slug: "football" },
   { name: "Horse Racing", icon: FaHorse, slug: "horse-racing" },
   { name: "In-Play", icon: MdAccessTime, slug: "in-play" },
-  { name: "Lotteries", icon: MdOutlineCasino, slug: "lotteries" },
+
   { name: "Greyhound Racing", icon: FaDog, slug: "greyhound-racing" },
-  { name: "Golf", icon: MdOutlineSportsGolf, slug: "golf" },
+
   { name: "Basketball", icon: MdOutlineSportsBasketball, slug: "basketball" },
   { name: "UFC", icon: MdOutlineSportsMma, slug: "ufc" },
   { name: "eSports", icon: MdSportsEsports, slug: "esports" },
