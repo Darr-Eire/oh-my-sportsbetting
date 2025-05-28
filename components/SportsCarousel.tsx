@@ -25,7 +25,6 @@ const sports = [
   { name: "UFC", icon: MdOutlineSportsMma, slug: "ufc" },
   { name: "eSports", icon: MdSportsEsports, slug: "esports" },
   { name: "Table Tennis", icon: MdOutlineSportsTennis, slug: "table-tennis" },
-  { name: "Cricket", icon: MdOutlineSportsCricket, slug: "cricket" },
   { name: "Volleyball", icon: MdOutlineSportsVolleyball, slug: "volleyball" },
   { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
 ];
@@ -33,14 +32,12 @@ const sports = [
 export default function SportsCarousel() {
   return (
     <div className="max-w-4xl mx-auto my-6 px-4">
-      <nav
-        className="flex flex-wrap gap-4 justify-center"
-      >
+      <nav className="flex flex-wrap gap-4 justify-center">
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
             href={`/sports/${slug}`}
-            className="flex flex-col items-center text-white hover:text-electricCyan w-[calc(100%/6-1rem)] min-w-[72px]"
+            className="flex flex-col items-center text-white hover:text-electricCyan w-[calc(25%-1rem)] min-w-[72px]"
           >
             <Icon className="text-2xl mb-1" />
             <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
