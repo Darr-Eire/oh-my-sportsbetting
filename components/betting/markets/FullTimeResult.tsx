@@ -1,13 +1,21 @@
-import MarketGroup from "../MarketGroup";
+// components/betting/markets/FullTimeResult.tsx
 import MarketButton from "../MarketButton";
 
-export default function FullTimeResult({ odds }) {
+type FullTimeResultProps = {
+  odds: {
+    home: number;
+    draw: number;
+    away: number;
+  };
+};
+
+export default function FullTimeResult({ odds }: FullTimeResultProps) {
   return (
     <MarketGroup title="Full Time Result">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <MarketButton label="Home" value={odds.home} />
-        <MarketButton label="Draw" value={odds.draw} />
-        <MarketButton label="Away" value={odds.away} />
+        <MarketButton label={`Home ${odds.home.toFixed(2)}`} onClick={() => {}} />
+        <MarketButton label={`Draw ${odds.draw.toFixed(2)}`} onClick={() => {}} />
+        <MarketButton label={`Away ${odds.away.toFixed(2)}`} onClick={() => {}} />
       </div>
     </MarketGroup>
   );
