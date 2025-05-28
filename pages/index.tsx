@@ -77,54 +77,57 @@ export default function Home({
       <Head>
         <title>OhMySportsbook</title>
       </Head>
-      <div className="flex flex-col min-h-screen bg-[#0a1024] text-white font-sans">
-        {/* Sticky Header */}
-        <header className="sticky top-0 z-50 w-full flex items-center justify-between px-4 py-3 border-b border-white bg-[#0a1024]">
-          <button
-            className="text-2xl hover:text-electricCyan transition"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-          >
-            ☰
-          </button>
+     <div className="flex flex-col min-h-screen bg-[#0a1024] text-white font-sans">
+  {/* Sticky Header */}
+  <header className="sticky top-0 z-50 w-full flex items-center justify-between px-4 py-3 border-b border-white bg-[#0a1024]">
+    <button
+      className="text-2xl hover:text-electricCyan transition"
+      onClick={() => setMenuOpen(!menuOpen)}
+      aria-label="Toggle menu"
+      aria-expanded={menuOpen}
+    >
+      ☰
+    </button>
 
-          <h1 className="text-lg font-bold font-futuristic tracking-wide">
-            OhMySportsbetting
-          </h1>
+    <h1 className="text-lg font-bold font-futuristic tracking-wide">
+      OhMySportsbetting
+    </h1>
 
-          <Link href="/login" passHref>
-            <button className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full shadow hover:brightness-110 transition">
-              Login
-            </button>
-          </Link>
-        </header>
+    <Link href="/login" passHref>
+      <button className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full shadow hover:brightness-110 transition">
+        Login
+      </button>
+    </Link>
+  </header>
 
-        {/* Dropdown Menu */}
-        {menuOpen && (
-          <nav
-            className="absolute top-full left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg"
-            role="menu"
-            aria-label="Main navigation"
-          >
-            <ul className="p-4 space-y-2">
-              {sports.map(({ name, icon: Icon, slug }) => (
-                <li key={slug}>
-                  <Link href={`/sports/${slug}`}>
-                    <a className="flex items-center gap-3 text-white hover:text-electricCyan transition">
-                      <Icon className="text-lg" />
-                      <span>{name}</span>
-                    </a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
+  {/* Dropdown Menu */}
+  {menuOpen && (
+    <nav
+      className="absolute top-[3.5rem] left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg"
+      role="menu"
+      aria-label="Main navigation"
+    >
+      <ul className="p-4 space-y-2">
+        {sports.map(({ name, icon: Icon, slug }) => (
+          <li key={slug}>
+            <Link href={`/sports/${slug}`} passHref>
+              <div className="flex items-center gap-3 text-white hover:text-electricCyan transition cursor-pointer">
+                <Icon className="text-lg" />
+                <span>{name}</span>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
 
-        {/* LEGAL NOTICE */}
-        <LegalNotice />
-      </div>
+  {/* Content goes here */}
+
+  {/* Footer / Legal Notice */}
+  <LegalNotice />
+</div>
+
     </>
   );
 }
