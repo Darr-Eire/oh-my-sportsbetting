@@ -114,45 +114,49 @@ export default function FootballPage() {
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {leagueInfo.map((league) => (
             <div key={league.name} className="mb-6 border-b border-cyan-800 pb-4">
-              <button
-                onClick={() => toggleLeague(league.name)}
-                className="flex flex-col sm:flex-row items-center justify-center sm:justify-between w-full py-3 px-3 bg-cyan-900 hover:bg-cyan-800 transition rounded text-center"
-                aria-expanded={!!openLeagues[league.name]}
-                aria-controls={`${league.name}-matches`}
-              >
-                <div className="flex-1 flex flex-col items-center justify-center">
-                  <div className="flex items-center space-x-3">
-                    <img
-                      src={league.flag}
-                      alt={`${league.name} flag`}
-                      className="w-5 h-5 rounded-sm"
-                      loading="lazy"
-                    />
-                    <img
-                      src={league.logo}
-                      alt={`${league.name} logo`}
-                      className="w-8 h-8 object-contain"
-                      loading="lazy"
-                    />
-                    <h2 className="text-lg font-bold text-cyan-300 whitespace-nowrap">
-                      {league.name}
-                    </h2>
-                  </div>
-                </div>
-                <span className="text-yellow-300 text-xl mt-2 sm:mt-0 flex items-center">
-                  {openLeagues[league.name] ? "−" : "+"}
-                </span>
-              </button>
+       <button
+  onClick={() => toggleLeague(league.name)}
+  className="flex flex-col sm:flex-row items-center justify-center sm:justify-between w-full py-3 px-3 bg-cyan-900 hover:bg-cyan-800 transition rounded text-center"
+  aria-expanded={!!openLeagues[league.name]}
+  aria-controls={`${league.name}-matches`}
+>
+  <div className="flex-1 flex flex-col items-center justify-center">
+    <div className="flex items-center space-x-3">
+      <Image
+        src={league.flag}
+        alt={`${league.name} flag`}
+        width={20}
+        height={20}
+        loading="lazy"
+        className="rounded-sm"
+      />
+      <Image
+        src={league.logo}
+        alt={`${league.name} logo`}
+        width={32}
+        height={32}
+        loading="lazy"
+        className="object-contain"
+      />
+      <h2 className="text-lg font-bold text-cyan-300 whitespace-nowrap">{league.name}</h2>
+    </div>
+  </div>
+  <span className="text-yellow-300 text-xl mt-2 sm:mt-0 flex items-center">
+    {openLeagues[league.name] ? "−" : "+"}
+  </span>
+</button>
 
-              {openLeagues[league.name] && (
-                <div
-                  id={`${league.name}-matches`}
-                  className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"
-                >
-                  {league.matches.map((match, idx) => (
-                    <MatchCard key={match.slug ?? idx} match={match} />
-                  ))}
-                </div>
+{openLeagues[league.name] && (
+  <div
+    id={`${league.name}-matches`}
+    role="region"
+    aria-labelledby={`${league.name}-header`}
+    className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"
+  >
+    {league.matches.map((match, idx) => (
+      <MatchCard key={match.slug ?? idx} match={match} />
+    ))}
+  </div>
               )}
             </div>
           ))}

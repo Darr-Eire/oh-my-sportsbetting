@@ -83,7 +83,7 @@ export default function MatchDetail() {
   const router = useRouter();
   const { slug } = router.query;
   const match = dummyMatchData;
-  const [activeMarket, setActiveMarket] = useState("");
+  const [activeMarket, setActiveMarket] = useState<string>("");
   const [view, setView] = useState<"markets" | "lineups" | "pitch">("markets");
 
   const toggleAccordion = (key: string) => {
@@ -152,7 +152,7 @@ export default function MatchDetail() {
                     ? "bg-cyan-500 text-white"
                     : "text-cyan-300 border border-cyan-500"
                 }`}
-                onClick={() => setView(tab as any)}
+                onClick={() => setView(tab as "markets" | "lineups" | "pitch")}
               >
                 {tab === "markets"
                   ? "Betting Markets"
@@ -181,6 +181,36 @@ export default function MatchDetail() {
                     {marketName}
                   </button>
                   {activeMarket === marketName && (
+                    <div className="px-4 pb-4 grid grid-cols-2 gap-2 mt-2">
+                      {Object.entries(options).map(([label, odd], subIdx) => (
+                        <button
+                          key={subIdx}
+                          className="bg-[#1e1e36] hover:bg-[#2a2a4a] text-sm px-4 py-2 rounded text-white border border-[#2a2a3d]"
+                        >
+                          {label}{" "}
+                          <span className="font-bold">
+                            {parseFloat(odd.toString()).toFixed(2)}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {view === "lineups" && (
+            <Lineups homeTeam={match.homeTeam} awayTeam={match.awayTeam} />
+          )}
+          {view === "pitch" && <PitchView />}
+        </div>
+
+        <Footer />
+      </div>
+    </>
+  );
+}
                     <div className="px-4 pb-4 grid grid-cols-2 gap-2 mt-2">
                       {Object.entries(options).map(([label, odd], subIdx) => (
                         <button

@@ -14,9 +14,10 @@ export default function LegalNotice() {
       <p className="text-sm text-gray-300 mb-3">
         <strong>By using this app, you agree to the OhMySportsbook Terms of Use</strong>. All bets are settled according
         to internal rules based on community consensus and fairness principles. If discrepancies arise,
-        the admin's final decision will be binding.
+        the admin&apos;s final decision will be binding.
       </p>
-        <p>
+
+      <p className="text-sm text-gray-300 mb-3">
         We accept no liability for data mismatches or payout disputes.&nbsp;
         Admin&apos;s final decision is binding.
       </p>
@@ -33,7 +34,7 @@ export default function LegalNotice() {
         <p>Pi is not a fiat currency. All entries and payouts are managed digitally and cannot be cashed out outside the network.</p>
       </div>
 
-  <div className="images">
+      <div className="flex gap-4 mt-6 justify-center">
         <Image src="/icon1.svg" alt="Icon 1" width={40} height={40} />
         <Image src="/icon2.svg" alt="Icon 2" width={40} height={40} />
       </div>

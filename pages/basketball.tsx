@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Sidebar from "../components/Sidebar";
 import LiveBadge from "../components/LiveBadge";
+import Image from "next/image";
 
 const matches = [
   {
@@ -54,23 +55,18 @@ export default function Basketball() {
             >
               <div className="flex justify-between items-start">
                 <div className="flex gap-4 items-center">
-                 import Image from 'next/image';
-
-<Image src="/your-image.png" alt="description" width={width} height={height} />
-
+                  <Image
                     src={match.logo}
                     alt={match.teams}
-                    className="w-16 h-16 rounded-full object-cover"
+                    width={64}
+                    height={64}
+                    className="rounded-full object-cover"
                   />
                   <div>
                     <div className="text-lg font-semibold">{match.teams}</div>
                     <div className="text-sm text-gray-400">{match.league}</div>
-                    <div className="text-sm text-gray-400">
-                      🕒 {match.time}
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      🏟️ {match.venue}
-                    </div>
+                    <div className="text-sm text-gray-400">🕒 {match.time}</div>
+                    <div className="text-sm text-gray-400">🏟️ {match.venue}</div>
                   </div>
                 </div>
 
