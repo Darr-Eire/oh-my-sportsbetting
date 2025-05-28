@@ -113,7 +113,7 @@ export default function FootballPage() {
             <img src="/bundesliga.png" alt="Bundesliga" className="w-10 h-10 object-contain" />
             <img src="/logos/serie_a.png" alt="Serie A" className="w-10 h-10 object-contain" />
             <img src="/logos/ligue_1.png" alt="Ligue 1" className="w-10 h-10 object-contain" />
-            <img src="/logos/brazilian_serie_a.png" alt="Brazilian Serie A" className="w-10 h-10 object-contain" />
+            <img src="/logos/Brazilian_Serie_A.png" alt="Brazilian Serie A" className="w-10 h-10 object-contain" />
           </div>
         </div>
 
