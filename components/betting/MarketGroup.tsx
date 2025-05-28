@@ -1,11 +1,19 @@
-import React from 'react';
 import MarketButton from './MarketButton';
 
-export default function MarketGroup({ markets }) {
+type Market = {
+  label: string;
+  odds: string;
+};
+
+type MarketGroupProps = {
+  markets: Market[];
+};
+
+export default function MarketGroup({ markets }: MarketGroupProps) {
   return (
     <div className="market-group">
-      {markets.map((market) => (
-        <MarketButton key={market.id} label={market.name} onClick={() => {}} />
+      {markets.map((market, index) => (
+        <MarketButton key={index} label={market.label} />
       ))}
     </div>
   );
