@@ -112,7 +112,7 @@ export default function Home({
 
         {/* Main content - add padding top so not hidden behind sticky header */}
         <main className="flex-1 px-4 py-2 pt-[72px] pb-28 flex flex-col items-center text-center">
-<PromoCarousel />
+          <PromoCarousel />
 
           <SportsCarousel />
           <PowerPriceCarousel />
@@ -207,35 +207,34 @@ export default function Home({
             <div className="space-y-3 w-full">
               {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
                 <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
-                 <button
-  onClick={() => toggleLeague(league)}
-  className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition"
-  aria-expanded={openLeague === league}
-  aria-controls={`${league}-matches`}
->
-  {leagueLogo && (
-    <Image
-      src={leagueLogo}
-      alt={`${league} logo`}
-      width={32}
-      height={32}
-      className="object-contain"
-      unoptimized
-    />
-  )}
-  <span className="flex items-center gap-2">
-    <span>{league}</span>
-    <Image
-      src={`https://flagcdn.com/w20/${countryCode}.png`}
-      alt={`${countryCode} flag`}
-      width={20}
-      height={14}
-      className="object-contain rounded-sm"
-      unoptimized
-    />
-  </span>
-</button>
-
+                  <button
+                    onClick={() => toggleLeague(league)}
+                    className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition"
+                    aria-expanded={openLeague === league}
+                    aria-controls={`${league}-matches`}
+                  >
+                    {leagueLogo && (
+                      <Image
+                        src={leagueLogo}
+                        alt={`${league} logo`}
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                        unoptimized
+                      />
+                    )}
+                    <span className="flex items-center gap-2">
+                      <span>{league}</span>
+                      <Image
+                        src={`https://flagcdn.com/w20/${countryCode}.png`}
+                        alt={`${countryCode} flag`}
+                        width={20}
+                        height={14}
+                        className="object-contain rounded-sm"
+                        unoptimized
+                      />
+                    </span>
+                  </button>
 
                   {openLeague === league && (
                     <div
@@ -256,7 +255,7 @@ export default function Home({
                               {odds.home.toFixed(2)}
                             </div>
                             <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-                              {odds.draw.toFixed(2)}
+                              {odds.draw !== undefined ? odds.draw.toFixed(2) : "-"}
                             </div>
                             <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
                               {odds.away.toFixed(2)}
