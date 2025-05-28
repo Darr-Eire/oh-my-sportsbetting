@@ -34,7 +34,7 @@ export default function SportsCarousel() {
   return (
     <div className="max-w-4xl mx-auto my-6 px-4">
       <nav
-        className="flex gap-4 overflow-x-auto no-scrollbar touch-pan-x"
+        className="flex gap-2 overflow-x-auto no-scrollbar touch-pan-x"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         {sports.map(({ name, icon: Icon, slug }) => (
