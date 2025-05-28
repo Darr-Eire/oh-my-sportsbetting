@@ -1,20 +1,16 @@
-import MarketButton from './MarketButton';
+import MarketGroup from "../MarketGroup";
+import MarketButton from "../MarketButton";
 
-export default function MarketGroup({ markets }: { markets: { label: string; odds: string }[] }) {
-  // Dummy onClick handler or you can define it properly as needed
-  const handleClick = (label: string) => {
-    console.log('Clicked market:', label);
-  };
+type FullTimeResultProps = {
+  odds: { home: number; draw: number; away: number };
+};
 
-  return (
-    <div className="market-group">
-      {markets.map((market, index) => (
-        <MarketButton
-          key={index}
-          label={market.label}
-          onClick={() => handleClick(market.label)}
-        />
-      ))}
-    </div>
-  );
+export default function FullTimeResult({ odds }: FullTimeResultProps) {
+  const markets = [
+    { label: `Home ${odds.home.toFixed(2)}`, odds: odds.home.toString() },
+    { label: `Draw ${odds.draw.toFixed(2)}`, odds: odds.draw.toString() },
+    { label: `Away ${odds.away.toFixed(2)}`, odds: odds.away.toString() },
+  ];
+
+  return <MarketGroup markets={markets} />;
 }
