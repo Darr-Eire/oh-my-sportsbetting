@@ -35,17 +35,18 @@ export default function SportsCarousel() {
     arrows: false,
     swipeToSlide: true,
     focusOnSelect: false,
+    draggable: true,
   };
 
   return (
-    <div className="max-w-4xl mx-auto my-6 px-4">
+    <div className="max-w-4xl mx-auto my-6 px-2">
       <Slider {...settings}>
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
             href={`/sports/${slug}`}
             className="flex flex-col items-center justify-center text-white hover:text-electricCyan cursor-pointer px-2"
-            style={{ minWidth: "72px" }}
+            style={{ minWidth: "0" }} // Let slick control width
           >
             <Icon className="text-2xl mb-1 leading-none" />
             <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
