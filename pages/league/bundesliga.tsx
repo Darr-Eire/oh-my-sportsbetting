@@ -1,7 +1,20 @@
 import Head from "next/head";
 import Link from "next/link";
 
-const matchesByDay = {
+type Odds = {
+  home: number;
+  draw: number;
+  away: number;
+};
+
+type Match = {
+  slug: string;
+  teams: string;
+  time: string;
+  odds: Odds;
+};
+
+const matchesByDay: Record<string, Match[]> = {
   "Friday, May 24": [
     {
       slug: "bayern-munich-vs-dortmund",
@@ -47,7 +60,7 @@ const matchesByDay = {
       slug: "leverkusen-vs-schalke",
       teams: "Bayer Leverkusen vs Schalke 04",
       time: "15:30",
-      odds: { home: 1.70, draw: 3.5, away: 4.5 },
+      odds: { home: 1.7, draw: 3.5, away: 4.5 },
     },
     {
       slug: "bochum-vs-koln",
@@ -77,8 +90,8 @@ export default function Bundesliga() {
           <section key={day}>
             <h2 className="text-xl text-cyan-300 font-semibold mb-3">{day}</h2>
             <div className="space-y-4">
-              {matches.map((match, idx) => (
-                <MatchCard key={idx} {...match} />
+              {matches.map((match) => (
+                <MatchCard key={match.slug} {...match} />
               ))}
             </div>
           </section>
@@ -88,7 +101,7 @@ export default function Bundesliga() {
   );
 }
 
-function MatchCard({ teams, time, odds, slug }) {
+function MatchCard({ teams, time, odds, slug }: Match) {
   return (
     <Link href={`/match/${slug}`} passHref>
       <div className="bg-deepBlue p-4 rounded-lg border border-[#2a2a3d] hover:shadow-lg transition cursor-pointer">
