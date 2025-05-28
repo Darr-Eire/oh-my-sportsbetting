@@ -1,19 +1,19 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 
-import Lineups from "../../components/Lineups";
-import PitchView from "../../components/PitchView";
-import Footer from "../../components/Footer";
+// import Lineups from "../../components/Lineups";
+// import PitchView from "../../components/PitchView";
+// import Footer from "../../components/Footer";
 
 const dummyMatchData = {
-  // Your dummy match data here
+  teams: "Team A vs Team B",
+  // other match data
 };
 
 export default function MatchDetail() {
-  const router = useRouter();
-  // Remove slug if unused:
+  // const router = useRouter();
   // const { slug } = router.query;
 
   const match = dummyMatchData;
@@ -31,7 +31,7 @@ export default function MatchDetail() {
         <title>{match.teams} – Match Details</title>
       </Head>
       <div className="min-h-screen bg-[#0a0a23] text-white px-4 py-8">
-        {/* Your full JSX here for MatchDetail */}
+        {/* Add your JSX here */}
       </div>
     </>
   );
