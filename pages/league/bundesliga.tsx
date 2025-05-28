@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Sidebar from "../../components/Sidebar";
 import Link from "next/link";
 
 const matchesByDay = {
@@ -71,22 +70,19 @@ export default function Bundesliga() {
       <Head>
         <title>Bundesliga – All Matches</title>
       </Head>
-      <div className="flex min-h-screen bg-[#0a0a23] text-white">
-        <Sidebar />
-        <main className="flex-1 p-6 space-y-10">
-          <h1 className="text-2xl font-bold text-gold">Bundesliga</h1>
+      <div className="min-h-screen bg-[#0a0a23] text-white p-6 space-y-10">
+        <h1 className="text-2xl font-bold text-gold">Bundesliga</h1>
 
-          {Object.entries(matchesByDay).map(([day, matches]) => (
-            <section key={day}>
-              <h2 className="text-xl text-cyan-300 font-semibold mb-3">{day}</h2>
-              <div className="space-y-4">
-                {matches.map((match, idx) => (
-                  <MatchCard key={idx} {...match} />
-                ))}
-              </div>
-            </section>
-          ))}
-        </main>
+        {Object.entries(matchesByDay).map(([day, matches]) => (
+          <section key={day}>
+            <h2 className="text-xl text-cyan-300 font-semibold mb-3">{day}</h2>
+            <div className="space-y-4">
+              {matches.map((match, idx) => (
+                <MatchCard key={idx} {...match} />
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </>
   );

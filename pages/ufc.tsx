@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Sidebar from "../components/Sidebar";
 import LiveBadge from "../components/LiveBadge";
 import Image from "next/image";
 
@@ -45,9 +44,8 @@ export default function UFC() {
         <title>Pi Sportsbook – UFC</title>
       </Head>
 
-      <div className="flex min-h-screen bg-[#0a0a23] text-white">
-        <Sidebar />
-        <main className="flex-1 p-6">
+      <div className="min-h-screen bg-[#0a0a23] text-white p-6">
+        <main>
           <h1 className="text-2xl font-bold text-pink-400 mb-6 font-orbitron">
             🥋 UFC – Upcoming Fights
           </h1>
@@ -56,7 +54,6 @@ export default function UFC() {
             {events.map((event, i) => {
               const [fighter1, fighter2] = event.fighters.split(" vs ");
 
-              // normalize fighter keys for odds lookup (lowercase, no spaces/apostrophes)
               const normalizeKey = (name: string) =>
                 name.toLowerCase().replace(/[^a-z]/g, "");
 
@@ -94,7 +91,6 @@ export default function UFC() {
                     </div>
                   </div>
 
-                  {/* Odds Buttons */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 text-sm">
                     <button className="border border-blue-400 text-blue-300 px-3 py-2 rounded hover:bg-blue-400 hover:text-black">
                       🧠 {fighter1}{" "}

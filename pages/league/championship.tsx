@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Sidebar from "../../components/Sidebar";
 
 const matches = [
   { teams: "Leeds United vs West Brom", time: "Saturday, May 31 – 15:00", odds: { home: 2.0, draw: 3.1, away: 3.6 } },
@@ -19,18 +18,17 @@ export default function Championship() {
       <Head>
         <title>Championship – All Matches</title>
       </Head>
-      <div className="flex min-h-screen bg-[#0a0a23] text-white">
-        <Sidebar />
-        <main className="flex-1 p-6 space-y-6">
-          <h1 className="text-2xl font-bold text-gold">Championship</h1>
+      <div className="min-h-screen bg-[#0a0a23] text-white p-6 space-y-6">
+        <h1 className="text-2xl font-bold text-gold">Championship</h1>
 
-          <h2 className="text-xl text-cyan-300 font-semibold mb-3">Saturday, May 31 – All Matches Kick Off at 15:00</h2>
-          <div className="space-y-4">
-            {matches.map((match, idx) => (
-              <MatchCard key={idx} {...match} />
-            ))}
-          </div>
-        </main>
+        <h2 className="text-xl text-cyan-300 font-semibold mb-3">
+          Saturday, May 31 – All Matches Kick Off at 15:00
+        </h2>
+        <div className="space-y-4">
+          {matches.map((match, idx) => (
+            <MatchCard key={idx} {...match} />
+          ))}
+        </div>
       </div>
     </>
   );
@@ -38,7 +36,7 @@ export default function Championship() {
 
 function MatchCard({ teams, time, odds }) {
   return (
-    <div className="bg-deepBlue p-4 rounded-lg border border-[#2a2a3d] hover:shadow-lg transition">
+    <div className="bg-deepBlue p-4 rounded-lg border border-[#2a2a3d] hover:shadow-lg transition cursor-pointer">
       <div className="flex justify-between items-center">
         <div>
           <div className="text-md font-semibold">{teams}</div>
