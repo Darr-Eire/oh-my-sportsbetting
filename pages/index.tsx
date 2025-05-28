@@ -5,9 +5,9 @@ import PromoCarousel from "../components/PromoCarousel";
 import PowerPriceCarousel from "../components/PowerPriceCarousel";
 import BetBuilderCarousel from "../components/BetBuilderCarousel";
 import SportsCarousel from "../components/SportsCarousel";
-import { useState } from "react";
-import Slider from "react-slick";
 import LegalNotice from "../components/LegalNotice";
+import Slider from "react-slick";
+import { useState } from "react";
 
 import {
   MdSportsSoccer,
@@ -17,7 +17,6 @@ import {
   MdOutlineSportsBasketball,
   MdOutlineSportsMma,
   MdSportsEsports,
-  MdOutlineSportsTennis,
   MdOutlineListAlt,
 } from "react-icons/md";
 import { FaHorse, FaDog } from "react-icons/fa";
@@ -77,60 +76,107 @@ export default function Home({
       <Head>
         <title>OhMySportsbook</title>
       </Head>
-     <div className="flex flex-col min-h-screen bg-[#0a1024] text-white font-sans">
-  {/* Sticky Header */}
-  <header className="sticky top-0 z-50 w-full flex items-center justify-between px-4 py-3 border-b border-white bg-[#0a1024]">
-    <button
-      className="text-2xl hover:text-electricCyan transition"
-      onClick={() => setMenuOpen(!menuOpen)}
-      aria-label="Toggle menu"
-      aria-expanded={menuOpen}
-    >
-      ☰
-    </button>
+      <div className="flex flex-col min-h-screen bg-[#0a1024] text-white font-sans">
+        {/* Sticky Header */}
+        <header className="sticky top-0 z-50 w-full flex items-center justify-between px-4 py-3 border-b border-white bg-[#0a1024]">
+          <button
+            className="text-2xl hover:text-electricCyan transition"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            ☰
+          </button>
 
-    <h1 className="text-lg font-bold font-futuristic tracking-wide">
-      OhMySportsbetting
-    </h1>
+          <h1 className="text-lg font-bold font-futuristic tracking-wide">
+            OhMySportsbetting
+          </h1>
 
-    <Link href="/login" passHref>
-      <button className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full shadow hover:brightness-110 transition">
-        Login
-      </button>
-    </Link>
-  </header>
+          <Link href="/login" passHref>
+            <button className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full shadow hover:brightness-110 transition">
+              Login
+            </button>
+          </Link>
+        </header>
 
-  {/* Dropdown Menu */}
-  {menuOpen && (
-    <nav
-      className="absolute top-[3.5rem] left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg"
-      role="menu"
-      aria-label="Main navigation"
-    >
-      <ul className="p-4 space-y-2">
-        {sports.map(({ name, icon: Icon, slug }) => (
-          <li key={slug}>
-            <Link href={`/sports/${slug}`} passHref>
-              <div className="flex items-center gap-3 text-white hover:text-electricCyan transition cursor-pointer">
-                <Icon className="text-lg" />
-                <span>{name}</span>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )}
+        {/* Dropdown Menu */}
+        {menuOpen && (
+          <nav
+            className="absolute top-[3.5rem] left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg"
+            role="menu"
+            aria-label="Main navigation"
+          >
+            <ul className="p-4 space-y-2">
+              {sports.map(({ name, icon: Icon, slug }) => (
+                <li key={slug}>
+                  <Link href={`/sports/${slug}`} passHref>
+                    <div className="flex items-center gap-3 text-white hover:text-electricCyan transition cursor-pointer">
+                      <Icon className="text-lg" />
+                      <span>{name}</span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
-  {/* Content goes here */}
+        {/* Main */}
+        <main className="flex-1 px-4 py-2 pt-[72px] pb-28 flex flex-col items-center text-center">
+          <PromoCarousel />
+          <SportsCarousel />
+          <PowerPriceCarousel />
 
-  {/* Footer / Legal Notice */}
-  <LegalNotice />
-</div>
+          {/* Basketball */}
+          {/* ... insert basketball section here, same as you already had ... */}
 
+          {/* Football */}
+          {/* ... insert football section here, same as you already had ... */}
+
+          {/* Bet Builder */}
+          <section className="mt-8 w-full max-w-3xl mx-auto">
+            <div className="max-w-md mx-auto">
+              <BetBuilderCarousel />
+            </div>
+          </section>
+
+          {/* Accumulators */}
+          {/* ... insert Popular Accumulators section ... */}
+
+          {/* Horse Racing */}
+          {/* ... insert Horse Racing section here ... */}
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-[#0a1024] text-white text-sm px-6 py-10">
+          <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 border-b border-gray-700 pb-8">
+            {/* ... insert footer sections ... */}
+          </div>
+
+          <div className="max-w-7xl mx-auto mt-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-2">
+              <Image src="/pi-logo.png" alt="Pi Network" width={32} height={32} />
+              <span className="text-gray-300">
+                Transactions powered by the Pi SDK
+              </span>
+            </div>
+            <div className="flex gap-4 items-center">
+              <Image src="/18plus.png" alt="18+" width={24} height={24} />
+              <Image src="/responsible.png" alt="Responsible" width={24} height={24} />
+            </div>
+          </div>
+
+          <div className="text-center text-xs mt-8 text-gray-400">
+            © {new Date().getFullYear()} OhMySports. Built for Pioneers. Play smart.
+            Bet responsibly.
+          </div>
+        </footer>
+        <LegalNotice />
+      </div>
     </>
   );
 }
+
 
 
         {/* Main content - add padding top so not hidden behind sticky header */}
