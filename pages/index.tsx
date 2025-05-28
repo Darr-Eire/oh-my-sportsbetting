@@ -335,51 +335,52 @@ export default function Home() {
           {/* Today's Football Matches */}
           <section className="mt-10 w-full max-w-3xl">
             <h2 className="text-lg font-bold text-white mb-6">Today’s Football Matches</h2>
-            {todayMatches.map((block, i) => (
-              <div key={i} className="mb-8">
-                <h3 className="text-gold font-semibold mb-4 text-lg">{block.league}</h3>
-                <div>
-                  {block.matches.map((match, j) => {
-                    const teams = match.teams.split(" vs ");
+          {todayMatches.map((block, i) => (
+  <div key={i} className="mb-8">
+    <h3 className="text-gold font-semibold mb-4 text-lg">{block.league}</h3>
+    <div>
+      {block.matches.map((match, j) => {
+        const teams = match.teams.split(" vs ");
 
-                    return (
-                      <div key={j} className="mb-6">
-                        <div className="bg-[#f8f9fa] p-4 rounded-lg border border-gray-300 hover:shadow-lg transition-shadow flex justify-between items-center text-left">
-                          <div>
-                            <div className="text-sm font-semibold text-gray-900">{teams[0]}</div>
-                            <div className="text-sm font-semibold text-gray-900">{teams[1]}</div>
-                            <div className="text-xs text-gray-600 mt-1">Kickoff: {match.time}</div>
-                          </div>
-
-                          <div className="flex gap-3 text-sm font-medium">
-                            <div className="bg-gray-100 rounded px-3 py-1 text-green-700">
-                              {match.odds.home.toFixed(2)}
-                            </div>
-                            <div className="bg-gray-100 rounded px-3 py-1 text-green-700">
-                              {match.odds.draw.toFixed(2)}
-                            </div>
-                            <div className="bg-gray-100 rounded px-3 py-1 text-green-700">
-                              {match.odds.away.toFixed(2)}
-                            </div>
-                          </div>
-                        </div>
-
-                        <button className="flex items-center gap-2 text-xs mt-1 text-gray-600 hover:text-green-700">
-                          <span className="font-bold text-lg">+</span> Top Markets
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="mt-4">
-                  <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
-                    <button className="text-sm text-electricCyan hover:underline font-medium">
-                      View All Matches
-                    </button>
-                  </Link>
-                </div>
+        return (
+          <div key={j} className="mb-6">
+            <div className="bg-[#0a1024] p-4 rounded-lg border border-gray-700 hover:shadow-neon transition-shadow flex justify-between items-center text-left">
+              <div>
+                <div className="text-sm font-semibold text-white">{teams[0]}</div>
+                <div className="text-sm font-semibold text-white">{teams[1]}</div>
+                <div className="text-xs text-gray-400 mt-1">Kickoff: {match.time}</div>
               </div>
-            ))}
+
+          <div className="flex gap-3 text-sm font-medium">
+  <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+    {match.odds.home.toFixed(2)}
+  </div>
+  <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+    {match.odds.draw.toFixed(2)}
+  </div>
+  <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+    {match.odds.away.toFixed(2)}
+  </div>
+</div>
+
+            </div>
+
+            <button className="flex items-center gap-2 text-xs mt-1 text-gray-500 hover:text-green-400">
+              <span className="font-bold text-lg">+</span> Top Markets
+            </button>
+          </div>
+        );
+      })}
+    </div>
+    <div className="mt-4">
+      <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
+        <button className="text-sm text-electricCyan hover:underline font-medium">
+          View All Matches
+        </button>
+      </Link>
+    </div>
+  </div>
+))}
           </section>
 
           {/* Bet Builder Highlights */}

@@ -32,20 +32,24 @@ const sports = [
 
 export default function SportsCarousel() {
   return (
-    <div className="overflow-x-auto py-4">
-      <div className="flex space-x-6 px-4 w-max">
+    <div className="max-w-4xl mx-auto my-6 px-4">
+      <nav
+        className="flex gap-4 overflow-x-auto no-scrollbar touch-pan-x"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
             href={`/sports/${slug}`}
-            className="flex flex-col items-center text-white hover:text-yellow-400 transition min-w-[64px]"
+            className="flex flex-col items-center text-white hover:text-electricCyan min-w-[72px] px-1 flex-shrink-0"
           >
-            <Icon className="text-3xl mb-1" />
-            <span className="text-xs text-center">{name}</span>
+            <Icon className="text-2xl mb-1" />
+            <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
+              {name}
+            </span>
           </Link>
         ))}
-      </div>
+      </nav>
     </div>
   );
 }
-
