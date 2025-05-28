@@ -1,6 +1,11 @@
-import React from 'react';
+import React from "react";
 
-export default function MarketButton({ label, onClick }) {
+type MarketButtonProps = {
+  label: string;
+  onClick: () => void;
+};
+
+export default function MarketButton({ label, onClick }: MarketButtonProps) {
   return (
     <button onClick={onClick} className="market-button">
       {label}
