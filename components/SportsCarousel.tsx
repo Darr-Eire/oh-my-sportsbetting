@@ -16,9 +16,9 @@ const sports = [
   { name: "Football", icon: MdSportsSoccer, slug: "football" },
   { name: "Horse Racing", icon: FaHorse, slug: "horse-racing" },
   { name: "In-Play", icon: MdAccessTime, slug: "in-play" },
-
+  { name: "Lotteries", icon: MdOutlineCasino, slug: "lotteries" },
   { name: "Greyhound Racing", icon: FaDog, slug: "greyhound-racing" },
-
+  { name: "Golf", icon: MdOutlineSportsGolf, slug: "golf" },
   { name: "Basketball", icon: MdOutlineSportsBasketball, slug: "basketball" },
   { name: "UFC", icon: MdOutlineSportsMma, slug: "ufc" },
   { name: "eSports", icon: MdSportsEsports, slug: "esports" },
@@ -27,26 +27,16 @@ const sports = [
 
 export default function SportsCarousel() {
   return (
-    <div className="max-w-4xl mx-auto my-6 px-4">
-      <nav
-        className="
-          flex flex-wrap justify-center
-          gap-2 sm:gap-3 md:gap-4
-        "
-      >
+    <div className="max-w-4xl mx-auto my-6 px-2">
+      <nav className="flex overflow-x-auto gap-4 justify-start py-4 scrollbar-thin scrollbar-thumb-electricCyan scrollbar-track-transparent">
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
             href={`/sports/${slug}`}
-            className="
-              flex flex-col items-center text-white hover:text-electricCyan
-              w-[calc(20%-0.5rem)] min-w-[60px]
-              px-1 py-1
-              sm:w-[calc(16.66%-0.75rem)] sm:min-w-[72px]
-            "
+            className="flex flex-col items-center justify-center text-white hover:text-electricCyan w-[70px] sm:w-[80px] flex-shrink-0"
           >
-            <Icon className="text-2xl mb-1 leading-none" />
-            <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
+            <Icon className="text-3xl mb-1" />
+            <span className="text-xs sm:text-sm text-center leading-tight select-none whitespace-nowrap">
               {name}
             </span>
           </Link>
