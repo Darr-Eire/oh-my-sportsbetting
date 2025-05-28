@@ -1,5 +1,6 @@
 // components/betting/markets/FullTimeResult.tsx
 import MarketButton from "../MarketButton";
+import MarketGroup from '../MarketGroup'; // adjust path if needed
 
 type FullTimeResultProps = {
   odds: {
