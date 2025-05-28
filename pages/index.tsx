@@ -267,15 +267,16 @@ export default function Home({
                             <div className="text-xs text-gray-400">Kickoff: {time}</div>
                           </div>
                           <div className="flex gap-3 text-sm font-medium">
-                            <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-                              {odds.home.toFixed(2)}
-                            </div>
-                            <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-                              {odds.draw.toFixed(2)}
-                            </div>
-                            <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-                              {odds.away.toFixed(2)}
-                            </div>
+                     <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+  {odds?.home?.toFixed(2) ?? "—"}
+</div>
+<div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+  {odds?.draw?.toFixed(2) ?? "—"}
+</div>
+<div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+  {odds?.away?.toFixed(2) ?? "—"}
+</div>
+
                           </div>
                         </div>
                       ))}
