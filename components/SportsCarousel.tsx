@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Slider from "react-slick";
 import {
   MdSportsSoccer,
   MdAccessTime,
@@ -31,56 +30,22 @@ const sports = [
 ];
 
 export default function SportsCarousel() {
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 300,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    arrows: false,
-    swipeToSlide: true,
-    focusOnSelect: false,
-    responsive: [
-      {
-        breakpoint: 768, // mobile
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinite: false,
-          arrows: false,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 1024, // tablet and desktop keep 6
-        settings: {
-          slidesToShow: 6,
-          slidesToScroll: 1,
-          infinite: false,
-          arrows: false,
-          dots: false,
-        },
-      },
-    ],
-  };
-
   return (
-    <div className="max-w-4xl mx-auto my-6 px-2">
-      <Slider {...settings}>
+    <div className="max-w-4xl mx-auto my-6 px-4">
+      <nav className="flex flex-wrap gap-4 justify-center">
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
             href={`/sports/${slug}`}
-            className="flex flex-col items-center justify-center text-white hover:text-electricCyan cursor-pointer px-1"
-            style={{ minWidth: "70px" }}
+            className="flex flex-col items-center justify-center text-white hover:text-electricCyan w-[calc(25%-1rem)] min-w-[72px]"
           >
-            <Icon className="text-2xl mb-1" />
+            <Icon className="text-2xl mb-1 leading-none" />
             <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
               {name}
             </span>
           </Link>
         ))}
-      </Slider>
+      </nav>
     </div>
   );
 }
