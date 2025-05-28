@@ -1,6 +1,18 @@
 import Head from "next/head";
 
-const matches = [
+type Odds = {
+  home: number;
+  draw: number;
+  away: number;
+};
+
+type MatchCardProps = {
+  teams: string;
+  time: string;
+  odds: Odds;
+};
+
+const matches: MatchCardProps[] = [
   { teams: "Leeds United vs West Brom", time: "Saturday, May 31 – 15:00", odds: { home: 2.0, draw: 3.1, away: 3.6 } },
   { teams: "Norwich City vs Sunderland", time: "Saturday, May 31 – 15:00", odds: { home: 1.9, draw: 3.0, away: 4.2 } },
   { teams: "Hull City vs Coventry City", time: "Saturday, May 31 – 15:00", odds: { home: 2.5, draw: 3.0, away: 2.9 } },
@@ -34,7 +46,7 @@ export default function Championship() {
   );
 }
 
-function MatchCard({ teams, time, odds }) {
+function MatchCard({ teams, time, odds }: MatchCardProps) {
   return (
     <div className="bg-deepBlue p-4 rounded-lg border border-[#2a2a3d] hover:shadow-lg transition cursor-pointer">
       <div className="flex justify-between items-center">

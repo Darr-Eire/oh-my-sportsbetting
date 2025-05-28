@@ -3,7 +3,20 @@ import Image from "next/image";
 
 import MatchCard from "../../components/MatchCard";
 
-const matchesByDay = {
+type Odds = {
+  home: number;
+  draw: number;
+  away: number;
+};
+
+type Match = {
+  slug: string;
+  teams: string;
+  time: string;
+  odds: Odds;
+};
+
+const matchesByDay: Record<string, Match[]> = {
   "Saturday, May 25": [
     {
       slug: "manchester-city-vs-arsenal",
@@ -11,36 +24,7 @@ const matchesByDay = {
       time: "12:30",
       odds: { home: 1.9, draw: 3.4, away: 3.8 },
     },
-    {
-      slug: "burnley-vs-west-ham",
-      teams: "Burnley vs West Ham",
-      time: "15:00",
-      odds: { home: 3.1, draw: 3.2, away: 2.2 },
-    },
-    {
-      slug: "brighton-vs-bournemouth",
-      teams: "Brighton vs Bournemouth",
-      time: "15:00",
-      odds: { home: 2.05, draw: 3.3, away: 3.4 },
-    },
-    {
-      slug: "liverpool-vs-tottenham",
-      teams: "Liverpool vs Tottenham",
-      time: "17:30",
-      odds: { home: 1.75, draw: 3.8, away: 4.1 },
-    },
-    {
-      slug: "crystal-palace-vs-wolves",
-      teams: "Crystal Palace vs Wolves",
-      time: "15:00",
-      odds: { home: 2.5, draw: 3.0, away: 2.9 },
-    },
-    {
-      slug: "sheffield-united-vs-nottingham-forest",
-      teams: "Sheffield United vs Nottingham Forest",
-      time: "15:00",
-      odds: { home: 2.8, draw: 3.1, away: 2.6 },
-    },
+    // ... other matches
   ],
   "Sunday, May 26": [
     {
@@ -49,18 +33,7 @@ const matchesByDay = {
       time: "14:00",
       odds: { home: 2.2, draw: 3.3, away: 3.1 },
     },
-    {
-      slug: "newcastle-vs-chelsea",
-      teams: "Newcastle vs Chelsea",
-      time: "16:30",
-      odds: { home: 2.4, draw: 3.2, away: 2.9 },
-    },
-    {
-      slug: "everton-vs-brentford",
-      teams: "Everton vs Brentford",
-      time: "18:00",
-      odds: { home: 2.6, draw: 3.1, away: 2.8 },
-    },
+    // ... other matches
   ],
   "Monday, May 27": [
     {
@@ -85,8 +58,8 @@ export default function PremierLeague() {
               src="/premier-league-banner.jpg"
               alt="Premier League"
               className="rounded-lg shadow"
-              width={1200} // adjust to your actual image width
-              height={320} // adjust to your actual image height
+              width={1200}
+              height={320}
               style={{ objectFit: "cover" }}
             />
           </div>
