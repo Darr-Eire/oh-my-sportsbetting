@@ -2,7 +2,42 @@ import Head from "next/head";
 import LiveBadge from "../components/LiveBadge";
 import Image from "next/image";
 
-const fighterKeyMap: Record<string, keyof typeof events[0]["odds"]> = {
+const events = [
+  {
+    fighters: "Jon Jones vs Stipe Miocic",
+    time: "May 31, 2025 – 10:00 PM ET",
+    venue: "T-Mobile Arena, Las Vegas",
+    logo: "/logos/jones-miocic.png",
+    odds: {
+      jon: 1.65,
+      stipe: 2.35,
+      method: {
+        ko: 2.2,
+        submission: 3.4,
+        decision: 4.8,
+      },
+    },
+    status: "live",
+  },
+  {
+    fighters: "Sean O'Malley vs Merab Dvalishvili",
+    time: "June 7, 2025 – 9:00 PM ET",
+    venue: "Barclays Center, Brooklyn",
+    logo: "/logos/omalley-merab.png",
+    odds: {
+      sean: 1.85,
+      merab: 1.95,
+      method: {
+        ko: 2.8,
+        submission: 3.2,
+        decision: 2.9,
+      },
+    },
+    status: "upcoming",
+  },
+];
+
+const fighterKeyMap: Record<string, "jon" | "stipe" | "sean" | "merab"> = {
   "Jon Jones": "jon",
   "Stipe Miocic": "stipe",
   "Sean O'Malley": "sean",
@@ -12,44 +47,89 @@ const fighterKeyMap: Record<string, keyof typeof events[0]["odds"]> = {
 export default function UFC() {
   return (
     <>
-      {/* ...head and container code unchanged... */}
+      <Head>
+        <title>Pi Sportsbook – UFC</title>
+      </Head>
 
-      <div className="space-y-6">
-        {events.map((event, i) => {
-          const [fighter1, fighter2] = event.fighters.split(" vs ");
+      <div className="min-h-screen bg-[#0a0a23] text-white p-6">
+        <main>
+          <h1 className="text-2xl font-bold text-pink-400 mb-6 font-orbitron">
+            🥋 UFC – Upcoming Fights
+          </h1>
 
-          const fighter1Key = fighterKeyMap[fighter1];
-          const fighter2Key = fighterKeyMap[fighter2];
+          <div className="space-y-6">
+            {events.map((event, i) => {
+              const [fighter1, fighter2] = event.fighters.split(" vs ");
 
-          return (
-            <div key={i} className="bg-[#12122b] p-5 rounded-xl border border-[#1f1f40] shadow-md hover:shadow-pink-500/10 transition-shadow duration-300">
-              {/* ...header and info unchanged... */}
+              const fighter1Key = fighterKeyMap[fighter1];
+              const fighter2Key = fighterKeyMap[fighter2];
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 text-sm">
-                <button className="border border-blue-400 text-blue-300 px-3 py-2 rounded hover:bg-blue-400 hover:text-black">
-                  🧠 {fighter1}{" "}
-                  {fighter1Key && event.odds[fighter1Key] !== undefined
-                    ? event.odds[fighter1Key].toFixed(2)
-                    : "—"}
-                </button>
-                <button className="border border-red-400 text-red-300 px-3 py-2 rounded hover:bg-red-400 hover:text-black">
-                  💥 {fighter2}{" "}
-                  {fighter2Key && event.odds[fighter2Key] !== undefined
-                    ? event.odds[fighter2Key].toFixed(2)
-                    : "—"}
-                </button>
-                <button className="bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded text-gray-300 font-semibold col-span-2 sm:col-span-1">
-                  ➕ Add to Bet Slip
-                </button>
-              </div>
+              return (
+                <div
+                  key={i}
+                  className="bg-[#12122b] p-5 rounded-xl border border-[#1f1f40] shadow-md hover:shadow-pink-500/10 transition-shadow duration-300"
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-4">
+                      <Image
+                        src={event.logo}
+                        alt={event.fighters}
+                        width={64}
+                        height={64}
+                        className="rounded-full object-cover"
+                      />
+                      <div>
+                        <div className="text-lg font-semibold">{event.fighters}</div>
+                        <div className="text-sm text-gray-400">🕒 {event.time}</div>
+                        <div className="text-sm text-gray-400">🏟️ {event.venue}</div>
+                      </div>
+                    </div>
+                    <div>
+                      {event.status === "live" ? (
+                        <LiveBadge />
+                      ) : (
+                        <div className="text-xs bg-yellow-400 text-black px-2 py-1 rounded uppercase font-semibold">
+                          Upcoming
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-              {/* ...methods buttons unchanged... */}
-            </div>
-          );
-        })}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 text-sm">
+                    <button className="border border-blue-400 text-blue-300 px-3 py-2 rounded hover:bg-blue-400 hover:text-black">
+                      🧠 {fighter1}{" "}
+                      {fighter1Key && event.odds[fighter1Key] !== undefined
+                        ? event.odds[fighter1Key].toFixed(2)
+                        : "—"}
+                    </button>
+                    <button className="border border-red-400 text-red-300 px-3 py-2 rounded hover:bg-red-400 hover:text-black">
+                      💥 {fighter2}{" "}
+                      {fighter2Key && event.odds[fighter2Key] !== undefined
+                        ? event.odds[fighter2Key].toFixed(2)
+                        : "—"}
+                    </button>
+                    <button className="bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded text-gray-300 font-semibold col-span-2 sm:col-span-1">
+                      ➕ Add to Bet Slip
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 mt-3 text-sm">
+                    <button className="border border-purple-400 text-purple-300 px-3 py-2 rounded hover:bg-purple-500 hover:text-black">
+                      KO/TKO {event.odds?.method?.ko?.toFixed(2) ?? "—"}
+                    </button>
+                    <button className="border border-indigo-400 text-indigo-300 px-3 py-2 rounded hover:bg-indigo-500 hover:text-black">
+                      Submission {event.odds?.method?.submission?.toFixed(2) ?? "—"}
+                    </button>
+                    <button className="border border-teal-400 text-teal-300 px-3 py-2 rounded hover:bg-teal-500 hover:text-black">
+                      Decision {event.odds?.method?.decision?.toFixed(2) ?? "—"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </main>
       </div>
-
-      {/* ...closing tags */}
     </>
   );
 }
