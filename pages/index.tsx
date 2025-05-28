@@ -36,13 +36,36 @@ const sports = [
   { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
 ];
 
+type Match = {
+  teams: string;
+  time: string;
+  odds: {
+    home: number;
+    draw?: number;
+    away: number;
+  };
+};
+
+type LeagueBlock = {
+  league: string;
+  countryCode: string;
+  leagueLogo: string;
+  matches: Match[];
+};
+
+type BasketballBlock = {
+  league: string;
+  matches: Match[];
+};
+
 export default function Home({
   todayMatches,
   basketballMatches,
 }: {
-  todayMatches: typeof todayMatches;
-  basketballMatches: typeof basketballMatches;
+  todayMatches: LeagueBlock[];
+  basketballMatches: BasketballBlock[];
 }) {
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLeague, setOpenLeague] = useState<string | null>(null);
   const [openBasketball, setOpenBasketball] = useState(false);
