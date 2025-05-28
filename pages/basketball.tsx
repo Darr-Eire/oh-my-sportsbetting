@@ -2,6 +2,35 @@ import Head from "next/head";
 import Image from "next/image";
 import LiveBadge from "../components/LiveBadge";
 
+const matches = [
+  {
+    league: "NBA Eastern Conference Finals",
+    teams: "New York Knicks vs Indiana Pacers",
+    time: "May 25, 2025 – 8:00 PM ET",
+    venue: "Gainbridge Fieldhouse, Indianapolis",
+    logo: "/logos/knicks-pacers.png",
+    odds: { home: 1.85, away: 2.05 },
+    status: "upcoming",
+  },
+  {
+    league: "NBA Eastern Conference Finals",
+    teams: "New York Knicks vs Indiana Pacers",
+    time: "May 27, 2025 – 8:00 PM ET",
+    venue: "Gainbridge Fieldhouse, Indianapolis",
+    logo: "/logos/knicks-pacers.png",
+    odds: { home: 1.90, away: 2.00 },
+    status: "live",
+  },
+  {
+    league: "NBA Eastern Conference Finals",
+    teams: "Indiana Pacers vs New York Knicks",
+    time: "May 29, 2025 – 8:00 PM ET",
+    venue: "Madison Square Garden, New York",
+    logo: "/logos/pacers-knicks.png",
+    odds: { home: 1.95, away: 1.95 },
+    status: "upcoming",
+  },
+];
 
 export default function Basketball() {
   return (
@@ -11,8 +40,6 @@ export default function Basketball() {
       </Head>
 
       <div className="flex min-h-screen bg-[#0a0a23] text-white">
-     
-
         <main className="flex-1 p-6 space-y-6">
           <h1 className="text-2xl font-bold text-cyan-300 mb-6 font-orbitron">
             🏀 NBA Playoffs – Eastern Conference Finals
