@@ -26,13 +26,14 @@ const sports = [
 
 export default function SportsCarousel() {
   return (
-    <div className="max-w-4xl mx-auto my-6 px-4">
-      <nav className="flex flex-wrap gap-4 justify-center">
+    <div className="max-w-4xl mx-auto my-6 px-4 overflow-x-hidden">
+      <nav className="flex flex-nowrap gap-4 justify-center">
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
             href={`/sports/${slug}`}
-            className="flex flex-col items-center justify-center text-white hover:text-electricCyan w-[calc(20%-1rem)] min-w-[72px]"
+            className="flex flex-col items-center justify-center text-white hover:text-electricCyan"
+            style={{ width: "20%", minWidth: "72px" }}
           >
             <Icon className="text-2xl mb-1 leading-none" />
             <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
