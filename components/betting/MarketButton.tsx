@@ -1,7 +1,9 @@
-<FullTimeResult odds={match.odds} />
-<OverUnder odds={match.odds} />
-<BTTS odds={match.odds} />
-<DoubleChance odds={match.odds} />
-<DrawNoBet odds={match.odds} />
-<CorrectScore scores={match.correctScore} />
-<HTFT odds={match.odds} />
+import React from 'react';
+
+export default function MarketButton({ label, onClick }) {
+  return (
+    <button onClick={onClick} className="market-button">
+      {label}
+    </button>
+  );
+}

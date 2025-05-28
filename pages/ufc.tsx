@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Sidebar from "../components/Sidebar";
 import LiveBadge from "../components/LiveBadge";
+import Image from "next/image";
 
 const events = [
   {
@@ -54,6 +55,14 @@ export default function UFC() {
           <div className="space-y-6">
             {events.map((event, i) => {
               const [fighter1, fighter2] = event.fighters.split(" vs ");
+
+              // normalize fighter keys for odds lookup (lowercase, no spaces/apostrophes)
+              const normalizeKey = (name: string) =>
+                name.toLowerCase().replace(/[^a-z]/g, "");
+
+              const fighter1Key = normalizeKey(fighter1);
+              const fighter2Key = normalizeKey(fighter2);
+
               return (
                 <div
                   key={i}
@@ -61,10 +70,12 @@ export default function UFC() {
                 >
                   <div className="flex justify-between items-start">
                     <div className="flex items-center gap-4">
-                      <img
+                      <Image
                         src={event.logo}
                         alt={event.fighters}
-                        className="w-16 h-16 object-cover rounded-full"
+                        width={64}
+                        height={64}
+                        className="rounded-full object-cover"
                       />
                       <div>
                         <div className="text-lg font-semibold">{event.fighters}</div>
@@ -86,10 +97,12 @@ export default function UFC() {
                   {/* Odds Buttons */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 text-sm">
                     <button className="border border-blue-400 text-blue-300 px-3 py-2 rounded hover:bg-blue-400 hover:text-black">
-                      🧠 {fighter1} {event.odds?.jon?.toFixed?.(2) || "—"}
+                      🧠 {fighter1}{" "}
+                      {event.odds?.[fighter1Key]?.toFixed(2) ?? "—"}
                     </button>
                     <button className="border border-red-400 text-red-300 px-3 py-2 rounded hover:bg-red-400 hover:text-black">
-                      💥 {fighter2} {event.odds?.stipe?.toFixed?.(2) || "—"}
+                      💥 {fighter2}{" "}
+                      {event.odds?.[fighter2Key]?.toFixed(2) ?? "—"}
                     </button>
                     <button className="bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded text-gray-300 font-semibold col-span-2 sm:col-span-1">
                       ➕ Add to Bet Slip
@@ -98,13 +111,13 @@ export default function UFC() {
 
                   <div className="grid grid-cols-3 gap-2 mt-3 text-sm">
                     <button className="border border-purple-400 text-purple-300 px-3 py-2 rounded hover:bg-purple-500 hover:text-black">
-                      KO/TKO {event.odds?.method?.ko?.toFixed?.(2) || "—"}
+                      KO/TKO {event.odds?.method?.ko?.toFixed(2) ?? "—"}
                     </button>
                     <button className="border border-indigo-400 text-indigo-300 px-3 py-2 rounded hover:bg-indigo-500 hover:text-black">
-                      Submission {event.odds?.method?.submission?.toFixed?.(2) || "—"}
+                      Submission {event.odds?.method?.submission?.toFixed(2) ?? "—"}
                     </button>
                     <button className="border border-teal-400 text-teal-300 px-3 py-2 rounded hover:bg-teal-500 hover:text-black">
-                      Decision {event.odds?.method?.decision?.toFixed?.(2) || "—"}
+                      Decision {event.odds?.method?.decision?.toFixed(2) ?? "—"}
                     </button>
                   </div>
                 </div>

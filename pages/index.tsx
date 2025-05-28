@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import BottomNav from "../components/BottomNav";
 import PromoCarousel from "../components/PromoCarousel";
 import PowerPriceCarousel from "../components/PowerPriceCarousel";
@@ -37,7 +38,6 @@ const sports = [
   { name: "Volleyball", icon: MdOutlineSportsVolleyball, slug: "volleyball" },
   { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
 ];
-
 
 const todayMatches = [
   {
@@ -131,75 +131,72 @@ export default function Home() {
           </h1>
 
           {/* Right – Login */}
-          <a href="/login">
+          <Link href="/login">
             <button className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full shadow hover:brightness-110 transition">
               Login
             </button>
-          </a>
+          </Link>
         </header>
 
         {/* Dropdown Menu */}
-  {menuOpen && (
-  <div className="absolute top-[60px] left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg">
- <ul className="flex flex-col px-4 py-4 space-y-3 text-sm font-medium text-white">
-  <li><a href="/">🏠 Home</a></li>
-  <li><a href="/sports">⚽ All Sports</a></li>
-  <li><a href="/in-play">📊 Live In-Play</a></li>
-  <li><a href="/fixtures">📅 Upcoming Fixtures</a></li>
-  <li><a href="/my-bets">🧾 My Bets</a></li>
-  <li><a href="/competitions">🏆 Competitions</a></li>
-  <li><a href="/power-prices">🎯 Boosted Odds</a></li>
+        {menuOpen && (
+          <div className="absolute top-[60px] left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg">
+            <ul className="flex flex-col px-4 py-4 space-y-3 text-sm font-medium text-white">
+              <li><Link href="/">Home</Link></li>
+              <li><Link href="/sports">⚽ All Sports</Link></li>
+              <li><Link href="/in-play">📊 Live In-Play</Link></li>
+              <li><Link href="/fixtures">📅 Upcoming Fixtures</Link></li>
+              <li><Link href="/my-bets">🧾 My Bets</Link></li>
+              <li><Link href="/competitions">🏆 Competitions</Link></li>
+              <li><Link href="/power-prices">🎯 Boosted Odds</Link></li>
 
-  {/* My Account Dropdown */}
-  <li>
-    <details className="group">
-      <summary className="cursor-pointer list-none flex justify-between items-center hover:text-electricCyan">
-        👤 My Account
-        <span className="ml-auto transform group-open:rotate-90 transition-transform">›</span>
-      </summary>
-      <div className="px-4 py-2 border-b border-gray-700">
-  <input
-    type="text"
-    placeholder="🔍 Search menu..."
-    className="w-full px-3 py-2 text-sm rounded-md bg-[#1c1c2e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-electricCyan"
-  />
-</div>
+              {/* My Account Dropdown */}
+              <li>
+                <details className="group">
+                  <summary className="cursor-pointer list-none flex justify-between items-center hover:text-electricCyan">
+                    👤 My Account
+                    <span className="ml-auto transform group-open:rotate-90 transition-transform">›</span>
+                  </summary>
+                  <div className="px-4 py-2 border-b border-gray-700">
+                    <input
+                      type="text"
+                      placeholder="🔍 Search menu..."
+                      className="w-full px-3 py-2 text-sm rounded-md bg-[#1c1c2e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-electricCyan"
+                    />
+                  </div>
 
-      <ul className="mt-2 ml-4 flex flex-col space-y-2">
-        <li><a href="/wallet" className="hover:text-electricCyan">💼 Wallet</a></li>
-        <li><a href="/rewards" className="hover:text-electricCyan">🎁 Rewards</a></li>
-        <li><a href="/referrals" className="hover:text-electricCyan">📥 Refer & Earn</a></li>
-        <li><a href="/account-settings" className="hover:text-electricCyan">⚙️ Settings</a></li>
-        <li><a href="/bet-history" className="hover:text-electricCyan">🔄 Bet History</a></li>
-      </ul>
-    </details>
-  </li>
+                  <ul className="mt-2 ml-4 flex flex-col space-y-2">
+                    <li><Link href="/wallet" className="hover:text-electricCyan">💼 Wallet</Link></li>
+                    <li><Link href="/rewards" className="hover:text-electricCyan">🎁 Rewards</Link></li>
+                    <li><Link href="/referrals" className="hover:text-electricCyan">📥 Refer & Earn</Link></li>
+                    <li><Link href="/account-settings" className="hover:text-electricCyan">⚙️ Settings</Link></li>
+                    <li><Link href="/bet-history" className="hover:text-electricCyan">🔄 Bet History</Link></li>
+                  </ul>
+                </details>
+              </li>
 
-  <li><a href="/tips">💡 Betting Tips</a></li>
-  <li><a href="/stats">📈 Stats Center</a></li>
-  <li><a href="/how-to-play">❓ How to Bet</a></li>
-  <li><a href="/rules">📘 Rules</a></li>
-  <li><a href="/support">💬 Contact Support</a></li>
-  <li><a href="/faq">📄 FAQ</a></li>
-  <li><a href="/responsible-gambling">🔐 Responsible Gambling</a></li>
-  <li><a href="/terms">👨‍⚖️ Terms & Conditions</a></li>
-  <li><a href="/privacy">🔒 Privacy Policy</a></li>
-  <li><a href="/about">🙌 About</a></li>
-  <li><a href="/roadmap">🧭 Roadmap</a></li>
-</ul>
-
-  </div>
-)}
-
-
+              <li><Link href="/tips">💡 Betting Tips</Link></li>
+              <li><Link href="/stats">📈 Stats Center</Link></li>
+              <li><Link href="/how-to-play">❓ How to Bet</Link></li>
+              <li><Link href="/rules">📘 Rules</Link></li>
+              <li><Link href="/support">💬 Contact Support</Link></li>
+              <li><Link href="/faq">📄 FAQ</Link></li>
+              <li><Link href="/responsible-gambling">🔐 Responsible Gambling</Link></li>
+              <li><Link href="/terms">👨‍⚖️ Terms & Conditions</Link></li>
+              <li><Link href="/privacy">🔒 Privacy Policy</Link></li>
+              <li><Link href="/about">🙌 About</Link></li>
+              <li><Link href="/roadmap">🧭 Roadmap</Link></li>
+            </ul>
+          </div>
+        )}
 
         <main className="flex-1 px-4 py-6 pb-28 flex flex-col items-center text-center">
           <PromoCarousel />
-<SportsCarousel />
-  
+          <SportsCarousel />
 
           <PowerPriceCarousel />
- {/* Basketball Section */}
+
+          {/* Basketball Section */}
           <section className="mt-12 w-full max-w-3xl">
             <h2 className="text-lg font-bold text-white mb-6">Today’s NBA Games</h2>
             {basketballMatches.map((block, i) => (
@@ -236,6 +233,7 @@ export default function Home() {
               </div>
             ))}
           </section>
+
           {/* Today's Football Matches */}
           <section className="mt-10 w-full max-w-3xl">
             <h2 className="text-lg font-bold text-white mb-6">Today’s Football Matches</h2>
@@ -282,98 +280,95 @@ export default function Home() {
             <BetBuilderCarousel />
           </section>
 
-         
+          {/* Horse Racing */}
+          <section className="mt-12 w-full max-w-3xl">
+            <h2 className="text-lg font-bold text-white mb-4 text-center">
+              🐎 Today’s Horse Racing – Monday, May 26
+            </h2>
 
-        {/* Horse Racing */}
-<section className="mt-12 w-full max-w-3xl">
-  <h2 className="text-lg font-bold text-white mb-4 text-center">
-    🐎 Today’s Horse Racing – Monday, May 26
-  </h2>
+            <div className="space-y-8">
+              {[
+                {
+                  track: "Cheltenham",
+                  time: "14:30",
+                  race: "Novice Hurdle",
+                  favorites: ["Galloping Glory", "Storm Chaser", "Misty Valley"],
+                },
+                {
+                  track: "Aintree",
+                  time: "15:10",
+                  race: "Handicap Chase",
+                  favorites: ["Iron Duke", "Whisper Wind", "Lucky Star"],
+                },
+                {
+                  track: "Ascot",
+                  time: "16:05",
+                  race: "Class 2 Stakes",
+                  favorites: ["Crimson Jet", "Royal Flame", "Nightfall"],
+                },
+                {
+                  track: "Newbury",
+                  time: "17:00",
+                  race: "Flat Handicap",
+                  favorites: ["Velvet Thunder", "Bright Banner", "Echo Raider"],
+                },
+              ].map((race, idx) => {
+                const slug = race.track.toLowerCase().replace(/\s+/g, "-");
 
-  <div className="space-y-8">
-    {[
-      {
-        track: "Cheltenham",
-        time: "14:30",
-        race: "Novice Hurdle",
-        favorites: ["Galloping Glory", "Storm Chaser", "Misty Valley"],
-      },
-      {
-        track: "Aintree",
-        time: "15:10",
-        race: "Handicap Chase",
-        favorites: ["Iron Duke", "Whisper Wind", "Lucky Star"],
-      },
-      {
-        track: "Ascot",
-        time: "16:05",
-        race: "Class 2 Stakes",
-        favorites: ["Crimson Jet", "Royal Flame", "Nightfall"],
-      },
-      {
-        track: "Newbury",
-        time: "17:00",
-        race: "Flat Handicap",
-        favorites: ["Velvet Thunder", "Bright Banner", "Echo Raider"],
-      },
-    ].map((race, idx) => {
-      const slug = race.track.toLowerCase().replace(/\s+/g, "-");
+                return (
+                  <div key={idx} className="space-y-2">
+                    <Link href={`/racing/${slug}`}>
+                      <div className="bg-[#0a1024] text-white p-4 rounded-xl border border-[#2a2a3d] hover:shadow-neon hover:bg-[#0f152e] transition-shadow cursor-pointer">
+                        <div className="font-semibold text-sm mb-1">{race.track} – {race.time}</div>
+                        <div className="text-sm italic text-gray-300 mb-2">{race.race}</div>
+                        <div className="text-sm">
+                          Favorites:{" "}
+                          <span className="text-electricCyan font-medium">
+                            {race.favorites.join(", ")}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
 
-      return (
-        <div key={idx} className="space-y-2">
-          <Link href={`/racing/${slug}`}>
-            <div className="bg-[#0a1024] text-white p-4 rounded-xl border border-[#2a2a3d] hover:shadow-neon hover:bg-[#0f152e] transition-shadow cursor-pointer">
-              <div className="font-semibold text-sm mb-1">{race.track} – {race.time}</div>
-              <div className="text-sm italic text-gray-300 mb-2">{race.race}</div>
-              <div className="text-sm">
-                Favorites:{" "}
-                <span className="text-electricCyan font-medium">
-                  {race.favorites.join(", ")}
-                </span>
-              </div>
+                    <div className="text-center">
+                      <Link href={`/racing/${slug}`}>
+                        <button className="mt-1 text-sm text-electricCyan hover:underline font-medium">
+                          View All {race.track} Races
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </Link>
-
-          <div className="text-center">
-            <Link href={`/racing/${slug}`}>
-              <button className="mt-1 text-sm text-electricCyan hover:underline font-medium">
-                View All {race.track} Races
-              </button>
-            </Link>
-          </div>
-        </div>
-      );
-    })}
-  </div>
-</section>
-
-
+          </section>
         </main>
-     {/* Footer */}
+
+        {/* Footer */}
         <footer className="bg-[#0a1024] text-white text-sm px-6 py-10">
           <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 border-b border-gray-700 pb-8">
             <div>
               <h4 className="font-bold mb-3 text-electricCyan">Company</h4>
               <ul className="space-y-1">
-                <li><a href="/about" className="hover:underline">About Us</a></li>
-                <li><a href="/roadmap" className="hover:underline">Roadmap</a></li>
-                <li><a href="/contact" className="hover:underline">Contact</a></li>
+                <li><Link href="/about" className="hover:underline">About Us</Link></li>
+                <li><Link href="/roadmap" className="hover:underline">Roadmap</Link></li>
+                <li><Link href="/contact" className="hover:underline">Contact</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-electricCyan">Support</h4>
               <ul className="space-y-1">
-                <li><a href="/how-to-play" className="hover:underline">How to Bet with Pi</a></li>
-                <li><a href="/faq" className="hover:underline">FAQ</a></li>
-                <li><a href="/support" className="hover:underline">Contact Support</a></li>
+                <li><Link href="/how-to-play" className="hover:underline">How to Bet with Pi</Link></li>
+                <li><Link href="/faq" className="hover:underline">FAQ</Link></li>
+                <li><Link href="/support" className="hover:underline">Contact Support</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-electricCyan">Legal</h4>
               <ul className="space-y-1">
-                <li><a href="/terms" className="hover:underline">Terms of Use</a></li>
-                <li><a href="/privacy" className="hover:underline">Privacy Policy</a></li>
-                <li><a href="/responsible-gambling" className="hover:underline">Responsible Gambling</a></li>
+                <li><Link href="/terms" className="hover:underline">Terms of Use</Link></li>
+                <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
+                <li><Link href="/responsible-gambling" className="hover:underline">Responsible Gambling</Link></li>
               </ul>
             </div>
             <div>
@@ -389,12 +384,12 @@ export default function Home() {
 
           <div className="max-w-7xl mx-auto mt-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <img src="/pi-logo.png" alt="Pi Network" className="h-8" />
+              <Image src="/pi-logo.png" alt="Pi Network" width={32} height={32} />
               <span className="text-gray-300">Transactions powered by the Pi SDK</span>
             </div>
             <div className="flex gap-4 items-center">
-              <img src="/18plus.png" alt="18+" className="h-6" />
-              <img src="/responsible.png" alt="Responsible" className="h-6" />
+              <Image src="/18plus.png" alt="18+" width={24} height={24} />
+              <Image src="/responsible.png" alt="Responsible" width={24} height={24} />
             </div>
           </div>
 
@@ -408,4 +403,3 @@ export default function Home() {
     </>
   );
 }
-   

@@ -1,7 +1,12 @@
-<FullTimeResult odds={match.odds} />
-<OverUnder odds={match.odds} />
-<BTTS odds={match.odds} />
-<DoubleChance odds={match.odds} />
-<DrawNoBet odds={match.odds} />
-<CorrectScore scores={match.correctScore} />
-<HTFT odds={match.odds} />
+import React from 'react';
+import MarketButton from './MarketButton';
+
+export default function MarketGroup({ markets }) {
+  return (
+    <div className="market-group">
+      {markets.map((market) => (
+        <MarketButton key={market.id} label={market.name} onClick={() => {}} />
+      ))}
+    </div>
+  );
+}

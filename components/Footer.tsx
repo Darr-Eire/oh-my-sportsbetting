@@ -1,8 +1,9 @@
-// components/LegalNotice.tsx
+import Image from 'next/image';
+
 export default function LegalNotice() {
   return (
     <div className="bg-[#0f0f1f] text-white p-6 mt-12 rounded-lg border border-[#2c2c3c]">
-      <h2 className="text-lg font-bold text-gold mb-4">OhMySportsbook Rules & Disclaimer</h2>
+      <h2 className="text-lg font-bold text-yellow-500 mb-4">OhMySportsbook Rules & Disclaimer</h2>
 
       <p className="text-sm text-gray-300 mb-3">
         All odds, data, and results shown in this app are powered by the Pi Network and third-party live feeds.
@@ -13,10 +14,14 @@ export default function LegalNotice() {
       <p className="text-sm text-gray-300 mb-3">
         <strong>By using this app, you agree to the OhMySportsbook Terms of Use</strong>. All bets are settled according
         to internal rules based on community consensus and fairness principles. If discrepancies arise,
-        the admin's final decision will be binding. We accept no liability for data mismatches or payout disputes.
+        the admin's final decision will be binding.
+      </p>
+        <p>
+        We accept no liability for data mismatches or payout disputes.&nbsp;
+        Admin&apos;s final decision is binding.
       </p>
 
-      <h3 className="text-md font-semibold text-electricCyan mt-4 mb-2">Responsible Gaming</h3>
+      <h3 className="text-md font-semibold text-cyan-400 mt-4 mb-2">Responsible Gaming</h3>
       <p className="text-sm text-gray-400 mb-3">
         We support responsible use of Pi for entertainment. If you feel that betting or gaming is affecting your
         wellbeing or finances, please stop and seek help from the Pi community or your local support services.
@@ -28,11 +33,9 @@ export default function LegalNotice() {
         <p>Pi is not a fiat currency. All entries and payouts are managed digitally and cannot be cashed out outside the network.</p>
       </div>
 
-      <div className="flex justify-center gap-4 mt-6 flex-wrap">
-        <img src="/gambleaware.svg" alt="Be Gamble Aware" className="h-6" />
-        <img src="/18plus.svg" alt="18+" className="h-6" />
-        <img src="/pi-logo.svg" alt="Pi Network" className="h-6" />
-        <img src="/responsible.svg" alt="Responsible Gambling" className="h-6" />
+  <div className="images">
+        <Image src="/icon1.svg" alt="Icon 1" width={40} height={40} />
+        <Image src="/icon2.svg" alt="Icon 2" width={40} height={40} />
       </div>
     </div>
   );

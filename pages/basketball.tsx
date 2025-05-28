@@ -54,7 +54,10 @@ export default function Basketball() {
             >
               <div className="flex justify-between items-start">
                 <div className="flex gap-4 items-center">
-                  <img
+                 import Image from 'next/image';
+
+<Image src="/your-image.png" alt="description" width={width} height={height} />
+
                     src={match.logo}
                     alt={match.teams}
                     className="w-16 h-16 rounded-full object-cover"
