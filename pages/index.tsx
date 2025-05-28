@@ -207,45 +207,35 @@ export default function Home({
             <div className="space-y-3 w-full">
               {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
                 <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
-                  <button
-                    onClick={() => toggleLeague(league)}
-                    className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition"
-                    aria-expanded={openLeague === league}
-                    aria-controls={`${league}-matches`}
-                  >
-                  {leagueLogo && (
-  <Image
-    src={leagueLogo}
-    alt={`${league} logo`}
-    width={32}
-    height={32}
-    unoptimized
-  />
+                 <button
+  onClick={() => toggleLeague(league)}
+  className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition"
+  aria-expanded={openLeague === league}
+  aria-controls={`${league}-matches`}
+>
+  {leagueLogo && (
+    <Image
+      src={leagueLogo}
+      alt={`${league} logo`}
+      width={32}
+      height={32}
+      className="object-contain"
+      unoptimized
+    />
+  )}
+  <span className="flex items-center gap-2">
+    <span>{league}</span>
+    <Image
+      src={`https://flagcdn.com/w20/${countryCode}.png`}
+      alt={`${countryCode} flag`}
+      width={20}
+      height={14}
+      className="object-contain rounded-sm"
+      unoptimized
+    />
+  </span>
+</button>
 
-                    <span className="flex items-center gap-2">
-                      <span>{league}</span>
-                      <Image
-                        src={`https://flagcdn.com/w20/${countryCode}.png`}
-                        alt={`${countryCode} flag`}
-                        width={20}
-                        height={14}
-                        className="object-contain rounded-sm"
-                        unoptimized
-                      />
-                    </span>
-                    <svg
-                      className={`ml-auto h-5 w-5 transition-transform ${
-                        openLeague === league ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
 
                   {openLeague === league && (
                     <div
