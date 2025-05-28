@@ -34,14 +34,13 @@ export default function SportsCarousel() {
   return (
     <div className="max-w-4xl mx-auto my-6 px-4">
       <nav
-        className="flex gap-4 overflow-x-auto no-scrollbar touch-pan-x"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        className="flex flex-wrap gap-4 justify-center"
       >
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
             href={`/sports/${slug}`}
-            className="flex flex-col items-center text-white hover:text-electricCyan min-w-[72px] px-1 flex-shrink-0"
+            className="flex flex-col items-center text-white hover:text-electricCyan w-[calc(100%/6-1rem)] min-w-[72px]"
           >
             <Icon className="text-2xl mb-1" />
             <span className="text-[10px] text-center leading-tight select-none whitespace-nowrap">
