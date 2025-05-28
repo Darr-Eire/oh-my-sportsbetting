@@ -112,7 +112,8 @@ export default function Home({
 
         {/* Main content - add padding top so not hidden behind sticky header */}
         <main className="flex-1 px-4 py-2 pt-[72px] pb-28 flex flex-col items-center text-center">
-          <PromoCarousel className="mb-2" />
+<PromoCarousel />
+
           <SportsCarousel />
           <PowerPriceCarousel />
 
