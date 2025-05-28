@@ -213,14 +213,15 @@ export default function Home({
                     aria-expanded={openLeague === league}
                     aria-controls={`${league}-matches`}
                   >
-                    <Image
-                      src={leagueLogo}
-                      alt={`${league} logo`}
-                      width={32}
-                      height={32}
-                      className="object-contain"
-                      unoptimized
-                    />
+                  {leagueLogo && (
+  <Image
+    src={leagueLogo}
+    alt={`${league} logo`}
+    width={32}
+    height={32}
+    unoptimized
+  />
+
                     <span className="flex items-center gap-2">
                       <span>{league}</span>
                       <Image
