@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "america-vs-chivas",
+    "teams": "Club América vs Chivas",
+    "time": "Sat 03:00",
+    "odds": { "home": 2.10, "draw": 3.10, "away": 3.60 }
+  },
+  {
+    "slug": "tigres-vs-pumas",
+    "teams": "Tigres UANL vs Pumas UNAM",
+    "time": "Sat 05:00",
+    "odds": { "home": 2.00, "draw": 3.00, "away": 3.90 }
+  },
+  {
+    "slug": "leon-vs-cruz-azul",
+    "teams": "León vs Cruz Azul",
+    "time": "Sun 01:00",
+    "odds": { "home": 2.40, "draw": 3.20, "away": 2.80 }
+  },
+  {
+    "slug": "monterrey-vs-necaxa",
+    "teams": "Monterrey vs Necaxa",
+    "time": "Sun 03:00",
+    "odds": { "home": 1.85, "draw": 3.50, "away": 4.10 }
+  },
+  {
+    "slug": "toluca-vs-atlas",
+    "teams": "Toluca vs Atlas",
+    "time": "Sun 05:00",
+    "odds": { "home": 2.20, "draw": 3.30, "away": 3.10 }
+  },
+  {
+    "slug": "tijuana-vs-juarez",
+    "teams": "Club Tijuana vs FC Juárez",
+    "time": "Sat 02:00",
+    "odds": { "home": 2.60, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "queretaro-vs-santos",
+    "teams": "Querétaro vs Santos Laguna",
+    "time": "Sun 00:00",
+    "odds": { "home": 2.50, "draw": 3.10, "away": 2.80 }
+  },
+  {
+    "slug": "mazatlan-vs-puebla",
+    "teams": "Mazatlán FC vs Puebla",
+    "time": "Fri 23:00",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "san-luis-vs-atletico-morelia",
+    "teams": "Atlético San Luis vs Atlético Morelia",
+    "time": "Sat 23:30",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 3.00 }
+  },
+  {
+    "slug": "zacatecas-vs-celaya",
+    "teams": "Mineros de Zacatecas vs Celaya",
+    "time": "Mon 02:00",
+    "odds": { "home": 2.80, "draw": 3.10, "away": 2.70 }
+  }
+]

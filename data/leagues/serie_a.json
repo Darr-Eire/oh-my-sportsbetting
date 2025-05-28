@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "juventus-vs-inter",
+    "teams": "Juventus vs Inter Milan",
+    "time": "Sun 20:45",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 2.90 }
+  },
+  {
+    "slug": "milan-vs-napoli",
+    "teams": "AC Milan vs Napoli",
+    "time": "Sat 18:00",
+    "odds": { "home": 2.50, "draw": 3.30, "away": 2.70 }
+  },
+  {
+    "slug": "roma-vs-lazio",
+    "teams": "AS Roma vs Lazio",
+    "time": "Sun 18:00",
+    "odds": { "home": 2.60, "draw": 3.10, "away": 2.60 }
+  },
+  {
+    "slug": "atalanta-vs-torino",
+    "teams": "Atalanta vs Torino",
+    "time": "Sat 15:00",
+    "odds": { "home": 2.10, "draw": 3.30, "away": 3.20 }
+  },
+  {
+    "slug": "fiorentina-vs-genoa",
+    "teams": "Fiorentina vs Genoa",
+    "time": "Mon 20:45",
+    "odds": { "home": 2.00, "draw": 3.50, "away": 3.90 }
+  },
+  {
+    "slug": "bologna-vs-empoli",
+    "teams": "Bologna vs Empoli",
+    "time": "Sun 12:30",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 3.00 }
+  },
+  {
+    "slug": "sassuolo-vs-lecce",
+    "teams": "Sassuolo vs Lecce",
+    "time": "Sat 14:00",
+    "odds": { "home": 2.80, "draw": 3.20, "away": 2.70 }
+  },
+  {
+    "slug": "verona-vs-spezia",
+    "teams": "Hellas Verona vs Spezia",
+    "time": "Sun 15:00",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "salernitana-vs-udinese",
+    "teams": "Salernitana vs Udinese",
+    "time": "Fri 20:45",
+    "odds": { "home": 2.90, "draw": 3.10, "away": 2.60 }
+  },
+  {
+    "slug": "cagliari-vs-monza",
+    "teams": "Cagliari vs Monza",
+    "time": "Mon 19:00",
+    "odds": { "home": 2.60, "draw": 3.20, "away": 2.80 }
+  }
+]

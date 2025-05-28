@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "galatasaray-vs-besiktas",
+    "teams": "Galatasaray vs Beşiktaş",
+    "time": "Fri 18:00",
+    "odds": { "home": 1.95, "draw": 3.20, "away": 3.80 }
+  },
+  {
+    "slug": "fenerbahce-vs-trabzonspor",
+    "teams": "Fenerbahçe vs Trabzonspor",
+    "time": "Sat 18:00",
+    "odds": { "home": 2.05, "draw": 3.40, "away": 3.60 }
+  },
+  {
+    "slug": "istanbulspor-vs-konyaspor",
+    "teams": "Istanbulspor vs Konyaspor",
+    "time": "Sat 15:00",
+    "odds": { "home": 2.90, "draw": 3.10, "away": 2.50 }
+  },
+  {
+    "slug": "antalyaspor-vs-sivasspor",
+    "teams": "Antalyaspor vs Sivasspor",
+    "time": "Sun 12:30",
+    "odds": { "home": 2.50, "draw": 3.00, "away": 2.80 }
+  },
+  {
+    "slug": "adana-vs-hatayspor",
+    "teams": "Adana Demirspor vs Hatayspor",
+    "time": "Sun 15:00",
+    "odds": { "home": 2.10, "draw": 3.20, "away": 3.40 }
+  },
+  {
+    "slug": "basaksehir-vs-ankaragucu",
+    "teams": "Başakşehir vs Ankaragücü",
+    "time": "Fri 20:00",
+    "odds": { "home": 2.30, "draw": 3.00, "away": 3.00 }
+  },
+  {
+    "slug": "gaziantep-vs-kayserispor",
+    "teams": "Gaziantep FK vs Kayserispor",
+    "time": "Sat 14:00",
+    "odds": { "home": 2.60, "draw": 3.10, "away": 2.80 }
+  },
+  {
+    "slug": "kasimpasa-vs-alanyaspor",
+    "teams": "Kasımpaşa vs Alanyaspor",
+    "time": "Sun 11:30",
+    "odds": { "home": 2.40, "draw": 3.00, "away": 3.10 }
+  },
+  {
+    "slug": "rizespor-vs-samsunspor",
+    "teams": "Çaykur Rizespor vs Samsunspor",
+    "time": "Sun 17:00",
+    "odds": { "home": 2.70, "draw": 3.20, "away": 2.90 }
+  },
+  {
+    "slug": "pendikspor-vs-karagumruk",
+    "teams": "Pendikspor vs Fatih Karagümrük",
+    "time": "Mon 18:00",
+    "odds": { "home": 2.50, "draw": 3.10, "away": 2.90 }
+  }
+]

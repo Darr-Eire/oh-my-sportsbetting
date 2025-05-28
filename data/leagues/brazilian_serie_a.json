@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "flamengo-vs-palmeiras",
+    "teams": "Flamengo vs Palmeiras",
+    "time": "Sat 22:00",
+    "odds": { "home": 2.00, "draw": 3.20, "away": 3.60 }
+  },
+  {
+    "slug": "corinthians-vs-gremio",
+    "teams": "Corinthians vs Gremio",
+    "time": "Sat 00:30",
+    "odds": { "home": 2.10, "draw": 3.00, "away": 3.40 }
+  },
+  {
+    "slug": "sao-paulo-vs-atletico-mg",
+    "teams": "São Paulo vs Atlético MG",
+    "time": "Sun 01:00",
+    "odds": { "home": 2.25, "draw": 3.10, "away": 3.10 }
+  },
+  {
+    "slug": "santos-vs-bahia",
+    "teams": "Santos vs Bahia",
+    "time": "Sun 22:00",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 2.90 }
+  },
+  {
+    "slug": "fortaleza-vs-vasco",
+    "teams": "Fortaleza vs Vasco",
+    "time": "Mon 00:00",
+    "odds": { "home": 2.30, "draw": 3.00, "away": 3.00 }
+  },
+  {
+    "slug": "botafogo-vs-cruzeiro",
+    "teams": "Botafogo vs Cruzeiro",
+    "time": "Fri 23:00",
+    "odds": { "home": 2.60, "draw": 3.10, "away": 2.70 }
+  },
+  {
+    "slug": "internacional-vs-cuiaba",
+    "teams": "Internacional vs Cuiabá",
+    "time": "Sat 21:30",
+    "odds": { "home": 2.10, "draw": 3.20, "away": 3.20 }
+  },
+  {
+    "slug": "goias-vs-america-mg",
+    "teams": "Goiás vs América MG",
+    "time": "Sun 23:30",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "athletico-pr-vs-coritiba",
+    "teams": "Athletico PR vs Coritiba",
+    "time": "Sun 20:00",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 3.10 }
+  },
+  {
+    "slug": "bragantino-vs-ceara",
+    "teams": "Bragantino vs Ceará",
+    "time": "Mon 02:00",
+    "odds": { "home": 2.50, "draw": 3.00, "away": 3.00 }
+  }
+]

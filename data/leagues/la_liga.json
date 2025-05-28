@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "barcelona-vs-atletico",
+    "teams": "Barcelona vs Atletico Madrid",
+    "time": "Sun 21:00",
+    "odds": { "home": 1.95, "draw": 3.30, "away": 4.00 }
+  },
+  {
+    "slug": "real-vs-betis",
+    "teams": "Real Madrid vs Real Betis",
+    "time": "Sat 20:00",
+    "odds": { "home": 1.60, "draw": 3.80, "away": 5.50 }
+  },
+  {
+    "slug": "valencia-vs-villarreal",
+    "teams": "Valencia vs Villarreal",
+    "time": "Fri 20:00",
+    "odds": { "home": 2.70, "draw": 3.20, "away": 2.40 }
+  },
+  {
+    "slug": "sevilla-vs-girona",
+    "teams": "Sevilla vs Girona",
+    "time": "Sat 18:30",
+    "odds": { "home": 2.30, "draw": 3.30, "away": 2.80 }
+  },
+  {
+    "slug": "athletic-vs-sociedad",
+    "teams": "Athletic Bilbao vs Real Sociedad",
+    "time": "Sun 14:00",
+    "odds": { "home": 2.40, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "osasuna-vs-almeria",
+    "teams": "Osasuna vs Almeria",
+    "time": "Sat 16:15",
+    "odds": { "home": 2.20, "draw": 3.10, "away": 3.40 }
+  },
+  {
+    "slug": "celta-vs-getafe",
+    "teams": "Celta Vigo vs Getafe",
+    "time": "Sun 12:00",
+    "odds": { "home": 2.60, "draw": 2.90, "away": 2.90 }
+  },
+  {
+    "slug": "granada-vs-mallorca",
+    "teams": "Granada vs Mallorca",
+    "time": "Fri 19:30",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.80 }
+  },
+  {
+    "slug": "cadiz-vs-rayo",
+    "teams": "Cadiz vs Rayo Vallecano",
+    "time": "Mon 20:00",
+    "odds": { "home": 2.80, "draw": 3.10, "away": 2.70 }
+  },
+  {
+    "slug": "las-palmas-vs-espanyol",
+    "teams": "Las Palmas vs Espanyol",
+    "time": "Sun 16:15",
+    "odds": { "home": 2.50, "draw": 3.00, "away": 3.00 }
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "leeds-vs-ipswich",
+    "teams": "Leeds United vs Ipswich Town",
+    "time": "Sat 12:30",
+    "odds": { "home": 2.00, "draw": 3.20, "away": 3.40 }
+  },
+  {
+    "slug": "leicester-vs-norwich",
+    "teams": "Leicester City vs Norwich",
+    "time": "Sat 15:00",
+    "odds": { "home": 1.85, "draw": 3.30, "away": 4.00 }
+  },
+  {
+    "slug": "sunderland-vs-west-brom",
+    "teams": "Sunderland vs West Brom",
+    "time": "Sat 17:30",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 2.90 }
+  },
+  {
+    "slug": "southampton-vs-hull",
+    "teams": "Southampton vs Hull City",
+    "time": "Sun 13:00",
+    "odds": { "home": 2.20, "draw": 3.00, "away": 3.30 }
+  },
+  {
+    "slug": "coventry-vs-millwall",
+    "teams": "Coventry vs Millwall",
+    "time": "Sun 16:00",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 3.00 }
+  },
+  {
+    "slug": "blackburn-vs-birmingham",
+    "teams": "Blackburn Rovers vs Birmingham City",
+    "time": "Fri 20:00",
+    "odds": { "home": 2.50, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "watford-vs-bristol",
+    "teams": "Watford vs Bristol City",
+    "time": "Sat 13:00",
+    "odds": { "home": 2.10, "draw": 3.20, "away": 3.20 }
+  },
+  {
+    "slug": "qpr-vs-plymouth",
+    "teams": "QPR vs Plymouth Argyle",
+    "time": "Sat 15:00",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.80 }
+  },
+  {
+    "slug": "stoke-vs-rotherham",
+    "teams": "Stoke City vs Rotherham",
+    "time": "Sun 12:00",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 3.10 }
+  },
+  {
+    "slug": "preston-vs-cardiff",
+    "teams": "Preston North End vs Cardiff City",
+    "time": "Mon 19:45",
+    "odds": { "home": 2.60, "draw": 3.20, "away": 2.90 }
+  }
+]

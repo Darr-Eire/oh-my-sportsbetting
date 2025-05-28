@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "psg-vs-lyon",
+    "teams": "PSG vs Lyon",
+    "time": "Sat 21:00",
+    "odds": { "home": 1.55, "draw": 4.10, "away": 5.80 }
+  },
+  {
+    "slug": "marseille-vs-monaco",
+    "teams": "Marseille vs Monaco",
+    "time": "Sun 20:45",
+    "odds": { "home": 2.30, "draw": 3.30, "away": 2.90 }
+  },
+  {
+    "slug": "lille-vs-rennes",
+    "teams": "Lille vs Rennes",
+    "time": "Sat 19:00",
+    "odds": { "home": 2.20, "draw": 3.20, "away": 3.10 }
+  },
+  {
+    "slug": "lens-vs-toulouse",
+    "teams": "Lens vs Toulouse",
+    "time": "Sun 15:00",
+    "odds": { "home": 2.10, "draw": 3.30, "away": 3.40 }
+  },
+  {
+    "slug": "nice-vs-nantes",
+    "teams": "Nice vs Nantes",
+    "time": "Fri 20:00",
+    "odds": { "home": 1.95, "draw": 3.40, "away": 4.00 }
+  },
+  {
+    "slug": "strasbourg-vs-brest",
+    "teams": "Strasbourg vs Brest",
+    "time": "Sat 17:00",
+    "odds": { "home": 2.50, "draw": 3.10, "away": 2.90 }
+  },
+  {
+    "slug": "reims-vs-angers",
+    "teams": "Reims vs Angers",
+    "time": "Sun 13:00",
+    "odds": { "home": 2.60, "draw": 3.20, "away": 2.80 }
+  },
+  {
+    "slug": "montpellier-vs-clermont",
+    "teams": "Montpellier vs Clermont",
+    "time": "Sat 14:00",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "metz-vs-auxerre",
+    "teams": "Metz vs Auxerre",
+    "time": "Sun 17:00",
+    "odds": { "home": 2.40, "draw": 3.00, "away": 3.00 }
+  },
+  {
+    "slug": "lorient-vs-ajaccio",
+    "teams": "Lorient vs Ajaccio",
+    "time": "Mon 20:45",
+    "odds": { "home": 2.30, "draw": 3.20, "away": 3.10 }
+  }
+]

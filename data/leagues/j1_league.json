@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "kawasaki-vs-kashima",
+    "teams": "Kawasaki Frontale vs Kashima Antlers",
+    "time": "Sat 10:00",
+    "odds": { "home": 2.10, "draw": 3.20, "away": 3.10 }
+  },
+  {
+    "slug": "gamba-vs-urawa",
+    "teams": "Gamba Osaka vs Urawa Reds",
+    "time": "Sat 12:00",
+    "odds": { "home": 2.50, "draw": 3.10, "away": 2.70 }
+  },
+  {
+    "slug": "fc-tokyo-vs-yokohama",
+    "teams": "FC Tokyo vs Yokohama F. Marinos",
+    "time": "Sun 07:00",
+    "odds": { "home": 2.60, "draw": 3.10, "away": 2.50 }
+  },
+  {
+    "slug": "sanfrecce-vs-shonan",
+    "teams": "Sanfrecce Hiroshima vs Shonan Bellmare",
+    "time": "Sun 09:00",
+    "odds": { "home": 2.00, "draw": 3.00, "away": 3.80 }
+  },
+  {
+    "slug": "cerezo-vs-vissel",
+    "teams": "Cerezo Osaka vs Vissel Kobe",
+    "time": "Sun 11:00",
+    "odds": { "home": 2.40, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "nagoya-vs-albirex",
+    "teams": "Nagoya Grampus vs Albirex Niigata",
+    "time": "Sat 08:00",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 3.20 }
+  },
+  {
+    "slug": "sagan-vs-avispa",
+    "teams": "Sagan Tosu vs Avispa Fukuoka",
+    "time": "Sat 09:00",
+    "odds": { "home": 2.60, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "kyoto-vs-yamagata",
+    "teams": "Kyoto Sanga vs Montedio Yamagata",
+    "time": "Sun 06:00",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.80 }
+  },
+  {
+    "slug": "tokushima-vs-omeya",
+    "teams": "Tokushima Vortis vs Omiya Ardija",
+    "time": "Sun 08:30",
+    "odds": { "home": 2.50, "draw": 3.20, "away": 2.90 }
+  },
+  {
+    "slug": "matsumoto-vs-kofu",
+    "teams": "Matsumoto Yamaga vs Ventforet Kofu",
+    "time": "Mon 10:00",
+    "odds": { "home": 2.60, "draw": 3.10, "away": 2.80 }
+  }
+]

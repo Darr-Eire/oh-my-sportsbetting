@@ -1,0 +1,70 @@
+"use client";
+import { useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
+const betBuilders = [
+  {
+    title: "Man City vs Arsenal",
+    options: ["Both Teams to Score", "Over 2.5 Goals", "Haaland to Score"],
+    odds: "7/2",
+  },
+  {
+    title: "Liverpool vs Chelsea",
+    options: ["Liverpool Win", "Salah to Assist", "Over 1.5 Corners Each Half"],
+    odds: "5/1",
+  },
+  {
+    title: "Real Madrid vs Sevilla",
+    options: ["Madrid Win", "Bellingham to Score", "BTTS"],
+    odds: "4/1",
+  },
+];
+
+export default function BetBuilderCarousel() {
+  const [index, setIndex] = useState(0);
+
+  const next = () => setIndex((prev) => (prev + 1) % betBuilders.length);
+  const prev = () => setIndex((prev) => (prev - 1 + betBuilders.length) % betBuilders.length);
+  const current = betBuilders[index];
+
+  return (
+    <section className="mb-10">
+      <h2 className="text-white font-bold text-lg mb-4 text-center">Most Popular Bet Builders</h2>
+
+      <div className="relative bg-[#0a1024] border border-[#2a2a3d] p-6 rounded-xl text-white text-center shadow-lg">
+        <h3 className="font-bold mb-3 text-lg">{current.title}</h3>
+
+        <ul className="text-sm text-gray-300 mb-4 space-y-1">
+          {current.options.map((opt, i) => (
+            <li key={i}>{opt}</li>
+          ))}
+        </ul>
+
+        <div>
+          <span className="bg-electricCyan text-black px-4 py-1 rounded-full text-sm font-bold shadow">
+            {current.odds}
+          </span>
+        </div>
+
+        {/* Arrows */}
+        <div className="absolute top-1/2 left-2 -translate-y-1/2 cursor-pointer">
+          <FaArrowLeft onClick={prev} className="text-white opacity-60 hover:opacity-100 text-lg transition" />
+        </div>
+        <div className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer">
+          <FaArrowRight onClick={next} className="text-white opacity-60 hover:opacity-100 text-lg transition" />
+        </div>
+
+        {/* Dots */}
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
+          {betBuilders.map((_, i) => (
+            <div
+              key={i}
+              className={`w-2 h-2 rounded-full ${i === index ? "bg-electricCyan" : "bg-white/30"}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
