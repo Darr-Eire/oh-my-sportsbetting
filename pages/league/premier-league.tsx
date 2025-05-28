@@ -71,7 +71,7 @@ export default function PremierLeague() {
               <h2 className="text-xl text-cyan-300 font-semibold mb-3 text-center">{day}</h2>
               <div className="space-y-4">
                 {matches.map((match) => (
-                  <MatchCard key={match.slug} {...match} />
+                  <MatchCard key={match.slug} match={match} />
                 ))}
               </div>
             </section>
@@ -81,3 +81,4 @@ export default function PremierLeague() {
     </>
   );
 }
+
