@@ -558,8 +558,6 @@ export default function Home({
         </footer>
       </div>
     </>
-  );
-}
 
 export async function getServerSideProps() {
   const todayMatches = [
