@@ -34,18 +34,18 @@ export default function SportsCarousel() {
   return (
     <div className="overflow-x-auto py-4">
       <div className="flex space-x-6 px-4 w-max">
-  {sports.map(({ name, icon: Icon, slug }) => (
-  <Link
-    key={slug}
-    href={`/sports/${slug}`}
-    className="flex flex-col items-center text-white hover:text-yellow-400 transition min-w-[64px]"
-  >
-    <Icon className="text-3xl mb-1" /> {/* ✅ Render the icon reference */}
-    <span className="text-xs text-center">{name}</span>
-  </Link>
-))}
-
+        {sports.map(({ name, icon: Icon, slug }) => (
+          <Link
+            key={slug}
+            href={`/sports/${slug}`}
+            className="flex flex-col items-center text-white hover:text-yellow-400 transition min-w-[64px]"
+          >
+            <Icon className="text-3xl mb-1" />
+            <span className="text-xs text-center">{name}</span>
+          </Link>
+        ))}
       </div>
     </div>
   );
 }
+

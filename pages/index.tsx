@@ -338,29 +338,38 @@ export default function Home() {
             {todayMatches.map((block, i) => (
               <div key={i} className="mb-8">
                 <h3 className="text-gold font-semibold mb-4 text-lg">{block.league}</h3>
-                <div className="space-y-3">
-                  {block.matches.map((match, j) => (
-                    <div
-                      key={j}
-                      className="flex justify-between items-center bg-deepBlue p-4 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300"
-                    >
-                      <div>
-                        <div className="text-sm font-medium">{match.teams}</div>
-                        <div className="text-xs text-gray-400">Kickoff: {match.time}</div>
+                <div>
+                  {block.matches.map((match, j) => {
+                    const teams = match.teams.split(" vs ");
+
+                    return (
+                      <div key={j} className="mb-6">
+                        <div className="bg-[#f8f9fa] p-4 rounded-lg border border-gray-300 hover:shadow-lg transition-shadow flex justify-between items-center text-left">
+                          <div>
+                            <div className="text-sm font-semibold text-gray-900">{teams[0]}</div>
+                            <div className="text-sm font-semibold text-gray-900">{teams[1]}</div>
+                            <div className="text-xs text-gray-600 mt-1">Kickoff: {match.time}</div>
+                          </div>
+
+                          <div className="flex gap-3 text-sm font-medium">
+                            <div className="bg-gray-100 rounded px-3 py-1 text-green-700">
+                              {match.odds.home.toFixed(2)}
+                            </div>
+                            <div className="bg-gray-100 rounded px-3 py-1 text-green-700">
+                              {match.odds.draw.toFixed(2)}
+                            </div>
+                            <div className="bg-gray-100 rounded px-3 py-1 text-green-700">
+                              {match.odds.away.toFixed(2)}
+                            </div>
+                          </div>
+                        </div>
+
+                        <button className="flex items-center gap-2 text-xs mt-1 text-gray-600 hover:text-green-700">
+                          <span className="font-bold text-lg">+</span> Top Markets
+                        </button>
                       </div>
-                      <div className="flex gap-2 text-sm">
-                        <button className="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded shadow-neon">
-                          Home {match.odds.home.toFixed(2)}
-                        </button>
-                        <button className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded shadow-neon">
-                          Draw {match.odds.draw.toFixed(2)}
-                        </button>
-                        <button className="bg-red-600 hover:bg-red-500 px-3 py-1 rounded shadow-neon">
-                          Away {match.odds.away.toFixed(2)}
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
                 <div className="mt-4">
                   <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
@@ -385,32 +394,27 @@ export default function Home() {
             </h2>
 
             <div className="space-y-8">
-              {[
-                {
-                  track: "Cheltenham",
-                  time: "14:30",
-                  race: "Novice Hurdle",
-                  favorites: ["Galloping Glory", "Storm Chaser", "Misty Valley"],
-                },
-                {
-                  track: "Aintree",
-                  time: "15:10",
-                  race: "Handicap Chase",
-                  favorites: ["Iron Duke", "Whisper Wind", "Lucky Star"],
-                },
-                {
-                  track: "Ascot",
-                  time: "16:05",
-                  race: "Class 2 Stakes",
-                  favorites: ["Crimson Jet", "Royal Flame", "Nightfall"],
-                },
-                {
-                  track: "Newbury",
-                  time: "17:00",
-                  race: "Flat Handicap",
-                  favorites: ["Velvet Thunder", "Bright Banner", "Echo Raider"],
-                },
-              ].map((race, idx) => {
+              {[{
+                track: "Cheltenham",
+                time: "14:30",
+                race: "Novice Hurdle",
+                favorites: ["Galloping Glory", "Storm Chaser", "Misty Valley"],
+              }, {
+                track: "Aintree",
+                time: "15:10",
+                race: "Handicap Chase",
+                favorites: ["Iron Duke", "Whisper Wind", "Lucky Star"],
+              }, {
+                track: "Ascot",
+                time: "16:05",
+                race: "Class 2 Stakes",
+                favorites: ["Crimson Jet", "Royal Flame", "Nightfall"],
+              }, {
+                track: "Newbury",
+                time: "17:00",
+                race: "Flat Handicap",
+                favorites: ["Velvet Thunder", "Bright Banner", "Echo Raider"],
+              }].map((race, idx) => {
                 const slug = race.track.toLowerCase().replace(/\s+/g, "-");
 
                 return (
@@ -543,6 +547,3 @@ export default function Home() {
     </>
   );
 }
-
-
-
