@@ -7,6 +7,7 @@ import BetBuilderCarousel from "../components/BetBuilderCarousel";
 import SportsCarousel from "../components/SportsCarousel";
 import { useState } from "react";
 import Slider from "react-slick";
+import LegalNotice from "../components/LegalNotice";
 
 import {
   MdSportsSoccer,
@@ -106,9 +107,28 @@ export default function Home({
             role="menu"
             aria-label="Main navigation"
           >
-            {/* Insert your dropdown menu items here */}
+            <ul className="p-4 space-y-2">
+              {sports.map(({ name, icon: Icon, slug }) => (
+                <li key={slug}>
+                  <Link href={`/sports/${slug}`}>
+                    <a className="flex items-center gap-3 text-white hover:text-electricCyan transition">
+                      <Icon className="text-lg" />
+                      <span>{name}</span>
+                    </a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         )}
+
+        {/* LEGAL NOTICE */}
+        <LegalNotice />
+      </div>
+    </>
+  );
+}
+
 
         {/* Main content - add padding top so not hidden behind sticky header */}
         <main className="flex-1 px-4 py-2 pt-[72px] pb-28 flex flex-col items-center text-center">

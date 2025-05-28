@@ -174,10 +174,9 @@ export default function FootballPage() {
 
         {/* Back to Home Button */}
         <div className="flex justify-center mb-8">
-          <a
-            href="/"
-            className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition"
-          >
+        <Link href="/" className="...">
+  Back to Home
+</Link>
             Back to Home
           </a>
         </div>

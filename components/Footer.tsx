@@ -6,6 +6,7 @@ export default function LegalNotice() {
     <footer className="w-full bg-[#0a1024] text-white px-4 py-8 border-t border-white mt-12">
       <div className="max-w-6xl mx-auto space-y-6 text-center">
 
+        {/* Rules & Disclaimer */}
         <div>
           <h2 className="text-lg sm:text-xl font-bold text-white mb-2">
             OhMySportsbook – Rules & Disclaimer
@@ -13,7 +14,7 @@ export default function LegalNotice() {
           <div className="text-sm sm:text-base text-gray-400 space-y-3 max-w-3xl mx-auto">
             <p>
               Odds, data, and results are powered by the Pi Network and third-party feeds.
-              Accuracy isn't guaranteed. Betting is at your own risk.
+              Accuracy isn&apos;t guaranteed. Betting is at your own risk.
             </p>
             <p>
               <strong className="text-white">By using this app, you accept our Terms.</strong> 
@@ -29,18 +30,21 @@ export default function LegalNotice() {
           </div>
         </div>
 
+        {/* Logos */}
         <div className="flex justify-center gap-4 items-center">
-          <Image src="/pi-logo.png" alt="Pi Network" width={28} height={28} />
-          <Image src="/18plus.png" alt="18+" width={28} height={28} />
-          <Image src="/responsible.png" alt="Responsible Gaming" width={28} height={28} />
+          <Image src="/pi-logo.png" alt="Pi Network" width={28} height={28} unoptimized />
+          <Image src="/18plus.png" alt="18+" width={28} height={28} unoptimized />
+          <Image src="/responsible.png" alt="Responsible Gaming" width={28} height={28} unoptimized />
         </div>
 
+        {/* Copyright */}
         <div className="text-[12px] text-gray-500 space-y-1">
           <p>© {new Date().getFullYear()} OhMySportsbook. All rights reserved.</p>
           <p>Powered by the Pi Network • Built for Pioneers</p>
           <p>Pi is not fiat. Entries and payouts are digital and non-redeemable externally.</p>
         </div>
 
+        {/* Social Icons */}
         <div className="flex justify-center gap-6 text-white text-xl mt-4">
           <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="hover:text-electricCyan">
             <FaTwitter />
