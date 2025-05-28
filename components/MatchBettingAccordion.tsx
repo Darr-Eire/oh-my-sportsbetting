@@ -1,10 +1,23 @@
-// MatchBettingAccordion.tsx
 import { useState } from "react";
 
-export default function MatchBettingAccordion({ categories }) {
-  const [openIndex, setOpenIndex] = useState(null);
+type Bet = {
+  label: string;
+  odds: string | number;
+};
 
-  const toggle = (i) => {
+type Category = {
+  name: string;
+  bets: Bet[];
+};
+
+type Props = {
+  categories: Category[];
+};
+
+export default function MatchBettingAccordion({ categories }: Props) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (i: number) => {
     setOpenIndex(openIndex === i ? null : i);
   };
 
