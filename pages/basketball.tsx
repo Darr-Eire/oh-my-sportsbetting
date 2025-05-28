@@ -1,3 +1,6 @@
+import Head from "next/head";
+import Image from "next/image";
+import LiveBadge from "../components/LiveBadge";
 
 
 export default function Basketball() {
