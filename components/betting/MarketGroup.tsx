@@ -1,4 +1,5 @@
-import MarketGroup from "../MarketGroup";
+import MarketGroup from "./MarketGroup";
+
 import MarketButton from "../MarketButton";
 
 type FullTimeResultProps = {
