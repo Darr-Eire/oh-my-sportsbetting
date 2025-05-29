@@ -37,37 +37,28 @@ export default function PowerPriceCarousel() {
   const p = powerPrices[index];
 
   return (
-    <section className="relative mb-6">
-      <h2 className="text-white font-semibold text-lg mb-3 text-center">🔥 Power Prices</h2>
+   <section className="w-full max-w-3xl mx-auto mb-8">
+  <h2 className="text-white font-semibold text-lg mb-4 text-center">🔥 Power Prices</h2>
 
-      <div className="bg-[#0a1024] border border-[#2a2a3d] p-6 rounded-xl text-center relative shadow-lg">
-        <div className="font-semibold text-sm text-white mb-1">{p.match}</div>
-        <div className="text-gray-400 text-xs mb-2">{p.description}</div>
-        <div className="flex justify-center items-center gap-4 mt-2">
-          <span className="text-gray-500 line-through">{p.oldOdds}</span>
-          <span className="bg-electricCyan text-black px-4 py-1 rounded-full text-sm font-bold shadow">
-            {p.newOdds}
-          </span>
-        </div>
+  <div className="bg-[#0a1024] border border-gray-700 px-6 py-6 rounded-lg text-center relative shadow-lg">
+    <div className="font-semibold text-base text-white mb-1">{p.match}</div>
+    <div className="text-gray-400 text-sm mb-2">{p.description}</div>
+    <div className="flex justify-center items-center gap-4 mt-3">
+      <span className="text-white line-through text-base">{p.oldOdds}</span>
+      <span className="bg-electricCyan text-white px-5 py-1.5 rounded-full text-base font-bold shadow">
+        {p.newOdds}
+      </span>
+    </div>
 
-        {/* Arrows */}
-        <div className="absolute top-1/2 left-2 -translate-y-1/2 cursor-pointer">
-          <FaArrowLeft onClick={prev} className="text-white text-lg opacity-60 hover:opacity-100 transition" />
-        </div>
-        <div className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer">
-          <FaArrowRight onClick={next} className="text-white text-lg opacity-60 hover:opacity-100 transition" />
-        </div>
+    {/* Arrows */}
+    <div className="absolute top-1/2 left-4 -translate-y-1/2 cursor-pointer">
+      <FaArrowLeft onClick={prev} className="text-white text-xl opacity-60 hover:opacity-100 transition" />
+    </div>
+    <div className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer">
+      <FaArrowRight onClick={next} className="text-white text-xl opacity-60 hover:opacity-100 transition" />
+    </div>
+  </div>
+</section>
 
-        {/* Dots */}
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
-          {powerPrices.map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full ${i === index ? "bg-electricCyan" : "bg-white/30"}`}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }

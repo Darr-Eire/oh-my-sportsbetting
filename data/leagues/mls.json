@@ -1,0 +1,52 @@
+[
+  {
+    "teams": "LA Galaxy vs Inter Miami",
+    "time": "Sat 21:00",
+    "odds": { "home": 2.10, "draw": 3.30, "away": 3.50 }
+  },
+  {
+    "teams": "New York City FC vs Atlanta United",
+    "time": "Sun 23:00",
+    "odds": { "home": 1.85, "draw": 3.60, "away": 4.10 }
+  },
+  {
+    "teams": "Seattle Sounders vs Portland Timbers",
+    "time": "Sat 20:30",
+    "odds": { "home": 2.25, "draw": 3.20, "away": 3.00 }
+  },
+  {
+    "teams": "Toronto FC vs CF Montréal",
+    "time": "Sat 22:00",
+    "odds": { "home": 2.50, "draw": 3.50, "away": 2.90 }
+  },
+  {
+    "teams": "Chicago Fire vs Orlando City",
+    "time": "Sun 01:00",
+    "odds": { "home": 2.70, "draw": 3.10, "away": 2.50 }
+  },
+  {
+    "teams": "Columbus Crew vs Nashville SC",
+    "time": "Sun 00:30",
+    "odds": { "home": 2.30, "draw": 3.40, "away": 2.70 }
+  },
+  {
+    "teams": "FC Dallas vs Houston Dynamo",
+    "time": "Sat 23:00",
+    "odds": { "home": 2.15, "draw": 3.20, "away": 3.20 }
+  },
+  {
+    "teams": "Real Salt Lake vs Colorado Rapids",
+    "time": "Sun 02:30",
+    "odds": { "home": 2.05, "draw": 3.60, "away": 3.80 }
+  },
+  {
+    "teams": "Philadelphia Union vs New England Revolution",
+    "time": "Sat 21:30",
+    "odds": { "home": 1.95, "draw": 3.50, "away": 4.00 }
+  },
+  {
+    "teams": "Charlotte FC vs DC United",
+    "time": "Sun 00:00",
+    "odds": { "home": 2.60, "draw": 3.20, "away": 2.60 }
+  }
+]

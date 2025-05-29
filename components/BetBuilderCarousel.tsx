@@ -54,15 +54,7 @@ export default function BetBuilderCarousel() {
           <FaArrowRight onClick={next} className="text-white opacity-60 hover:opacity-100 text-lg transition" />
         </div>
 
-        {/* Dots */}
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
-          {betBuilders.map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full ${i === index ? "bg-electricCyan" : "bg-white/30"}`}
-            />
-          ))}
-        </div>
+      
       </div>
     </section>
   );

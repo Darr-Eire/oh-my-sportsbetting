@@ -28,16 +28,25 @@ export default function MatchCard({ match }: { match: MatchCardProps }) {
 
           {/* Odds */}
           {odds?.home && odds?.draw && odds?.away ? (
-            <div className="flex gap-1 flex-wrap">
-              <button className="border border-white text-white bg-transparent hover:bg-white hover:text-cyan-700 px-3 py-1 rounded text-xs font-medium transition">
-                Home {odds.home.toFixed(2)}
-              </button>
-              <button className="border border-white text-white bg-transparent hover:bg-white hover:text-cyan-700 px-3 py-1 rounded text-xs font-medium transition">
-                Draw {odds.draw.toFixed(2)}
-              </button>
-              <button className="border border-white text-white bg-transparent hover:bg-white hover:text-cyan-700 px-3 py-1 rounded text-xs font-medium transition">
-                Away {odds.away.toFixed(2)}
-              </button>
+            <div className="flex gap-4 text-center text-xs">
+              <div className="flex flex-col items-center">
+                <button className="border border-white text-white bg-transparent hover:bg-white hover:text-cyan-700 px-3 py-1 rounded font-medium transition">
+                  {odds.home.toFixed(2)}
+                </button>
+                <span className="text-softText mt-1">Home</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <button className="border border-white text-white bg-transparent hover:bg-white hover:text-cyan-700 px-3 py-1 rounded font-medium transition">
+                  {odds.draw.toFixed(2)}
+                </button>
+                <span className="text-softText mt-1">Draw</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <button className="border border-white text-white bg-transparent hover:bg-white hover:text-cyan-700 px-3 py-1 rounded font-medium transition">
+                  {odds.away.toFixed(2)}
+                </button>
+                <span className="text-softText mt-1">Away</span>
+              </div>
             </div>
           ) : (
             <div className="text-softText italic">Odds unavailable</div>

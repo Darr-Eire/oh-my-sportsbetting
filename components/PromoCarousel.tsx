@@ -84,17 +84,7 @@ export default function PromoCarousel() {
         />
       </div>
 
-      {/* Dots */}
-      <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-2 z-30">
-        {slides.map((_, i) => (
-          <div
-            key={i}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              i === index ? "bg-white shadow-md scale-110" : "bg-white/40"
-            }`}
-          />
-        ))}
-      </div>
+  
     </div>
   );
 }

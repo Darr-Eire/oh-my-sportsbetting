@@ -9,32 +9,34 @@ import { useState } from "react";
 import Slider from "react-slick";
 import { horseRaces } from "../data/horseRaces";
 
-
 import {
-  MdSportsSoccer,
-  MdAccessTime,
-  MdOutlineCasino,
-  MdOutlineSportsGolf,
-  MdOutlineSportsBasketball,
-  MdOutlineSportsMma,
-  MdSportsEsports,
-  MdOutlineSportsTennis,
-  MdOutlineListAlt,
-} from "react-icons/md";
-import { FaHorse, FaDog } from "react-icons/fa";
+  FaFutbol,
+  FaHorseHead,
+  FaStopwatch,
+  FaTicketAlt,
+  FaDog,
+  FaGolfBall,
+  FaBasketballBall,
+  FaUserNinja,
+  FaGamepad,
+  FaThList
+} from "react-icons/fa";
 
 const sports = [
-  { name: "Football", icon: MdSportsSoccer, slug: "football" },
-  { name: "Horse Racing", icon: FaHorse, slug: "horse-racing" },
-  { name: "In-Play", icon: MdAccessTime, slug: "in-play" },
-  { name: "Lotteries", icon: MdOutlineCasino, slug: "lotteries" },
+  { name: "Football", icon: FaFutbol, slug: "football" },
+  { name: "Horse Racing", icon: FaHorseHead, slug: "horse-racing" },
+  { name: "In-Play", icon: FaStopwatch, slug: "in-play" },
+  { name: "Lotteries", icon: FaTicketAlt, slug: "lotteries" },
   { name: "Greyhound Racing", icon: FaDog, slug: "greyhound-racing" },
-  { name: "Golf", icon: MdOutlineSportsGolf, slug: "golf" },
-  { name: "Basketball", icon: MdOutlineSportsBasketball, slug: "basketball" },
-  { name: "UFC", icon: MdOutlineSportsMma, slug: "ufc" },
-  { name: "eSports", icon: MdSportsEsports, slug: "esports" },
-  { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
+  { name: "Golf", icon: FaGolfBall, slug: "golf" },
+  { name: "Basketball", icon: FaBasketballBall, slug: "basketball" },
+  { name: "UFC", icon: FaUserNinja, slug: "ufc" },
+  { name: "eSports", icon: FaGamepad, slug: "esports" },
+  { name: "A–Z", icon: FaThList, slug: "all-sports" },
 ];
+
+
+
 
 type Match = {
   teams: string;
@@ -124,208 +126,242 @@ export default function Home({
           <PowerPriceCarousel />
 
           {/* Basketball Section */}
-          <section className="w-full max-w-3xl border border-white rounded-lg">
-            <button
-              onClick={() => setOpenBasketball(!openBasketball)}
-              className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg"
-              aria-expanded={openBasketball}
-              aria-controls="basketball-matches"
-            >
-              <Image
-                src="/logos/nba.png"
-                alt="NBA Logo"
-                width={32}
-                height={32}
-                className="object-contain"
-                unoptimized
-              />
-              <span className="flex items-center gap-2">
-                <span>Today’s NBA Games</span>
-                <Image
-                  src="https://flagcdn.com/w20/us.png"
-                  alt="USA Flag"
-                  width={20}
-                  height={14}
-                  className="object-contain rounded-sm"
-                  unoptimized
-                />
-              </span>
+          <h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Basketball Games</h2>
+<section className="w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg">
+  <button
+    onClick={() => setOpenBasketball(!openBasketball)}
+    className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg"
+    aria-expanded={openBasketball}
+    aria-controls="basketball-matches"
+  >
+    <Image
+      src="/logos/nba.png"
+      alt="NBA Logo"
+      width={32}
+      height={32}
+      className="object-contain"
+      unoptimized
+    />
+    <span className="flex items-center gap-2">
+      <span>NBA Games</span>
+      <Image
+        src="https://flagcdn.com/w20/us.png"
+        alt="USA Flag"
+        width={20}
+        height={14}
+        className="object-contain rounded-sm"
+        unoptimized
+      />
+    </span>
+    <svg
+      className={`ml-auto h-5 w-5 transition-transform ${
+        openBasketball ? "rotate-180" : ""
+      }`}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
 
-              <svg
-                className={`ml-auto h-5 w-5 transition-transform ${
-                  openBasketball ? "rotate-180" : ""
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            {openBasketball && (
+  {openBasketball && (
+    <div
+      id="basketball-matches"
+      className="mt-3 space-y-4 px-4 pb-4 border-t border-gray-700 rounded-b-lg"
+    >
+      {basketballMatches.map((block, i) => (
+        <div key={i}>
+          <h3 className="text-gold font-semibold mb-3 text-lg">{block.league}</h3>
+          <div className="space-y-3">
+            {block.matches.map((match, j) => (
               <div
-                id="basketball-matches"
-                className="mt-3 space-y-3 px-4 pb-4 border-t border-white rounded-b-lg"
+                key={j}
+                className="flex flex-col bg-[#12182f] p-3 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300"
               >
-                {basketballMatches.map((block, i) => (
-                  <div key={i}>
-                    <h3 className="text-gold font-semibold mb-3 text-lg">{block.league}</h3>
-                    <div className="space-y-2">
-                      {block.matches.map((match, j) => (
-                        <div
-                          key={j}
-                          className="flex justify-between items-center bg-[#12182f] p-3 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300"
-                        >
-                          <div>
-                            <div className="text-sm font-semibold">{match.teams}</div>
-                            <div className="text-xs text-gray-400">Tip-off: {match.time}</div>
-                          </div>
-                          <div className="flex gap-2 text-sm">
-                            <button className="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded shadow-neon">
-                              Home {match.odds.home.toFixed(2)}
-                            </button>
-                            <button className="bg-red-600 hover:bg-red-500 px-3 py-1 rounded shadow-neon">
-                              Away {match.odds.away.toFixed(2)}
-                            </button>
-                          </div>
-                        </div>
-                      ))}
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="text-sm font-semibold text-white">{match.teams}</div>
+                    <div className="text-xs text-gray-400">Tip-off: {match.time}</div>
+                  </div>
+                  <div className="flex gap-4 text-sm font-medium text-center">
+                    <div className="flex flex-col items-center">
+                      <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                        {match.odds?.home?.toFixed(2) ?? "—"}
+                      </div>
+                      <span className="text-xs text-softText mt-1">Home</span>
                     </div>
-                    <div className="mt-3">
-                      <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
-                        <button className="text-sm text-electricCyan hover:underline font-medium">
-                          View All Games
-                        </button>
-                      </Link>
+                    <div className="flex flex-col items-center">
+                      <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                        {match.odds?.away?.toFixed(2) ?? "—"}
+                      </div>
+                      <span className="text-xs text-softText mt-1">Away</span>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
-            )}
-          </section>
+            ))}
+          </div>
+
+          {/* View More Button */}
+          <div className="pt-3 text-right">
+            <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
+              <a className="text-sm text-electricCyan hover:underline font-medium">
+                View All Matches
+              </a>
+            </Link>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
+
+
+
 
           {/* Today's Football Matches */}
-          <section className="w-full max-w-3xl space-y-4">
-            <h2 className="text-lg font-bold text-white mb-3">Today’s Football Matches</h2>
-            <div className="space-y-3 w-full">
-              {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
-                <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
-                  <button
-                    onClick={() => toggleLeague(league)}
-                    className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition"
-                    aria-expanded={openLeague === league}
-                    aria-controls={`${league}-matches`}
-                  >
-                    <Image
-                      src={leagueLogo}
-                      alt={`${league} logo`}
-                      width={32}
-                      height={32}
-                      className="object-contain"
-                      unoptimized
-                    />
-                    <span className="flex items-center gap-2">
-                      <span>{league}</span>
-                      <Image
-                        src={`https://flagcdn.com/w20/${countryCode}.png`}
-                        alt={`${countryCode} flag`}
-                        width={20}
-                        height={14}
-                        className="object-contain rounded-sm"
-                        unoptimized
-                      />
-                    </span>
-                    <svg
-                      className={`ml-auto h-5 w-5 transition-transform ${
-                        openLeague === league ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
+      <section className="w-full max-w-3xl space-y-4">
+  <h2 className="text-lg font-bold text-white mb-3">Today’s Football Matches</h2>
+  <div className="space-y-3 w-full">
+    {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
+      <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
+        <button
+          onClick={() => toggleLeague(league)}
+          className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition"
+          aria-expanded={openLeague === league}
+          aria-controls={`${league}-matches`}
+        >
+          <Image
+            src={leagueLogo}
+            alt={`${league} logo`}
+            width={32}
+            height={32}
+            className="object-contain"
+            unoptimized
+          />
+          <span className="flex items-center gap-2">
+            <span>{league}</span>
+            <Image
+              src={`https://flagcdn.com/w20/${countryCode}.png`}
+              alt={`${countryCode} flag`}
+              width={20}
+              height={14}
+              className="object-contain rounded-sm"
+              unoptimized
+            />
+          </span>
+          <svg
+            className={`ml-auto h-5 w-5 transition-transform ${
+              openLeague === league ? "rotate-180" : ""
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
 
-                  {openLeague === league && (
-                    <div
-                      id={`${league}-matches`}
-                      className="px-4 pb-4 space-y-3"
-                    >
-                      {matches.map(({ teams, time, odds }, idx) => (
-                        <div
-                          key={idx}
-                          className="flex justify-between items-center bg-[#12182f] p-3 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300"
-                        >
-                          <div>
-                            <div className="text-sm font-semibold">{teams}</div>
-                            <div className="text-xs text-gray-400">Kickoff: {time}</div>
-                          </div>
-                          <div className="flex gap-3 text-sm font-medium">
-                     <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-  {odds?.home?.toFixed(2) ?? "—"}
-</div>
-<div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-  {odds?.draw?.toFixed(2) ?? "—"}
-</div>
-<div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-  {odds?.away?.toFixed(2) ?? "—"}
-</div>
-
-                          </div>
-                        </div>
-                      ))}
+        {openLeague === league && (
+          <div id={`${league}-matches`} className="px-4 pb-4 space-y-3">
+            {matches.map(({ teams, time, odds }, idx) => (
+              <div
+                key={idx}
+                className="flex flex-col bg-[#12182f] p-3 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300"
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="text-sm font-semibold">{teams}</div>
+                    <div className="text-xs text-gray-400">Kickoff: {time}</div>
+                  </div>
+                  <div className="flex gap-3 text-sm font-medium text-center">
+                    <div className="flex flex-col items-center">
+                      <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                        {odds?.home?.toFixed(2) ?? "—"}
+                      </div>
+                      <span className="text-xs text-softText mt-1">Home</span>
                     </div>
-                  )}
+                    <div className="flex flex-col items-center">
+                      <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                        {odds?.draw?.toFixed(2) ?? "—"}
+                      </div>
+                      <span className="text-xs text-softText mt-1">Draw</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                        {odds?.away?.toFixed(2) ?? "—"}
+                      </div>
+                      <span className="text-xs text-softText mt-1">Away</span>
+                    </div>
+                  </div>
                 </div>
-              ))}
+              </div>
+            ))}
+
+            {/* View More Matches Button */}
+            <div className="pt-3 text-right">
+              <Link href={`/league/${league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
+                <a className="text-sm text-electricCyan hover:underline font-medium">
+                  View All Matches
+                </a>
+              </Link>
             </div>
-          </section>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</section>
 
-          {/* Bet Builder Highlights */}
-          <section className="mt-12 w-full max-w-3xl mx-auto">
-            <div className="max-w-md mx-auto">
-              <BetBuilderCarousel />
-            </div>
-          </section>
 
-          {/* Popular Accumulators */}
-          <section className="mt-12 w-full max-w-3xl mx-auto">
-            <h2 className="text-lg font-bold text-white mb-4">Popular Accumulators</h2>
 
-            <Slider
-              dots={true}
-              infinite={true}
-              speed={500}
-              slidesToShow={1}
-              slidesToScroll={1}
-              arrows={true}
-              adaptiveHeight={true}
-              className="text-center mx-auto max-w-md"
-            >
-              {[
-                { teams: "Manchester City & Liverpool & Chelsea", odds: 12.5 },
-                { teams: "PSG & Barcelona & Real Madrid", odds: 15.2 },
-                { teams: "Bayern Munich & Juventus & AC Milan", odds: 14.1 },
-              ].map(({ teams, odds }, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#12182f] p-6 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300 max-w-md mx-auto"
-                >
-                  <div className="text-lg font-semibold">{teams}</div>
-                  <div className="text-sm text-gray-400 mt-1">Odds: {odds}</div>
-                </div>
-              ))}
-            </Slider>
-          </section>
+         {/* Bet Builder Highlights */}
+<section className="mt-12 w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+  <div className="max-w-md mx-auto">
+    <BetBuilderCarousel />
+  </div>
+</section>
+
+{/* Popular Accumulators */}
+<section className="mt-12 w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+  <h2 className="text-lg font-bold text-white mb-4">Popular Accumulators</h2>
+
+  <Slider
+    dots={true}
+    infinite={true}
+    speed={500}
+    slidesToShow={1}
+    slidesToScroll={1}
+    arrows={true}
+    adaptiveHeight={true}
+    className="text-center mx-auto max-w-md"
+  >
+    {[
+      { teams: "Manchester City & Liverpool & Chelsea", odds: 12.5 },
+      { teams: "PSG & Barcelona & Real Madrid", odds: 15.2 },
+      { teams: "Bayern Munich & Juventus & AC Milan", odds: 14.1 },
+    ].map(({ teams, odds }, idx) => (
+      <div
+        key={idx}
+        className="bg-[#0a1024] p-6 rounded-lg border border-gray-700 hover:shadow-neon transition-shadow duration-300 max-w-md mx-auto"
+      >
+        <div className="text-lg font-semibold text-white">{teams}</div>
+        <div className="text-sm text-gray-400 mt-1">Odds: {odds}</div>
+      </div>
+    ))}
+  </Slider>
+</section>
+
 
 {/* Horse Racing Section */}
-<section className="mt-12 w-full max-w-3xl border border-white rounded-lg">
+<h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Horse Racing</h2>
+
+<section className="mt-12 w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg">
   <button
     onClick={toggleHorseRacing}
     className="flex items-center gap-3 w-full px-4 py-3 text-left text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg"
@@ -333,7 +369,7 @@ export default function Home({
     aria-controls="horse-racing-races"
   >
     <span className="flex items-center gap-2">
-      <span>Today’s Horse Racing</span>
+      <span>Horse Racing Courses</span>
       <Image
         src="https://flagcdn.com/w20/gb.png"
         alt="UK Flag"
@@ -366,7 +402,7 @@ export default function Home({
   {openHorseRacing && (
     <div
       id="horse-racing-races"
-      className="mt-4 space-y-6 px-4 pb-4 border-t border-white rounded-b-lg"
+      className="mt-4 space-y-6 px-4 pb-4 border-t border-gray-700 rounded-b-lg"
     >
       {horseRaces.map(({ track, countryCode, raceTime, raceName, runners }, i) => (
         <div key={i} className="border border-gray-700 rounded-lg bg-[#0a1024] p-4 space-y-4">
@@ -398,7 +434,7 @@ export default function Home({
                 </div>
 
                 <div className="flex flex-col flex-grow ml-2 text-left">
-                  <span className="font-semibold">{name}</span>
+                  <span className="font-semibold text-white">{name}</span>
                   <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
                     <span>J: {jockey}</span>
                     <span>T: {trainer}</span>
@@ -418,7 +454,7 @@ export default function Home({
 
           {/* View More Horses per Race */}
           <div className="pt-2 text-center">
-            <button className="border border-white text-white px-4 py-1.5 rounded-md hover:bg-white hover:text-black transition text-sm">
+            <button className="border border-gray-700 text-white px-4 py-1.5 rounded-md hover:bg-white hover:text-black transition text-sm">
               View More Horses
             </button>
           </div>
@@ -427,6 +463,7 @@ export default function Home({
     </div>
   )}
 </section>
+
 
 
 
@@ -535,72 +572,126 @@ export default function Home({
 }
 
 export async function getServerSideProps() {
-  const todayMatches = [
-    {
-      league: "Premier League",
-      countryCode: "gb",
-      leagueLogo: "/logos/premier_league.png",
-      matches: [
-        { teams: "Manchester City vs Arsenal", time: "20:00", odds: { home: 1.85, draw: 3.4, away: 3.9 } },
-        { teams: "Liverpool vs Chelsea", time: "18:30", odds: { home: 2.1, draw: 3.2, away: 3.5 } },
-        { teams: "Tottenham vs Newcastle", time: "15:00", odds: { home: 2.0, draw: 3.3, away: 3.7 } },
-      ],
-    },
-    {
-      league: "La Liga",
-      countryCode: "es",
-      leagueLogo: "/logos/la_liga.png",
-      matches: [
-        { teams: "Real Madrid vs Sevilla", time: "21:00", odds: { home: 1.95, draw: 3.5, away: 4.2 } },
-        { teams: "Barcelona vs Villarreal", time: "19:00", odds: { home: 1.8, draw: 3.6, away: 4.5 } },
-      ],
-    },
-    {
-      league: "Serie A",
-      countryCode: "it",
-      leagueLogo: "/logos/serie_a.png",
-      matches: [
-        { teams: "Juventus vs Napoli", time: "19:45", odds: { home: 2.1, draw: 3.3, away: 3.6 } },
-        { teams: "AC Milan vs Roma", time: "21:00", odds: { home: 2.0, draw: 3.4, away: 3.8 } },
-      ],
-    },
-    {
-      league: "Bundesliga",
-      countryCode: "de",
-      leagueLogo: "/bundesliga.png",
-      matches: [
-        { teams: "Bayern Munich vs Leipzig", time: "20:30", odds: { home: 1.75, draw: 3.6, away: 4.1 } },
-        { teams: "Dortmund vs Stuttgart", time: "18:00", odds: { home: 1.9, draw: 3.4, away: 3.9 } },
-      ],
-    },
-    {
-      league: "Ligue 1",
-      countryCode: "fr",
-      leagueLogo: "/logos/ligue_1.png",
-      matches: [
-        { teams: "PSG vs Lyon", time: "20:45", odds: { home: 1.55, draw: 4.0, away: 5.2 } },
-        { teams: "Marseille vs Nice", time: "18:00", odds: { home: 2.2, draw: 3.1, away: 3.3 } },
-      ],
-    },
-    {
-      league: "Eredivisie",
-      countryCode: "nl",
-      leagueLogo: "/logos/eredivisie.png",
-      matches: [
-        { teams: "Ajax vs Feyenoord", time: "18:30", odds: { home: 2.3, draw: 3.2, away: 2.9 } },
-        { teams: "PSV vs AZ Alkmaar", time: "20:00", odds: { home: 1.9, draw: 3.3, away: 3.8 } },
-      ],
-    },
-    {
-      league: "MLS",
-      countryCode: "us",
-      leagueLogo: "/logos/mls.png",
-      matches: [
-        { teams: "LA Galaxy vs Inter Miami", time: "03:00", odds: { home: 2.4, draw: 3.3, away: 2.8 } },
-        { teams: "New York City vs Atlanta United", time: "01:30", odds: { home: 2.1, draw: 3.2, away: 3.5 } },
-      ],
-    },
-  ];
+ const todayMatches = [
+  {
+    league: "Premier League",
+    countryCode: "gb",
+    leagueLogo: "/logos/premier_league.png",
+    matches: [
+      { teams: "Manchester City vs Arsenal", time: "20:00", odds: { home: 1.85, draw: 3.4, away: 3.9 } },
+      { teams: "Liverpool vs Chelsea", time: "18:30", odds: { home: 2.1, draw: 3.2, away: 3.5 } },
+      { teams: "Tottenham vs Newcastle", time: "15:00", odds: { home: 2.0, draw: 3.3, away: 3.7 } },
+    ],
+  },
+  {
+    league: "Championship",
+    countryCode: "gb",
+    leagueLogo: "/logos/championship.png",
+    matches: [
+      { teams: "Leeds vs Sunderland", time: "15:00", odds: { home: 1.95, draw: 3.4, away: 3.9 } },
+      { teams: "West Brom vs Norwich", time: "17:30", odds: { home: 2.05, draw: 3.2, away: 3.6 } },
+    ],
+  },
+  {
+    league: "La Liga",
+    countryCode: "es",
+    leagueLogo: "/logos/la_liga.png",
+    matches: [
+      { teams: "Real Madrid vs Sevilla", time: "21:00", odds: { home: 1.95, draw: 3.5, away: 4.2 } },
+      { teams: "Barcelona vs Villarreal", time: "19:00", odds: { home: 1.8, draw: 3.6, away: 4.5 } },
+    ],
+  },
+  {
+    league: "Serie A",
+    countryCode: "it",
+    leagueLogo: "/logos/serie_a.png",
+    matches: [
+      { teams: "Juventus vs Napoli", time: "19:45", odds: { home: 2.1, draw: 3.3, away: 3.6 } },
+      { teams: "AC Milan vs Roma", time: "21:00", odds: { home: 2.0, draw: 3.4, away: 3.8 } },
+    ],
+  },
+  {
+    league: "Bundesliga",
+    countryCode: "de",
+    leagueLogo: "/bundesliga.png",
+    matches: [
+      { teams: "Bayern Munich vs Leipzig", time: "20:30", odds: { home: 1.75, draw: 3.6, away: 4.1 } },
+      { teams: "Dortmund vs Stuttgart", time: "18:00", odds: { home: 1.9, draw: 3.4, away: 3.9 } },
+    ],
+  },
+  {
+    league: "Ligue 1",
+    countryCode: "fr",
+    leagueLogo: "/logos/ligue_1.png",
+    matches: [
+      { teams: "PSG vs Lyon", time: "20:45", odds: { home: 1.55, draw: 4.0, away: 5.2 } },
+      { teams: "Marseille vs Nice", time: "18:00", odds: { home: 2.2, draw: 3.1, away: 3.3 } },
+    ],
+  },
+  {
+    league: "Eredivisie",
+    countryCode: "nl",
+    leagueLogo: "/logos/eredivisie.png",
+    matches: [
+      { teams: "Ajax vs Feyenoord", time: "18:30", odds: { home: 2.3, draw: 3.2, away: 2.9 } },
+      { teams: "PSV vs AZ Alkmaar", time: "20:00", odds: { home: 1.9, draw: 3.3, away: 3.8 } },
+    ],
+  },
+  {
+    league: "Brazilian Série A",
+    countryCode: "br",
+    leagueLogo: "/logos/brazilian_serie_a.png",
+    matches: [
+      { teams: "Flamengo vs Palmeiras", time: "22:00", odds: { home: 2.2, draw: 3.1, away: 3.4 } },
+      { teams: "Corinthians vs Sao Paulo", time: "00:30", odds: { home: 2.4, draw: 3.0, away: 3.0 } },
+    ],
+  },
+  {
+    league: "J1 League",
+    countryCode: "jp",
+    leagueLogo: "/logos/j_1.png",
+    matches: [
+      { teams: "Kawasaki Frontale vs Gamba Osaka", time: "11:00", odds: { home: 2.0, draw: 3.3, away: 3.6 } },
+      { teams: "Urawa Reds vs FC Tokyo", time: "13:00", odds: { home: 2.1, draw: 3.2, away: 3.4 } },
+    ],
+  },
+  {
+    league: "Liga MX",
+    countryCode: "mx",
+    leagueLogo: "/logos/liga_mx.png",
+    matches: [
+      { teams: "Club América vs Tigres UANL", time: "03:00", odds: { home: 1.9, draw: 3.4, away: 3.6 } },
+      { teams: "Chivas Guadalajara vs Pumas", time: "01:00", odds: { home: 2.0, draw: 3.2, away: 3.5 } },
+    ],
+  },
+  {
+    league: "Turkish Süper Lig",
+    countryCode: "tr",
+    leagueLogo: "/logos/super_lig.png",
+    matches: [
+      { teams: "Galatasaray vs Fenerbahçe", time: "19:00", odds: { home: 2.1, draw: 3.2, away: 3.6 } },
+      { teams: "Besiktas vs Trabzonspor", time: "17:00", odds: { home: 2.3, draw: 3.1, away: 3.2 } },
+    ],
+  },
+  {
+    league: "MLS",
+    countryCode: "us",
+    leagueLogo: "/logos/mls.png",
+    matches: [
+      { teams: "LA Galaxy vs Inter Miami", time: "03:00", odds: { home: 2.4, draw: 3.3, away: 2.8 } },
+      { teams: "New York City vs Atlanta United", time: "01:30", odds: { home: 2.1, draw: 3.2, away: 3.5 } },
+    ],
+  },
+  {
+    league: "League of Ireland Premier Division",
+    countryCode: "ie",
+    leagueLogo: "/logos/league_of_ireland.png",
+    matches: [
+      { teams: "Shamrock Rovers vs Bohemians", time: "19:45", odds: { home: 1.8, draw: 3.5, away: 4.2 } },
+    ],
+  },
+];
+
 
   const basketballMatches = [
     {

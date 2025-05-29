@@ -17,6 +17,10 @@ import brazilianseriea from "../../data/leagues/brazilian_serie_a.json";
 import j1league from "../../data/leagues/j1_league.json";
 import ligamx from "../../data/leagues/liga_mx.json";
 import superlig from "../../data/leagues/super_lig.json";
+import league_of_ireland from "../../data/leagues/league_of_ireland.json";
+import mls from "../../data/leagues/mls.json";
+
+
 
 const leagueInfo = [
   {
@@ -79,6 +83,20 @@ const leagueInfo = [
     flag: "/flags/turkey.png",
     matches: superlig,
   },
+{
+  name: "Major League Soccer",
+  logo: "/logos/mls.png",
+  flag: "/logos/usa.png",
+  matches: mls
+},
+{
+  name: "League of Ireland Premier Division",
+  logo: "/logos/league_of_ireland.png",
+  flag: "/flags/ireland.png",
+  matches: league_of_ireland
+}
+
+
 ];
 
 export default function FootballPage() {
@@ -149,11 +167,12 @@ export default function FootballPage() {
               </button>
 
               {openLeagues[league.name] && (
-                <div id={`${league.name}-matches`} className="px-4 pb-4 space-y-3 bg-[#12182f] rounded-b-lg">
-                  {league.matches.map((match, idx) => (
-                    <MatchCard key={match.slug ?? idx} match={match} />
-                  ))}
-                </div>
+             <div className="grid gap-3">
+  {league.matches.map((match, i) => (
+    <MatchCard key={i} match={match} />
+  ))}
+</div>
+
               )}
             </div>
           ))}
