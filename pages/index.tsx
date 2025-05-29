@@ -122,7 +122,8 @@ export default function Home({
         )}
 
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
- <PromoCarousel className="mb-0" />
+<PromoCarousel />
+
 
      
 
