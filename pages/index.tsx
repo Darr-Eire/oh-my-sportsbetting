@@ -132,7 +132,8 @@ export default function Home({
         
 
           {/* Basketball Section */}
- <h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Basketball Games</h2>
+       <div className="w-full max-w-3xl space-y-10"></div>   
+<h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Basketball Games</h2>
 
 <section className="w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg">
   <button
@@ -440,13 +441,13 @@ export default function Home({
       id="horse-racing-races"
       className="mt-4 space-y-6 px-4 pb-4 border-t border-gray-700 rounded-b-lg"
     >
-      {Object.entries(
-        horseRaces.reduce((acc, race) => {
-          if (!acc[race.track]) acc[race.track] = [];
-          acc[race.track].push(race);
-          return acc;
-        }, {})
-      ).map(([track, races], i) => (
+     {Object.entries(
+  horseRaces.reduce((acc: Record<string, typeof horseRaces>, race) => {
+    if (!acc[race.track]) acc[race.track] = [];
+    acc[race.track].push(race);
+    return acc;
+  }, {})
+).map(([track, races]) => (
         <details key={i} className="border border-gray-700 rounded-lg bg-[#0a1024]">
           <summary className="cursor-pointer list-none px-4 py-3 flex justify-between items-center text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg">
             <span className="flex items-center gap-2">
