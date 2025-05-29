@@ -440,65 +440,88 @@ export default function Home({
       id="horse-racing-races"
       className="mt-4 space-y-6 px-4 pb-4 border-t border-gray-700 rounded-b-lg"
     >
-      {horseRaces.map(({ track, countryCode, raceTime, raceName, runners }, i) => (
-        <div key={i} className="border border-gray-700 rounded-lg bg-[#0a1024] p-4 space-y-4">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-white font-bold text-base">{track}</h3>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-white font-medium">{raceTime}</span>
+      {Object.entries(
+        horseRaces.reduce((acc, race) => {
+          if (!acc[race.track]) acc[race.track] = [];
+          acc[race.track].push(race);
+          return acc;
+        }, {})
+      ).map(([track, races], i) => (
+        <details key={i} className="border border-gray-700 rounded-lg bg-[#0a1024]">
+          <summary className="cursor-pointer list-none px-4 py-3 flex justify-between items-center text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg">
+            <span className="flex items-center gap-2">
+              {track}
               <Image
-                src={`https://flagcdn.com/w20/${countryCode}.png`}
-                alt={`${countryCode} flag`}
+                src={`https://flagcdn.com/w20/${races[0].countryCode}.png`}
+                alt="flag"
                 width={20}
                 height={14}
                 className="object-contain rounded-sm"
                 unoptimized
               />
-            </div>
-          </div>
+            </span>
+            <svg
+              className="h-5 w-5 transition-transform group-open:rotate-180"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
 
-          <div className="text-sm italic text-gray-300">{raceName}</div>
-
-          <div className="divide-y divide-gray-700">
-            {runners.map(({ number, name, jockey, trainer, form, odds }, idx) => (
-              <div key={idx} className="flex items-center py-3 text-sm">
-                <div className="flex items-center gap-3 w-10 font-bold text-white">
-                  <span>{number}</span>
-                  <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-white font-semibold select-none">
-                    {number}
-                  </div>
+          <div className="space-y-6 px-4 py-4">
+            {races.map(({ raceTime, raceName, runners }, j) => (
+              <div key={j} className="border border-gray-700 rounded-lg bg-[#0a1024] p-4 space-y-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-white font-bold text-base">{raceName}</h3>
+                  <span className="text-sm text-white font-medium">{raceTime}</span>
                 </div>
 
-                <div className="flex flex-col flex-grow ml-2 text-left">
-                  <span className="font-semibold text-white">{name}</span>
-                  <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
-                    <span>J: {jockey}</span>
-                    <span>T: {trainer}</span>
-                    <span>F: {form}</span>
-                  </div>
-                  <button className="text-xs text-electricCyan mt-1 underline hover:text-white transition">
-                    More information
+                <div className="divide-y divide-gray-700">
+                  {runners.map(({ number, name, jockey, trainer, form, odds }, idx) => (
+                    <div key={idx} className="flex items-center py-3 text-sm">
+                      <div className="flex items-center gap-3 w-10 font-bold text-white">
+                        <span>{number}</span>
+                        <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-white font-semibold select-none">
+                          {number}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col flex-grow ml-2 text-left">
+                        <span className="font-semibold text-white">{name}</span>
+                        <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
+                          <span>J: {jockey}</span>
+                          <span>T: {trainer}</span>
+                          <span>F: {form}</span>
+                        </div>
+                        <button className="text-xs text-electricCyan mt-1 underline hover:text-white transition">
+                          More information
+                        </button>
+                      </div>
+
+                      <div className="ml-auto font-semibold text-green-500 bg-green-900 bg-opacity-20 px-3 py-1 rounded-md">
+                        {odds}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2 text-center">
+                  <button className="border border-gray-700 text-white px-4 py-1.5 rounded-md hover:bg-white hover:text-black transition text-sm">
+                    View More Horses
                   </button>
-                </div>
-
-                <div className="ml-auto font-semibold text-green-500 bg-green-900 bg-opacity-20 px-3 py-1 rounded-md">
-                  {odds}
                 </div>
               </div>
             ))}
           </div>
-
-          {/* View More Horses per Race */}
-          <div className="pt-2 text-center">
-            <button className="border border-gray-700 text-white px-4 py-1.5 rounded-md hover:bg-white hover:text-black transition text-sm">
-              View More Horses
-            </button>
-          </div>
-        </div>
+        </details>
       ))}
     </div>
   )}
 </section>
+
 
 
 
