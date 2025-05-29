@@ -1,25 +1,30 @@
 [
   {
+    "slug": "shamrock-rovers-vs-bohemians",
     "teams": "Shamrock Rovers vs Bohemians",
     "time": "Fri 19:45",
     "odds": { "home": 1.80, "draw": 3.50, "away": 4.20 }
   },
   {
+    "slug": "dundalk-vs-derry-city",
     "teams": "Dundalk vs Derry City",
     "time": "Fri 19:45",
     "odds": { "home": 2.50, "draw": 3.30, "away": 2.75 }
   },
   {
+    "slug": "st-patricks-athletic-vs-sligo-rovers",
     "teams": "St Patrick's Athletic vs Sligo Rovers",
     "time": "Fri 19:45",
     "odds": { "home": 2.10, "draw": 3.20, "away": 3.10 }
   },
   {
+    "slug": "galway-united-vs-shelbourne",
     "teams": "Galway United vs Shelbourne",
     "time": "Fri 19:45",
     "odds": { "home": 2.85, "draw": 3.00, "away": 2.40 }
   },
   {
+    "slug": "waterford-fc-vs-cork-city",
     "teams": "Waterford FC vs Cork City",
     "time": "Fri 19:45",
     "odds": { "home": 2.00, "draw": 3.25, "away": 3.50 }
