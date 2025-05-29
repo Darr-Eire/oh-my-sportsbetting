@@ -28,13 +28,13 @@ export default function BetBuilderCarousel() {
   const current = betBuilders[index];
 
   return (
-    <section className="w-full max-w-2xl mx-auto mt-8 px-4">
+    <section className="w-full max-w-3xl mx-auto mt-6 mb-6 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
       <h2 className="text-white font-bold text-lg mb-4 text-center">Most Popular Bet Builders</h2>
 
-      <div className="relative bg-[#0a1024] border border-[#2a2a3d] p-6 rounded-lg text-white text-center shadow-lg">
-        <h3 className="font-bold mb-3 text-lg">{current.title}</h3>
+      <div className="relative bg-[#0a1024] p-4 rounded-lg text-white text-center shadow-lg border border-[#2a2a3d]">
+        <h3 className="font-bold mb-2 text-base">{current.title}</h3>
 
-        <ul className="text-sm text-white mb-4 space-y-1">
+        <ul className="text-sm text-white mb-3 space-y-1">
           {current.options.map((opt, i) => (
             <li key={i}>{opt}</li>
           ))}

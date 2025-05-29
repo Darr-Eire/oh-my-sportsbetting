@@ -44,7 +44,7 @@ export default function PopularFootballBetsCarousel() {
             key={idx}
             className="bg-[#0a1024] border border-white rounded-lg p-4 h-40 flex flex-col justify-center items-center text-center hover:shadow-neon transition-shadow duration-300"
           >
-            <div className="text-sm text-white font-semibold">{bet.match}</div>
+            <div className="text-sm text-white font-bold">{bet.match}</div>
             <div className="text-sm italic text-blue-400 mt-1">{bet.bet}</div>
             <div className="mt-3 text-white text-lg font-bold">Odds: {bet.odds}</div>
           </div>

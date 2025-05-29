@@ -19,7 +19,20 @@ const sportEmojis: Record<string, string> = {
   Basketball: "🏀",
   Tennis: "🎾",
   Baseball: "⚾",
+  "Horse Racing": "🐎",
+  eSports: "🎮",
+  UFC: "🥊",
+  Golf: "🏌️",
+  "Greyhound Racing": "🐕",
+  Boxing: "🥊",
+  Cricket: "🏏",
+  Rugby: "🏉",
+  Formula1: "🏎️",
+  Cycling: "🚴",
+  "Table Tennis": "🏓",
+  Volleyball: "🏐",
 };
+
 
 const grouped = liveGames.reduce((acc: Record<string, Game[]>, game: Game) => {
   if (!acc[game.sport]) acc[game.sport] = [];

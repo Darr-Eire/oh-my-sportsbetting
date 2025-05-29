@@ -356,8 +356,8 @@ export default function Home({
 
 
          {/* Bet Builder Highlights */}
-<section className="mt-12 w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
-  <div className="max-w-sm mx-auto">
+<section className="mt-6 w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-0">
+  <div className="max-w-md mx-auto">
     <BetBuilderCarousel />
   </div>
 </section>
