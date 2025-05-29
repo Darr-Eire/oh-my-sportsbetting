@@ -2,21 +2,34 @@
 import { useState } from "react";
 import { liveGames } from "../data/liveGames";
 
+// Define the expected game shape
+type Game = {
+  sport: string;
+  match: string;
+  time: string;
+  status: string;
+  odds?: {
+    home: string;
+    draw: string;
+    away: string;
+  };
+};
+
 // Emojis for known sports
 const sportEmojis: Record<string, string> = {
   Football: "⚽",
   Basketball: "🏀",
   Tennis: "🎾",
   Baseball: "⚾",
-  // Extend as needed
+  // Add more as needed
 };
 
-// Group live games by sport
-const grouped = liveGames.reduce((acc, game) => {
+// Group the games by sport
+const grouped = liveGames.reduce((acc: Record<string, Game[]>, game: Game) => {
   if (!acc[game.sport]) acc[game.sport] = [];
   acc[game.sport].push(game);
   return acc;
-}, {} as Record<string, typeof liveGames>);
+}, {});
 
 export default function LiveGamesFeed() {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
@@ -43,7 +56,7 @@ export default function LiveGamesFeed() {
               className="w-full px-4 py-3 flex justify-between items-center text-left bg-[#10182f] text-white font-semibold text-lg hover:bg-[#111c44] transition"
             >
               <span>{sportEmojis[sport] || "🎮"} {sport}</span>
-              <span>{/* No icon per your request */}</span>
+              <span>{/* No icon, per request */}</span>
             </button>
 
             {/* Game Cards */}
@@ -57,10 +70,10 @@ export default function LiveGamesFeed() {
                     {/* Match Info */}
                     <div className="flex justify-between items-center mb-2">
                       <h4 className="text-white font-medium">{game.match}</h4>
-                      <span className="text-sm text-cyan-400">{game.time}</span>
+                      <span className="text-sm text-cyan-400">{game.time}&apos;</span>
                     </div>
 
-                    {/* Odds Grid */}
+                    {/* Odds */}
                     <div className="grid grid-cols-3 gap-4 mt-2 text-center text-sm text-white font-semibold">
                       <div className="bg-[#0f1c34] py-2 rounded-lg border border-gray-700">
                         {game.odds?.home ?? "--"}
@@ -76,7 +89,7 @@ export default function LiveGamesFeed() {
                       </div>
                     </div>
 
-                    {/* View More Bets */}
+                    {/* View More Bets Button */}
                     <div className="mt-4 flex justify-center">
                       <button className="px-5 py-2 rounded-full bg-[#0f1a3c] text-white text-sm font-medium border border-cyan-400 hover:bg-cyan-600 transition">
                         View More Bets
