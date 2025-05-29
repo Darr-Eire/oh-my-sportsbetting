@@ -8,6 +8,7 @@ import SportsCarousel from "../components/SportsCarousel";
 import { useState } from "react";
 import Slider from "react-slick";
 import { horseRaces } from "../data/horseRaces";
+import LiveGamesFeed from "../components/LiveGamesFeed";
 
 import {
   FaFutbol,
@@ -121,9 +122,12 @@ export default function Home({
         )}
 
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
-          <PromoCarousel />
+          <PromoCarousel /> 
+     
+
           <SportsCarousel />
-          <PowerPriceCarousel />
+          <PowerPriceCarousel /> 
+        
 
           {/* Basketball Section */}
           <h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Basketball Games</h2>
@@ -356,7 +360,7 @@ export default function Home({
     ))}
   </Slider>
 </section>
-
+       <LiveGamesFeed />
 
 {/* Horse Racing Section */}
 <h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Horse Racing</h2>
