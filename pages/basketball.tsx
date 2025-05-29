@@ -79,7 +79,9 @@ export default function Basketball() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5 text-sm">
-                <button className="border border-cyan-400 text-cyan-300 px-3 py-2 rounded hover:bg-cyan-400 hover:text-black transition-all">
+                <button className="border border-white
+ text-cyan-300 px-3 py-2 rounded hover:bg-white
+ hover:text-black transition-all">
                   🏠 Home: {match.odds.home.toFixed(2)}
                 </button>
                 <button className="border border-purple-400 text-purple-300 px-3 py-2 rounded hover:bg-purple-400 hover:text-black transition-all">

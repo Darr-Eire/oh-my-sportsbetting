@@ -130,7 +130,8 @@ export default function Home({
         
 
           {/* Basketball Section */}
-          <h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Basketball Games</h2>
+ <h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Basketball Games</h2>
+
 <section className="w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg">
   <button
     onClick={() => setOpenBasketball(!openBasketball)}
@@ -174,7 +175,7 @@ export default function Home({
   {openBasketball && (
     <div
       id="basketball-matches"
-      className="mt-3 space-y-4 px-4 pb-4 border-t border-gray-700 rounded-b-lg"
+      className="mt-3 space-y-4 px-4 pb-6 border-t border-gray-700 rounded-b-lg"
     >
       {basketballMatches.map((block, i) => (
         <div key={i}>
@@ -209,16 +210,27 @@ export default function Home({
             ))}
           </div>
 
-          {/* View More Button */}
-          <div className="pt-3 text-right">
-            <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
-              <a className="text-sm text-electricCyan hover:underline font-medium">
-                View All Matches
-              </a>
-            </Link>
-          </div>
+          {/* View League Matches Button */}
+        <div className="pt-3 text-center">
+  <Link href={`/league/${block.league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
+    <a className="text-sm text-electricCyan hover:underline font-medium">
+      View All Matches
+    </a>
+  </Link>
+</div>
+
         </div>
       ))}
+
+      {/* Centered Global Basketball Link */}
+      <div className="pt-6 flex justify-center">
+        <Link href="/basketball" legacyBehavior>
+          <a className="text-sm px-5 py-2 border border-white
+ rounded-full text-white hover:bg-cyan-600 transition font-medium">
+            View All Basketball Games
+          </a>
+        </Link>
+      </div>
     </div>
   )}
 </section>
@@ -226,15 +238,17 @@ export default function Home({
 
 
 
+
           {/* Today's Football Matches */}
-      <section className="w-full max-w-3xl space-y-4">
+ <section className="w-full max-w-3xl space-y-4">
   <h2 className="text-lg font-bold text-white mb-3">Today’s Football Matches</h2>
+
   <div className="space-y-3 w-full">
     {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
       <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
         <button
           onClick={() => toggleLeague(league)}
-          className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition"
+          className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg"
           aria-expanded={openLeague === league}
           aria-controls={`${league}-matches`}
         >
@@ -247,7 +261,7 @@ export default function Home({
             unoptimized
           />
           <span className="flex items-center gap-2">
-            <span>{league}</span>
+            {league}
             <Image
               src={`https://flagcdn.com/w20/${countryCode}.png`}
               alt={`${countryCode} flag`}
@@ -272,7 +286,10 @@ export default function Home({
         </button>
 
         {openLeague === league && (
-          <div id={`${league}-matches`} className="px-4 pb-4 space-y-3">
+          <div
+            id={`${league}-matches`}
+            className="px-4 pb-4 pt-2 space-y-3 border-t border-gray-700 rounded-b-lg"
+          >
             {matches.map(({ teams, time, odds }, idx) => (
               <div
                 key={idx}
@@ -307,8 +324,8 @@ export default function Home({
               </div>
             ))}
 
-            {/* View More Matches Button */}
-            <div className="pt-3 text-right">
+            {/* Per-League View Button */}
+            <div className="pt-3 text-center">
               <Link href={`/league/${league.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
                 <a className="text-sm text-electricCyan hover:underline font-medium">
                   View All Matches
@@ -320,16 +337,29 @@ export default function Home({
       </div>
     ))}
   </div>
+
+  {/* Global "View All Football M" Button */}
+  <div className="pt-4 flex justify-center">
+    <Link href="/football" legacyBehavior>
+      <a className="text-sm px-5 py-2 border border-white
+ rounded-full text-white hover:bg-cyan-600 transition font-medium">
+        View All Football Leagues
+      </a>
+    </Link>
+  </div>
 </section>
+
+
 
 
 
          {/* Bet Builder Highlights */}
 <section className="mt-12 w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
-  <div className="max-w-md mx-auto">
+  <div className="max-w-sm mx-auto">
     <BetBuilderCarousel />
   </div>
 </section>
+
 
 {/* Popular Accumulators */}
 <section className="mt-12 w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">

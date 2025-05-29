@@ -28,20 +28,20 @@ export default function BetBuilderCarousel() {
   const current = betBuilders[index];
 
   return (
-    <section className="mb-10">
+    <section className="w-full max-w-2xl mx-auto mt-8 px-4">
       <h2 className="text-white font-bold text-lg mb-4 text-center">Most Popular Bet Builders</h2>
 
-      <div className="relative bg-[#0a1024] border border-[#2a2a3d] p-6 rounded-xl text-white text-center shadow-lg">
+      <div className="relative bg-[#0a1024] border border-[#2a2a3d] p-6 rounded-lg text-white text-center shadow-lg">
         <h3 className="font-bold mb-3 text-lg">{current.title}</h3>
 
-        <ul className="text-sm text-gray-300 mb-4 space-y-1">
+        <ul className="text-sm text-white mb-4 space-y-1">
           {current.options.map((opt, i) => (
             <li key={i}>{opt}</li>
           ))}
         </ul>
 
         <div>
-          <span className="bg-electricCyan text-black px-4 py-1 rounded-full text-sm font-bold shadow">
+          <span className="bg-electricCyan text-white px-4 py-1 rounded-full text-sm font-bold shadow">
             {current.odds}
           </span>
         </div>
@@ -53,10 +53,7 @@ export default function BetBuilderCarousel() {
         <div className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer">
           <FaArrowRight onClick={next} className="text-white opacity-60 hover:opacity-100 text-lg transition" />
         </div>
-
-      
       </div>
     </section>
   );
 }
-

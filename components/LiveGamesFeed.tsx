@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { liveGames } from "../data/liveGames";
 
-// Define the expected game shape
 type Game = {
   sport: string;
   match: string;
@@ -15,16 +14,13 @@ type Game = {
   };
 };
 
-// Emojis for known sports
 const sportEmojis: Record<string, string> = {
   Football: "⚽",
   Basketball: "🏀",
   Tennis: "🎾",
   Baseball: "⚾",
-  // Add more as needed
 };
 
-// Group the games by sport
 const grouped = liveGames.reduce((acc: Record<string, Game[]>, game: Game) => {
   if (!acc[game.sport]) acc[game.sport] = [];
   acc[game.sport].push(game);
@@ -44,64 +40,78 @@ export default function LiveGamesFeed() {
   };
 
   return (
-    <section className="w-full max-w-4xl mx-auto mb-10">
-      <h2 className="text-white text-3xl font-bold mb-6 px-4">In-Play Sports</h2>
+    <section className="w-full max-w-3xl mx-auto mb-10">
+      <h2 className="text-white text-lg font-bold mb-3">In-Play Sports</h2>
 
       {Object.entries(grouped).map(([sport, games]) => (
-        <div key={sport} className="mb-8">
-          <div className="bg-[#0a1024] rounded-lg border border-gray-700 shadow-sm overflow-hidden">
-            {/* Toggle Header */}
-            <button
-              onClick={() => toggleSection(sport)}
-              className="w-full px-4 py-3 flex justify-between items-center text-left bg-[#10182f] text-white font-semibold text-lg hover:bg-[#111c44] transition"
-            >
+        <div key={sport} className="mb-4 border border-gray-700 rounded-lg bg-[#0a1024]">
+          <button
+            onClick={() => toggleSection(sport)}
+            className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg"
+            aria-expanded={openSections[sport]}
+            aria-controls={`live-${sport}`}
+          >
+            <span className="flex items-center gap-2">
               <span>{sportEmojis[sport] || "🎮"} {sport}</span>
-              <span>{/* No icon, per request */}</span>
-            </button>
+            </span>
+          </button>
 
-            {/* Game Cards */}
-            {openSections[sport] && (
-              <div className="px-4 py-4 flex flex-col gap-4 bg-[#0a0a23]">
-                {games.map((game, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-[#10182f] border border-gray-600 hover:border-electricCyan p-4 rounded-lg transition"
-                  >
-                    {/* Match Info */}
-                    <div className="flex justify-between items-center mb-2">
-                      <h4 className="text-white font-medium">{game.match}</h4>
-                      <span className="text-sm text-cyan-400">{game.time}&apos;</span>
-                    </div>
-
-                    {/* Odds */}
-                    <div className="grid grid-cols-3 gap-4 mt-2 text-center text-sm text-white font-semibold">
-                      <div className="bg-[#0f1c34] py-2 rounded-lg border border-gray-700">
-                        {game.odds?.home ?? "--"}
-                        <div className="text-xs text-gray-400">Home</div>
+          {openSections[sport] && (
+            <div
+              id={`live-${sport}`}
+              className="px-4 pb-4 space-y-4 border-t border-gray-700 rounded-b-lg bg-[#0a1024]"
+            >
+              {games.map((game, idx) => (
+                <div key={idx}>
+                  <div className="flex flex-col bg-[#12182f] p-3 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <div className="text-sm font-semibold text-white">{game.match}</div>
+                        <div className="text-xs text-gray-400">Time: {game.time}&apos;</div>
                       </div>
-                      <div className="bg-[#0f1c34] py-2 rounded-lg border border-gray-700">
-                        {game.odds?.draw ?? "--"}
-                        <div className="text-xs text-gray-400">Draw</div>
+                      <div className="flex gap-3 text-sm font-medium text-center">
+                        <div className="flex flex-col items-center">
+                          <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                            {game.odds?.home ?? "—"}
+                          </div>
+                          <span className="text-xs text-softText mt-1">Home</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                            {game.odds?.draw ?? "—"}
+                          </div>
+                          <span className="text-xs text-softText mt-1">Draw</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
+                            {game.odds?.away ?? "—"}
+                          </div>
+                          <span className="text-xs text-softText mt-1">Away</span>
+                        </div>
                       </div>
-                      <div className="bg-[#0f1c34] py-2 rounded-lg border border-gray-700">
-                        {game.odds?.away ?? "--"}
-                        <div className="text-xs text-gray-400">Away</div>
-                      </div>
-                    </div>
-
-                    {/* View More Bets Button */}
-                    <div className="mt-4 flex justify-center">
-                      <button className="px-5 py-2 rounded-full bg-[#0f1a3c] text-white text-sm font-medium border border-cyan-400 hover:bg-cyan-600 transition">
-                        View More Bets
-                      </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
+
+                  {/* Centered Button */}
+                  <div className="pt-2 flex justify-center">
+                    <button className="text-sm px-4 
+ text-white rounded-full hover:bg-cyan-600 transition">
+                      View More Bets
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ))}
+
+      {/* FINAL BUTTON BELOW ALL */}
+      <div className="mt-6 flex justify-center">
+        <button className="text-sm px-6 py-2 border border-electricCyan text-electricCyan rounded-full hover:bg-electricCyan hover:text-black transition">
+          View All In-Play Markets
+        </button>
+      </div>
     </section>
   );
 }

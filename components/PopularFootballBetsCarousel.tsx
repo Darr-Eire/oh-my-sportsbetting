@@ -19,7 +19,7 @@ const popularBets = [
 ];
 
 const responsive = {
-  superLargeDesktop: { breakpoint: { max: 4000, min: 1536 }, items: 4 },
+  superLargeDesktop: { breakpoint: { max: 4000, min: 1536 }, items: 3 },
   desktop: { breakpoint: { max: 1535, min: 1024 }, items: 3 },
   tablet: { breakpoint: { max: 1023, min: 640 }, items: 2 },
   mobile: { breakpoint: { max: 639, min: 0 }, items: 1 },
@@ -27,8 +27,8 @@ const responsive = {
 
 export default function PopularFootballBetsCarousel() {
   return (
-    <section className="w-full max-w-5xl mx-auto mt-12 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
-      <h2 className="text-lg font-bold text-white mb-6 text-center">Popular Football Bets</h2>
+    <section className="w-full max-w-3xl mx-auto mt-12 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+      <h2 className="text-lg font-bold text-white mb-4 text-center">Popular Football Bets</h2>
 
       <Carousel
         responsive={responsive}
@@ -42,10 +42,10 @@ export default function PopularFootballBetsCarousel() {
         {popularBets.map((bet, idx) => (
           <div
             key={idx}
-            className="bg-[#0a1024] border border-white rounded-lg p-4 flex flex-col items-center justify-center h-40 hover:shadow-neon transition-shadow duration-300 text-center"
+            className="bg-[#0a1024] border border-white rounded-lg p-4 h-40 flex flex-col justify-center items-center text-center hover:shadow-neon transition-shadow duration-300"
           >
             <div className="text-sm text-white font-semibold">{bet.match}</div>
-            <div className="text-sm text-blue mt-1 italic">{bet.bet}</div>
+            <div className="text-sm italic text-blue-400 mt-1">{bet.bet}</div>
             <div className="mt-3 text-white text-lg font-bold">Odds: {bet.odds}</div>
           </div>
         ))}
