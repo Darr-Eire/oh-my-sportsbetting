@@ -61,7 +61,7 @@ const leagueInfo = [
   },
   {
     name: "Brazilian Série A",
-    logo: "/logos/brazilian_serie_a.png",
+    logo: "/logos/Brazilian_Serie_A.png",
     flag: "/flags/brazil.png",
     matches: brazilianseriea,
   },

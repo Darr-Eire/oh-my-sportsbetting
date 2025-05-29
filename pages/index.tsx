@@ -122,7 +122,8 @@ export default function Home({
         )}
 
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
-          <PromoCarousel /> 
+ <PromoCarousel className="mb-0" />
+
      
 
           <SportsCarousel />
@@ -674,7 +675,7 @@ export async function getServerSideProps() {
   {
     league: "Brazilian Série A",
     countryCode: "br",
-    leagueLogo: "/logos/brazilian_serie_a.png",
+    leagueLogo: "/logos/Brazilian_Serie_A.png",
     matches: [
       { teams: "Flamengo vs Palmeiras", time: "22:00", odds: { home: 2.2, draw: 3.1, away: 3.4 } },
       { teams: "Corinthians vs Sao Paulo", time: "00:30", odds: { home: 2.4, draw: 3.0, away: 3.0 } },

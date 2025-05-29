@@ -25,11 +25,10 @@ const sports = [
   { name: "eSports", icon: MdSportsEsports, slug: "esports" },
   { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
 ];
-
 export default function SportsCarousel() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4">
-      <nav className="flex overflow-x-auto gap-4 py-4 scrollbar-hide">
+      <nav className="flex overflow-x-auto gap-3 py-2 scrollbar-hide">
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}
@@ -37,7 +36,7 @@ export default function SportsCarousel() {
             className="flex-shrink-0 flex flex-col items-center justify-center w-16 sm:w-20 rounded-lg text-white hover:text-electricCyan transition"
           >
             <Icon className="text-3xl mb-1" />
-            <span className="text-xs text-center leading-tight">{name}</span>
+            <span className="text-[11px] text-center leading-tight">{name}</span>
           </Link>
         ))}
       </nav>
