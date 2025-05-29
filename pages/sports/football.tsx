@@ -125,14 +125,21 @@ export default function FootballPage() {
           </p>
 
           {/* League Logos Row */}
-          <div className="mt-4 flex flex-wrap justify-center gap-4">
-            <img src="/logos/premier_league.png" alt="Premier League" className="w-10 h-10 object-contain" />
-            <img src="/logos/la_liga.png" alt="La Liga" className="w-10 h-10 object-contain" />
-            <img src="/bundesliga.png" alt="Bundesliga" className="w-10 h-10 object-contain" />
-            <img src="/logos/serie_a.png" alt="Serie A" className="w-10 h-10 object-contain" />
-            <img src="/logos/ligue_1.png" alt="Ligue 1" className="w-10 h-10 object-contain" />
-            <img src="/logos/Brazilian_Serie_A.png" alt="Brazilian Serie A" className="w-10 h-10 object-contain" />
-          </div>
+     <div className="mt-4 flex flex-wrap justify-center gap-4">
+  <img src="/logos/premier_league.png" alt="Premier League" className="w-10 h-10 object-contain" />
+  <img src="/logos/championship.png" alt="Championship" className="w-10 h-10 object-contain" />
+  <img src="/bundesliga.png" alt="Bundesliga" className="w-10 h-10 object-contain" />
+  <img src="/logos/la_liga.png" alt="La Liga" className="w-10 h-10 object-contain" />
+  <img src="/logos/serie_a.png" alt="Serie A" className="w-10 h-10 object-contain" />
+  <img src="/logos/ligue_1.png" alt="Ligue 1" className="w-10 h-10 object-contain" />
+  <img src="/logos/Brazilian_Serie_A.png" alt="Brazilian Serie A" className="w-10 h-10 object-contain" />
+  <img src="/logos/j_1.png" alt="J1 League" className="w-10 h-10 object-contain" />
+  <img src="/logos/liga_mx.png" alt="Liga MX" className="w-10 h-10 object-contain" />
+  <img src="/logos/super_lig.png" alt="Turkish Süper Lig" className="w-10 h-10 object-contain" />
+  <img src="/logos/mls.png" alt="Major League Soccer" className="w-10 h-10 object-contain" />
+  <img src="/logos/league_of_ireland.png" alt="League of Ireland Premier Division" className="w-10 h-10 object-contain" />
+</div>
+
         </div>
 
         {/* Carousel */}
