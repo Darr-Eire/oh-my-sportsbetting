@@ -1,3 +1,5 @@
+// pages/sports/[sport].tsx
+
 "use client";
 import { useState } from "react";
 import Head from "next/head";
@@ -5,18 +7,23 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 
-// Create strict typings for your data
-type OddsType = { home: string; away: string; draw?: string } | string;
-
-type EventType = {
+type FootballOrBasketballOrUFC = {
   match?: string;
-  race?: string;
   fight?: string;
-  league?: string;
   countryCode: string;
   time: string;
-  odds: OddsType;
+  odds: { home: string; away: string; draw?: string };
 };
+
+type HorseRacingOrGreyhounds = {
+  track: string;
+  race: string;
+  countryCode: string;
+  time: string;
+  odds: string;
+};
+
+type EventType = FootballOrBasketballOrUFC | HorseRacingOrGreyhounds;
 
 const allSportsData: Record<string, EventType[]> = {
   Football: [
@@ -75,7 +82,7 @@ export default function AllSportsPage() {
 
               <div className="p-4 space-y-4">
                 {events.map((event, i) => {
-                  const isObjectOdds = typeof event.odds === 'object';
+                  const isHorseOrGreyhound = "track" in event;
 
                   return (
                     <div key={i} className="border border-gray-700 rounded-md bg-[#10182f] px-4 py-3 flex justify-between items-center shadow">
@@ -89,35 +96,31 @@ export default function AllSportsPage() {
                         />
                         <div>
                           <p className="text-white font-semibold">
-                            {event.match || event.race || event.fight || event.league}
+                            {isHorseOrGreyhound ? event.race : event.match || event.fight}
                           </p>
                           <p className="text-xs text-gray-400">{event.time}</p>
                         </div>
                       </div>
 
                       <div className="flex gap-2">
-                        {isObjectOdds ? (
+                        {isHorseOrGreyhound ? (
+                          <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-4 rounded shadow border border-green-400">
+                            Odds: {event.odds}
+                          </div>
+                        ) : (
                           <>
-                            {"home" in event.odds && (
-                              <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
-                                Home: {event.odds.home}
-                              </div>
-                            )}
+                            <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
+                              Home: {event.odds.home}
+                            </div>
                             {"draw" in event.odds && (
                               <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
                                 Draw: {event.odds.draw}
                               </div>
                             )}
-                            {"away" in event.odds && (
-                              <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
-                                Away: {event.odds.away}
-                              </div>
-                            )}
+                            <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
+                              Away: {event.odds.away}
+                            </div>
                           </>
-                        ) : (
-                          <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-4 rounded shadow border border-green-400">
-                            Odds: {event.odds}
-                          </div>
                         )}
                       </div>
                     </div>
