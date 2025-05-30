@@ -20,7 +20,7 @@ const slides: Slide[] = [
   {
     title: "🎯 Have You Used Your FREE SPIN Yet?",
     description:
-      "Don’t leave your free spin unused! Spin the wheel now for a guaranteed chance to win bonus Pi prizes, free bets, or exclusive rewards. Instant prizes waiting with every spin — no strings attached.",
+      "Don’t leave your free spin unused! Spin the wheel now for a guaranteed chance to win bonus Pi prizes, free bets, or exclusive rewards.",
     button: "Spin Now",
     radial: "radial-green",
     action: "/spin",
@@ -28,7 +28,7 @@ const slides: Slide[] = [
   {
     title: "🔥 Power Price Boosts: Bigger Odds, Bigger Wins!",
     description:
-      "This weekend’s biggest matches come with exclusive boosted odds you won’t find anywhere else. Maximize your profits with higher payouts on select fixtures. Limited-time offers — act before kickoff!",
+      "This weekend’s biggest matches come with exclusive boosted odds you won’t find anywhere else. Maximize your profits with higher payouts on select fixtures.",
     button: "View Boosts",
     radial: "radial-yellow",
     action: "/power-prices",
@@ -36,7 +36,7 @@ const slides: Slide[] = [
   {
     title: "🎁 Welcome Bonus: Free Jackpot Entry!",
     description:
-      "New here? We’re giving every new player a FREE entry into this week’s Pi Jackpot! Register today and instantly secure your chance to win huge cash prizes. No deposit required to claim your spot.",
+      "New here? We’re giving every new player a FREE entry into this week’s Pi Jackpot! Register today and instantly secure your chance to win huge cash prizes.",
     button: "Join & Play",
     radial: "radial-cyan",
     action: "/signup",
