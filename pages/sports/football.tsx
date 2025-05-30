@@ -166,7 +166,7 @@ export default function FootballPage() {
     "/flags/italy.png",
     "/flags/germany.png",
     "/flags/france.png",
-    "/logos/usa.png"
+
   ].map((flag, index) => (
     <div key={index}>
       <img src={flag} alt="flag" className="w-12 h-12 object-contain" />
