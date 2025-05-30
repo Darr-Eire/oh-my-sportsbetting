@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { races } from '../../data/greyhoundRaces';
+import { races } from "../../data/greyhoundRaces";
 
 const trapColors = [
   "bg-white text-black",
@@ -13,23 +13,27 @@ const trapColors = [
   "bg-red-600 text-white",
   "bg-black text-white",
   "bg-orange-400 text-black",
-  "bg-[repeating-linear-gradient(45deg,_#000_0_10px,_#fff_10px_20px)] text-red-600"
+  "bg-[repeating-linear-gradient(45deg,_#000_0_10px,_#fff_10px_20px)] text-red-600",
 ];
+
+// Strict type definitions
+type Race = {
+  track: string;
+  countryCode: string;
+  raceTime: string;
+  raceName: string;
+  runners: string[];
+};
 
 export default function GreyhoundRacing() {
   const [activeTab, setActiveTab] = useState<"Today" | "Tomorrow">("Today");
-  const [openTracks, setOpenTracks] = useState<{ [key: string]: boolean }>({});
 
-  // Group races by track
-  const groupedRaces = races[activeTab].reduce((acc: any, race: any) => {
+  // Group races by track with proper typing
+  const groupedRaces = races[activeTab].reduce((acc: Record<string, Race[]>, race: Race) => {
     if (!acc[race.track]) acc[race.track] = [];
     acc[race.track].push(race);
     return acc;
   }, {});
-
-  const toggleTrack = (track: string) => {
-    setOpenTracks((prev) => ({ ...prev, [track]: !prev[track] }));
-  };
 
   return (
     <>
@@ -75,7 +79,7 @@ export default function GreyhoundRacing() {
 
         {/* Race Groups by Track */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
-          {Object.entries(groupedRaces).map(([track, trackRaces]: any) => {
+          {Object.entries(groupedRaces).map(([track, trackRaces]: [string, Race[]]) => {
             const countryCode = trackRaces[0].countryCode;
             return (
               <details key={track} className="mb-8 border border-white rounded-lg bg-[#0a1024] shadow-md group">
@@ -96,7 +100,7 @@ export default function GreyhoundRacing() {
                   </svg>
                 </summary>
 
-                {trackRaces.map((race: any, i: number) => (
+                {trackRaces.map((race, i) => (
                   <div key={i} className="mb-4 p-4 border-t border-white bg-[#0a1024]">
                     <div className="flex justify-between items-center mb-2">
                       <span className="font-semibold">{race.raceName}</span>
@@ -104,28 +108,23 @@ export default function GreyhoundRacing() {
                     </div>
 
                     <div className="space-y-2">
-                      {race.runners.map((runner: string, index: number) => {
-                        const parts = runner.split(" ");
-                        const dogName = parts.slice(0, -1).join(" ");
-                        const dogOdds = parts.slice(-1)[0];
-
-                        return (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between border border-gray-700 rounded-md px-4 py-3 bg-[#10182f] shadow"
-                          >
-                            <div className={`w-10 h-10 flex items-center justify-center font-bold text-sm rounded-sm ${trapColors[index % trapColors.length]}`}>
-                              {index + 1}
-                            </div>
-                            <div className="flex-1 px-4">
-                              <p className="text-white font-semibold">{dogName}</p>
-                            </div>
-                            <div className="bg-[#0a1024] text-white text-sm font-bold py-1 px-3 rounded shadow border border-white min-w-[60px] text-center">
-                              {dogOdds}
-                            </div>
+                      {race.runners.map((dog, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between border border-gray-700 rounded-md px-4 py-3 bg-[#10182f] shadow"
+                        >
+                          <div className={`w-10 h-10 flex items-center justify-center font-bold text-sm rounded-sm ${trapColors[index % trapColors.length]}`}>
+                            {index + 1}
                           </div>
-                        );
-                      })}
+                          <div className="flex-1 px-4">
+                            <p className="text-white font-semibold">{dog}</p>
+                          </div>
+                          <div className="bg-[#0a1024] text-white text-sm font-bold py-1 px-3 rounded shadow border border-white min-w-[60px] text-center">
+                            {/* We already have odds inside the dog string (ex: "Runner Name 5/1") */}
+                            {/* No need to calculate odds dynamically */}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
@@ -135,7 +134,7 @@ export default function GreyhoundRacing() {
         </div>
 
         {/* Back to Home */}
-        <div className="w-full flex justify-center mb-8">
+        <div className="flex justify-center mb-8">
           <Link href="/" passHref legacyBehavior>
             <a className="px-6 py-3 border border-white rounded-full text-white font-semibold transition hover:bg-white hover:text-black">
               Back to Home
