@@ -21,13 +21,13 @@ export default function GreyhoundRacing() {
   const [openTracks, setOpenTracks] = useState<{ [key: string]: boolean }>({});
 
   // Group races by track
-  const groupedRaces = races[activeTab].reduce((acc, race) => {
+  const groupedRaces = races[activeTab].reduce((acc: any, race: any) => {
     if (!acc[race.track]) acc[race.track] = [];
     acc[race.track].push(race);
     return acc;
   }, {});
 
-  const toggleTrack = (track) => {
+  const toggleTrack = (track: string) => {
     setOpenTracks((prev) => ({ ...prev, [track]: !prev[track] }));
   };
 
@@ -75,7 +75,7 @@ export default function GreyhoundRacing() {
 
         {/* Race Groups by Track */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
-          {Object.entries(groupedRaces).map(([track, trackRaces]) => {
+          {Object.entries(groupedRaces).map(([track, trackRaces]: any) => {
             const countryCode = trackRaces[0].countryCode;
             return (
               <details key={track} className="mb-8 border border-white rounded-lg bg-[#0a1024] shadow-md group">
@@ -96,7 +96,7 @@ export default function GreyhoundRacing() {
                   </svg>
                 </summary>
 
-                {trackRaces.map((race, i) => (
+                {trackRaces.map((race: any, i: number) => (
                   <div key={i} className="mb-4 p-4 border-t border-white bg-[#0a1024]">
                     <div className="flex justify-between items-center mb-2">
                       <span className="font-semibold">{race.raceName}</span>
@@ -104,8 +104,11 @@ export default function GreyhoundRacing() {
                     </div>
 
                     <div className="space-y-2">
-                      {race.runners.map((dog, index) => {
-                        const odds = `${(1.5 + index * 0.5).toFixed(1)}/1`;
+                      {race.runners.map((runner: string, index: number) => {
+                        const parts = runner.split(" ");
+                        const dogName = parts.slice(0, -1).join(" ");
+                        const dogOdds = parts.slice(-1)[0];
+
                         return (
                           <div
                             key={index}
@@ -115,10 +118,10 @@ export default function GreyhoundRacing() {
                               {index + 1}
                             </div>
                             <div className="flex-1 px-4">
-                              <p className="text-white font-semibold">{dog}</p>
+                              <p className="text-white font-semibold">{dogName}</p>
                             </div>
                             <div className="bg-[#0a1024] text-white text-sm font-bold py-1 px-3 rounded shadow border border-white min-w-[60px] text-center">
-                              {odds}
+                              {dogOdds}
                             </div>
                           </div>
                         );
@@ -132,7 +135,7 @@ export default function GreyhoundRacing() {
         </div>
 
         {/* Back to Home */}
-        <div className="flex justify-center mb-8">
+        <div className="w-full flex justify-center mb-8">
           <Link href="/" passHref legacyBehavior>
             <a className="px-6 py-3 border border-white rounded-full text-white font-semibold transition hover:bg-white hover:text-black">
               Back to Home
