@@ -1,7 +1,4 @@
-// pages/sports/[sport].tsx
-
 "use client";
-import { useState } from "react";
 import Head from "next/head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -23,7 +20,15 @@ type HorseRacingOrGreyhounds = {
   odds: string;
 };
 
-type EventType = FootballOrBasketballOrUFC | HorseRacingOrGreyhounds;
+type eSportsType = {
+  match: string;
+  league: string;
+  countryCode: string;
+  time: string;
+  odds: { home: string; away: string };
+};
+
+type EventType = FootballOrBasketballOrUFC | HorseRacingOrGreyhounds | eSportsType;
 
 const allSportsData: Record<string, EventType[]> = {
   Football: [
@@ -83,6 +88,7 @@ export default function AllSportsPage() {
               <div className="p-4 space-y-4">
                 {events.map((event, i) => {
                   const isHorseOrGreyhound = "track" in event;
+                  const isEsports = "league" in event;
 
                   return (
                     <div key={i} className="border border-gray-700 rounded-md bg-[#10182f] px-4 py-3 flex justify-between items-center shadow">
@@ -96,7 +102,7 @@ export default function AllSportsPage() {
                         />
                         <div>
                           <p className="text-white font-semibold">
-                            {isHorseOrGreyhound ? event.race : event.match || event.fight}
+                            {isHorseOrGreyhound ? event.race : isEsports ? `${event.league}: ${event.match}` : event.match || event.fight}
                           </p>
                           <p className="text-xs text-gray-400">{event.time}</p>
                         </div>
