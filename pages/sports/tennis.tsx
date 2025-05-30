@@ -2,7 +2,6 @@
 import Head from "next/head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import Image from "next/image";
 import Link from "next/link";
 import { tennisEvents } from "../../data/tennis";
 
@@ -18,7 +17,9 @@ const competitions = [
   "WTA 500",
   "Challenger",
   "ITF Futures"
-];
+] as const;
+
+type Competition = typeof competitions[number];
 
 export default function TennisPage() {
   return (
@@ -47,7 +48,7 @@ export default function TennisPage() {
                 </svg>
               </summary>
 
-              {(tennisEvents[comp] || []).map((event, idx) => (
+              {(tennisEvents[comp as Competition] || []).map((event, idx) => (
                 <div key={idx} className="border border-white rounded-lg bg-[#0a1024] mb-2 px-4 py-3 flex items-center justify-between shadow">
                   <div className="flex-1">
                     <div className="font-semibold text-white">{event.match}</div>
