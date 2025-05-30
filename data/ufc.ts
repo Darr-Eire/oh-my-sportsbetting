@@ -1,7 +1,7 @@
 export const ufcEvents = {
   Today: [
     {
-      event: "UFC 300: Jones vs Miocic",
+      event: "UFC 300",
       countryCode: "us",
       startTime: "22:00",
       fights: [

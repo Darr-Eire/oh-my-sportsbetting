@@ -122,7 +122,7 @@ const leagueGroups = [
   },
   {
     country: "USA",
-    flag: "/logos/usa.png",
+    flag: "/flags/usa.png",
     leagues: [
       { name: "Major League Soccer", logo: "/logos/mls.png", matches: mls }
     ],
