@@ -3,8 +3,20 @@ import { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Define your slides
-const slides = [
+// 1️⃣ Define types for the radial keys
+type RadialKey = 'radial-green' | 'radial-yellow' | 'radial-cyan';
+
+// 2️⃣ Define slide type
+type Slide = {
+  title: string;
+  description: string;
+  button: string;
+  radial: RadialKey;
+  action: string;
+};
+
+// 3️⃣ Slides array
+const slides: Slide[] = [
   {
     title: "🎯 Have You Used Your FREE SPIN Yet?",
     description:
@@ -31,8 +43,8 @@ const slides = [
   },
 ];
 
-// Map radial backgrounds to button gradients
-const buttonColors = {
+// 4️⃣ Button color map (now fully type-safe)
+const buttonColors: Record<RadialKey, string> = {
   "radial-green": "from-[#0a1024] to-[#0a1024] hover:from-green-500 hover:to-green-700",
   "radial-yellow": "from-[#0a1024] to-[#0a1024] hover:from-yellow-500 hover:to-yellow-700",
   "radial-cyan": "from-[#0a1024] to-[#0a1024] hover:from-cyan-500 hover:to-cyan-700",
