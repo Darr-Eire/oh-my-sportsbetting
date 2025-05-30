@@ -85,6 +85,13 @@ const leagueGroups = [
       { name: "Coupe de France", logo: "/logos/coupedefrance.png", matches: coupeDeFrance }
     ],
   },
+    {
+    country: "Ireland",
+    flag: "/flags/ireland.png",
+    leagues: [
+      { name: "League of Ireland Premier Division", logo: "/logos/league_of_ireland.png", matches: league_of_ireland }
+    ],
+  },
   {
     country: "Brazil",
     flag: "/flags/brazil.png",
@@ -118,13 +125,6 @@ const leagueGroups = [
     flag: "/logos/usa.png",
     leagues: [
       { name: "Major League Soccer", logo: "/logos/mls.png", matches: mls }
-    ],
-  },
-  {
-    country: "Ireland",
-    flag: "/flags/ireland.png",
-    leagues: [
-      { name: "League of Ireland Premier Division", logo: "/logos/league_of_ireland.png", matches: league_of_ireland }
     ],
   },
 ];

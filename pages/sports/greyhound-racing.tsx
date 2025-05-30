@@ -4,15 +4,16 @@ import Head from "next/head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
+import Link from "next/link";
 import { races } from '../../data/greyhoundRaces';
 
 const trapColors = [
-  "bg-white text-black",                // Trap 1
-  "bg-blue-600 text-white",             // Trap 2
-  "bg-red-600 text-white",              // Trap 3
-  "bg-black text-white",                // Trap 4
-  "bg-orange-400 text-black",           // Trap 5
-  "bg-[repeating-linear-gradient(45deg,_#000_0_10px,_#fff_10px_20px)] text-red-600" // Trap 6
+  "bg-white text-black",
+  "bg-blue-600 text-white",
+  "bg-red-600 text-white",
+  "bg-black text-white",
+  "bg-orange-400 text-black",
+  "bg-[repeating-linear-gradient(45deg,_#000_0_10px,_#fff_10px_20px)] text-red-600"
 ];
 
 export default function GreyhoundRacing() {
@@ -84,7 +85,6 @@ export default function GreyhoundRacing() {
                 <span className="text-sm text-gray-400">{race.raceTime}</span>
               </summary>
 
-              {/* Dog Rows */}
               <div className="p-4 space-y-4">
                 {race.runners.map((dog, index) => {
                   const odds = `${(1.5 + index * 0.5).toFixed(1)}/1`;
@@ -98,11 +98,9 @@ export default function GreyhoundRacing() {
                       >
                         {index + 1}
                       </div>
-
                       <div className="flex-1 px-4">
                         <p className="text-white font-semibold">{dog}</p>
                       </div>
-
                       <div className="bg-[#0a1024] text-white text-sm font-bold py-1 px-3 rounded shadow border border-white min-w-[60px] text-center">
                         {odds}
                       </div>
@@ -116,12 +114,11 @@ export default function GreyhoundRacing() {
 
         {/* Back to Home Button */}
         <div className="flex justify-center mt-8 mb-8">
-          <a
-            href="/"
-            className="px-6 py-3 border border-white rounded-full text-white font-semibold transition hover:bg-white hover:text-black"
-          >
-            Back to Home
-          </a>
+          <Link href="/" passHref legacyBehavior>
+            <a className="px-6 py-3 border border-white rounded-full text-white font-semibold transition hover:bg-white hover:text-black">
+              Back to Home
+            </a>
+          </Link>
         </div>
 
         <Footer />
