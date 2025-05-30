@@ -22,7 +22,7 @@ const sportEmojis: Record<string, string> = {
   "Horse Racing": "🐎",
   eSports: "🎮",
   UFC: "🥊",
-  Golf: "🏌️",
+
   "Greyhound Racing": "🐕",
   Boxing: "🥊",
   Cricket: "🏏",

@@ -6,7 +6,7 @@ const sportsTabs = [
   { name: "All", icon: "⏱️" },
   { name: "Football", icon: "⚽" },
   { name: "Tennis", icon: "🎾" },
-  { name: "Golf", icon: "🏌️" },
+
   { name: "Cricket", icon: "🏏" },
 ];
 

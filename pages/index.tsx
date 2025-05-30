@@ -16,7 +16,7 @@ import {
   FaStopwatch,
   FaTicketAlt,
   FaDog,
-  FaGolfBall,
+
   FaBasketballBall,
   FaUserNinja,
   FaGamepad,
@@ -27,9 +27,7 @@ const sports = [
   { name: "Football", icon: FaFutbol, slug: "football" },
   { name: "Horse Racing", icon: FaHorseHead, slug: "horse-racing" },
   { name: "In-Play", icon: FaStopwatch, slug: "in-play" },
-  { name: "Lotteries", icon: FaTicketAlt, slug: "lotteries" },
   { name: "Greyhound Racing", icon: FaDog, slug: "greyhound-racing" },
-  { name: "Golf", icon: FaGolfBall, slug: "golf" },
   { name: "Basketball", icon: FaBasketballBall, slug: "basketball" },
   { name: "UFC", icon: FaUserNinja, slug: "ufc" },
   { name: "eSports", icon: FaGamepad, slug: "esports" },
@@ -143,7 +141,7 @@ export default function Home({
     aria-controls="basketball-matches"
   >
     <Image
-      src="/logos/nba.png"
+      src="/leagues/nba.png"
       alt="NBA Logo"
       width={32}
       height={32}
