@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "man-city-vs-chelsea",
+    "teams": "Manchester City vs Chelsea",
+    "time": "Sat 18:00",
+    "odds": { "home": 1.70, "draw": 3.60, "away": 4.50 }
+  },
+  {
+    "slug": "arsenal-vs-liverpool",
+    "teams": "Arsenal vs Liverpool",
+    "time": "Sun 12:30",
+    "odds": { "home": 2.40, "draw": 3.20, "away": 2.90 }
+  },
+  {
+    "slug": "tottenham-vs-westham",
+    "teams": "Tottenham Hotspur vs West Ham United",
+    "time": "Sun 15:30",
+    "odds": { "home": 2.10, "draw": 3.40, "away": 3.60 }
+  },
+  {
+    "slug": "brighton-vs-leicester",
+    "teams": "Brighton vs Leicester City",
+    "time": "Mon 14:00",
+    "odds": { "home": 2.50, "draw": 3.10, "away": 2.80 }
+  },
+  {
+    "slug": "everton-vs-villa",
+    "teams": "Everton vs Aston Villa",
+    "time": "Mon 17:00",
+    "odds": { "home": 2.60, "draw": 3.20, "away": 2.80 }
+  },
+  {
+    "slug": "wolves-vs-palace",
+    "teams": "Wolves vs Crystal Palace",
+    "time": "Tue 13:00",
+    "odds": { "home": 2.30, "draw": 3.20, "away": 3.00 }
+  }
+]

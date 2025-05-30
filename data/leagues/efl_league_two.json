@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "wrexham-vs-stockport",
+    "teams": "Wrexham vs Stockport County",
+    "time": "Sat 14:00",
+    "odds": { "home": 2.20, "draw": 3.20, "away": 3.50 }
+  },
+  {
+    "slug": "notts-vs-mansfield",
+    "teams": "Notts County vs Mansfield Town",
+    "time": "Sat 16:00",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 2.90 }
+  },
+  {
+    "slug": "gillingham-vs-barrow",
+    "teams": "Gillingham vs Barrow",
+    "time": "Sun 11:30",
+    "odds": { "home": 2.60, "draw": 3.00, "away": 2.80 }
+  },
+  {
+    "slug": "swindon-vs-doncaster",
+    "teams": "Swindon Town vs Doncaster Rovers",
+    "time": "Sun 13:00",
+    "odds": { "home": 2.30, "draw": 3.00, "away": 3.10 }
+  },
+  {
+    "slug": "crewe-vs-accrington",
+    "teams": "Crewe Alexandra vs Accrington Stanley",
+    "time": "Mon 14:00",
+    "odds": { "home": 2.70, "draw": 3.00, "away": 2.70 }
+  },
+  {
+    "slug": "tranmere-vs-salford",
+    "teams": "Tranmere Rovers vs Salford City",
+    "time": "Mon 16:30",
+    "odds": { "home": 2.50, "draw": 3.10, "away": 3.00 }
+  }
+]

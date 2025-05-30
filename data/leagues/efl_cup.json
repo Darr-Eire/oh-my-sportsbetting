@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "leicester-vs-derby",
+    "teams": "Leicester City vs Derby County",
+    "time": "Sat 18:00",
+    "odds": { "home": 2.00, "draw": 3.30, "away": 3.80 }
+  },
+  {
+    "slug": "forest-vs-coventry",
+    "teams": "Nottingham Forest vs Coventry City",
+    "time": "Sun 13:00",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 3.00 }
+  },
+  {
+    "slug": "southampton-vs-bournemouth",
+    "teams": "Southampton vs Bournemouth",
+    "time": "Sun 15:30",
+    "odds": { "home": 2.20, "draw": 3.30, "away": 3.10 }
+  },
+  {
+    "slug": "reading-vs-luton",
+    "teams": "Reading vs Luton Town",
+    "time": "Mon 13:00",
+    "odds": { "home": 2.50, "draw": 3.20, "away": 2.70 }
+  },
+  {
+    "slug": "millwall-vs-watford",
+    "teams": "Millwall vs Watford",
+    "time": "Mon 17:30",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 3.10 }
+  },
+  {
+    "slug": "ipswich-vs-huddersfield",
+    "teams": "Ipswich Town vs Huddersfield Town",
+    "time": "Tue 14:00",
+    "odds": { "home": 2.60, "draw": 3.10, "away": 2.90 }
+  }
+]

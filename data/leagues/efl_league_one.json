@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "portsmouth-vs-bolton",
+    "teams": "Portsmouth vs Bolton Wanderers",
+    "time": "Sat 15:00",
+    "odds": { "home": 2.10, "draw": 3.30, "away": 3.40 }
+  },
+  {
+    "slug": "derby-vs-barnsley",
+    "teams": "Derby County vs Barnsley",
+    "time": "Sat 17:30",
+    "odds": { "home": 2.20, "draw": 3.20, "away": 3.20 }
+  },
+  {
+    "slug": "peterborough-vs-oxford",
+    "teams": "Peterborough vs Oxford United",
+    "time": "Sun 13:00",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 2.80 }
+  },
+  {
+    "slug": "blackpool-vs-lincoln",
+    "teams": "Blackpool vs Lincoln City",
+    "time": "Sun 16:00",
+    "odds": { "home": 2.30, "draw": 3.20, "away": 3.10 }
+  },
+  {
+    "slug": "wycombe-vs-exeter",
+    "teams": "Wycombe vs Exeter City",
+    "time": "Mon 12:30",
+    "odds": { "home": 2.60, "draw": 3.00, "away": 2.70 }
+  },
+  {
+    "slug": "shrewsbury-vs-burton",
+    "teams": "Shrewsbury vs Burton Albion",
+    "time": "Mon 15:00",
+    "odds": { "home": 2.50, "draw": 3.10, "away": 2.90 }
+  }
+]

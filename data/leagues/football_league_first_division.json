@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "sunderland-vs-westbrom",
+    "teams": "Sunderland vs West Bromwich Albion",
+    "time": "Sat 12:30",
+    "odds": { "home": 2.20, "draw": 3.20, "away": 3.30 }
+  },
+  {
+    "slug": "leeds-vs-sheffield",
+    "teams": "Leeds United vs Sheffield Wednesday",
+    "time": "Sat 15:00",
+    "odds": { "home": 2.10, "draw": 3.40, "away": 3.50 }
+  },
+  {
+    "slug": "middlesbrough-vs-stoke",
+    "teams": "Middlesbrough vs Stoke City",
+    "time": "Sat 17:45",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 3.00 }
+  },
+  {
+    "slug": "preston-vs-hull",
+    "teams": "Preston North End vs Hull City",
+    "time": "Sun 13:00",
+    "odds": { "home": 2.50, "draw": 3.00, "away": 2.80 }
+  },
+  {
+    "slug": "blackburn-vs-qpr",
+    "teams": "Blackburn Rovers vs QPR",
+    "time": "Sun 15:30",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 3.00 }
+  },
+  {
+    "slug": "cardiff-vs-bristol",
+    "teams": "Cardiff City vs Bristol City",
+    "time": "Mon 18:00",
+    "odds": { "home": 2.60, "draw": 3.20, "away": 2.80 }
+  }
+]

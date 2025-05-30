@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "eibar-vs-leganes",
+    "teams": "Eibar vs Leganes",
+    "time": "Sat 18:00",
+    "odds": { "home": 2.20, "draw": 3.00, "away": 3.30 }
+  },
+  {
+    "slug": "granada-vs-albacete",
+    "teams": "Granada vs Albacete",
+    "time": "Sat 20:00",
+    "odds": { "home": 2.10, "draw": 3.20, "away": 3.50 }
+  },
+  {
+    "slug": "las-palmas-vs-burgos",
+    "teams": "Las Palmas vs Burgos",
+    "time": "Sun 12:00",
+    "odds": { "home": 2.00, "draw": 3.10, "away": 3.60 }
+  },
+  {
+    "slug": "oviedo-vs-mirandes",
+    "teams": "Real Oviedo vs Mirandes",
+    "time": "Sun 15:00",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 3.00 }
+  },
+  {
+    "slug": "huesca-vs-sporting",
+    "teams": "Huesca vs Sporting Gijon",
+    "time": "Mon 19:00",
+    "odds": { "home": 2.40, "draw": 3.20, "away": 2.90 }
+  },
+  {
+    "slug": "zaragoza-vs-levante",
+    "teams": "Zaragoza vs Levante",
+    "time": "Mon 21:00",
+    "odds": { "home": 2.50, "draw": 3.00, "away": 2.80 }
+  }
+]

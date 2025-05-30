@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "juventus-vs-atalanta",
+    "teams": "Juventus vs Atalanta",
+    "time": "Wed 20:00",
+    "odds": { "home": 2.05, "draw": 3.20, "away": 3.50 }
+  },
+  {
+    "slug": "inter-vs-napoli",
+    "teams": "Inter Milan vs Napoli",
+    "time": "Thu 20:00",
+    "odds": { "home": 1.95, "draw": 3.40, "away": 3.80 }
+  },
+  {
+    "slug": "roma-vs-lazio",
+    "teams": "Roma vs Lazio",
+    "time": "Tue 19:30",
+    "odds": { "home": 2.20, "draw": 3.10, "away": 3.20 }
+  },
+  {
+    "slug": "fiorentina-vs-torino",
+    "teams": "Fiorentina vs Torino",
+    "time": "Wed 18:00",
+    "odds": { "home": 2.00, "draw": 3.25, "away": 3.60 }
+  },
+  {
+    "slug": "spezia-vs-sassuolo",
+    "teams": "Spezia vs Sassuolo",
+    "time": "Thu 18:30",
+    "odds": { "home": 2.40, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "genoa-vs-udinese",
+    "teams": "Genoa vs Udinese",
+    "time": "Fri 21:00",
+    "odds": { "home": 2.30, "draw": 3.20, "away": 3.10 }
+  }
+]

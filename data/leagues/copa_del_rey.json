@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "real-madrid-vs-sevilla",
+    "teams": "Real Madrid vs Sevilla",
+    "time": "Sat 20:00",
+    "odds": { "home": 1.60, "draw": 3.80, "away": 5.00 }
+  },
+  {
+    "slug": "barcelona-vs-betis",
+    "teams": "Barcelona vs Real Betis",
+    "time": "Sun 19:00",
+    "odds": { "home": 1.70, "draw": 3.60, "away": 4.80 }
+  },
+  {
+    "slug": "atletico-vs-athletic",
+    "teams": "Atletico Madrid vs Athletic Bilbao",
+    "time": "Mon 21:00",
+    "odds": { "home": 2.00, "draw": 3.20, "away": 3.50 }
+  },
+  {
+    "slug": "valencia-vs-villarreal",
+    "teams": "Valencia vs Villarreal",
+    "time": "Tue 19:00",
+    "odds": { "home": 2.20, "draw": 3.30, "away": 3.20 }
+  },
+  {
+    "slug": "osasuna-vs-mallorca",
+    "teams": "Osasuna vs Mallorca",
+    "time": "Wed 20:00",
+    "odds": { "home": 2.40, "draw": 3.10, "away": 2.90 }
+  },
+  {
+    "slug": "celta-vs-getafe",
+    "teams": "Celta Vigo vs Getafe",
+    "time": "Thu 21:00",
+    "odds": { "home": 2.30, "draw": 3.20, "away": 3.00 }
+  }
+]

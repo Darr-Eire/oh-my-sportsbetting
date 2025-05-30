@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "psg-vs-marseille",
+    "teams": "Paris Saint-Germain vs Marseille",
+    "time": "Wed 21:00",
+    "odds": { "home": 1.60, "draw": 3.80, "away": 5.00 }
+  },
+  {
+    "slug": "lyon-vs-monaco",
+    "teams": "Lyon vs Monaco",
+    "time": "Tue 20:30",
+    "odds": { "home": 2.00, "draw": 3.20, "away": 3.60 }
+  },
+  {
+    "slug": "lille-vs-rennes",
+    "teams": "Lille vs Rennes",
+    "time": "Thu 20:45",
+    "odds": { "home": 2.10, "draw": 3.10, "away": 3.30 }
+  },
+  {
+    "slug": "angers-vs-reims",
+    "teams": "Angers vs Reims",
+    "time": "Wed 18:00",
+    "odds": { "home": 2.30, "draw": 3.00, "away": 3.10 }
+  },
+  {
+    "slug": "montpellier-vs-brest",
+    "teams": "Montpellier vs Brest",
+    "time": "Mon 19:00",
+    "odds": { "home": 2.00, "draw": 3.20, "away": 3.50 }
+  },
+  {
+    "slug": "toulouse-vs-nantes",
+    "teams": "Toulouse vs Nantes",
+    "time": "Fri 21:00",
+    "odds": { "home": 2.15, "draw": 3.10, "away": 3.40 }
+  }
+]

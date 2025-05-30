@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "auxerre-vs-amiens",
+    "teams": "Auxerre vs Amiens",
+    "time": "Sat 19:00",
+    "odds": { "home": 1.90, "draw": 3.30, "away": 3.80 }
+  },
+  {
+    "slug": "toulouse-vs-nimes",
+    "teams": "Toulouse vs Nîmes",
+    "time": "Sat 15:00",
+    "odds": { "home": 1.70, "draw": 3.50, "away": 4.60 }
+  },
+  {
+    "slug": "parisfc-vs-caen",
+    "teams": "Paris FC vs Caen",
+    "time": "Sun 14:00",
+    "odds": { "home": 2.20, "draw": 3.00, "away": 3.30 }
+  },
+  {
+    "slug": "sochaux-vs-dijon",
+    "teams": "Sochaux vs Dijon",
+    "time": "Sun 16:00",
+    "odds": { "home": 2.05, "draw": 3.10, "away": 3.50 }
+  },
+  {
+    "slug": "guingamp-vs-annecy",
+    "teams": "Guingamp vs Annecy",
+    "time": "Mon 20:00",
+    "odds": { "home": 2.30, "draw": 3.20, "away": 3.00 }
+  },
+  {
+    "slug": "metz-vs-rodez",
+    "teams": "Metz vs Rodez",
+    "time": "Fri 20:45",
+    "odds": { "home": 1.80, "draw": 3.40, "away": 4.20 }
+  }
+]

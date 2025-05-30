@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "bayern-vs-dortmund",
+    "teams": "Bayern Munich vs Borussia Dortmund",
+    "time": "Sat 20:45",
+    "odds": { "home": 1.85, "draw": 3.50, "away": 4.00 }
+  },
+  {
+    "slug": "leipzig-vs-frankfurt",
+    "teams": "RB Leipzig vs Eintracht Frankfurt",
+    "time": "Fri 20:45",
+    "odds": { "home": 2.00, "draw": 3.20, "away": 3.60 }
+  },
+  {
+    "slug": "leverkusen-vs-freiburg",
+    "teams": "Bayer Leverkusen vs Freiburg",
+    "time": "Thu 18:30",
+    "odds": { "home": 2.10, "draw": 3.00, "away": 3.30 }
+  },
+  {
+    "slug": "wolfsburg-vs-augsburg",
+    "teams": "Wolfsburg vs Augsburg",
+    "time": "Wed 19:00",
+    "odds": { "home": 2.30, "draw": 3.10, "away": 3.20 }
+  },
+  {
+    "slug": "mainz-vs-stuttgart",
+    "teams": "Mainz vs Stuttgart",
+    "time": "Tue 20:00",
+    "odds": { "home": 2.40, "draw": 3.00, "away": 2.90 }
+  },
+  {
+    "slug": "bochum-vs-unionberlin",
+    "teams": "Bochum vs Union Berlin",
+    "time": "Mon 20:45",
+    "odds": { "home": 2.50, "draw": 3.20, "away": 2.80 }
+  }
+]

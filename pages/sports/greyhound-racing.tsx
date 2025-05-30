@@ -6,7 +6,6 @@ import Footer from "../../components/Footer";
 import Image from "next/image";
 import { races } from '../../data/greyhoundRaces';
 
-
 const trapColors = [
   "bg-white text-black",                // Trap 1
   "bg-blue-600 text-white",             // Trap 2
@@ -113,6 +112,16 @@ export default function GreyhoundRacing() {
               </div>
             </details>
           ))}
+        </div>
+
+        {/* Back to Home Button */}
+        <div className="flex justify-center mt-8 mb-8">
+          <a
+            href="/"
+            className="px-6 py-3 border border-white rounded-full text-white font-semibold transition hover:bg-white hover:text-black"
+          >
+            Back to Home
+          </a>
         </div>
 
         <Footer />
