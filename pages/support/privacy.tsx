@@ -7,11 +7,12 @@ export default function Privacy() {
       title="Privacy Policy"
       description="Your privacy matters. This policy explains exactly how we collect, use, protect, and handle your personal information."
     >
+
       {/* Data Collection */}
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Information We Collect</h2>
         <p className="text-gray-300">
-          We collect personal and technical data when you register or use OhMySportsbetting. This includes:
+          {"We collect personal and technical data when you register or use OhMySportsbetting. This includes:"}
         </p>
         <ul className="list-disc list-inside text-gray-300 space-y-2 mt-2">
           <li>Name, email address, username</li>
@@ -26,7 +27,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">How We Use Your Data</h2>
         <p className="text-gray-300">
-          We use collected information for the following purposes:
+          {"We use collected information for the following purposes:"}
         </p>
         <ul className="list-disc list-inside text-gray-300 space-y-2 mt-2">
           <li>Account registration, management, and authentication</li>
@@ -43,7 +44,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Data Sharing & Disclosure</h2>
         <p className="text-gray-300">
-          We do not sell your personal information to any third parties. We may share your data only under these circumstances:
+          {"We do not sell your personal information to any third parties. We may share your data only under these circumstances:"}
         </p>
         <ul className="list-disc list-inside text-gray-300 space-y-2 mt-2">
           <li>With regulatory authorities for legal compliance</li>
@@ -58,9 +59,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Data Security</h2>
         <p className="text-gray-300">
-          We use advanced encryption, firewalls, and access controls to protect your data against unauthorized access, misuse,
-          or loss. Despite our best efforts, no system can be completely secure — you are responsible for maintaining strong
-          account credentials and practicing safe digital behavior.
+          {"We use advanced encryption, firewalls, and access controls to protect your data against unauthorized access, misuse, or loss. Despite our best efforts, no system can be completely secure — you are responsible for maintaining strong account credentials and practicing safe digital behavior."}
         </p>
       </section>
 
@@ -68,8 +67,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Cookies & Analytics</h2>
         <p className="text-gray-300">
-          Our platform uses cookies and analytics tools to personalize user experience, analyze traffic, and improve functionality.
-          You may control cookie preferences through your browser settings.
+          {"Our platform uses cookies and analytics tools to personalize user experience, analyze traffic, and improve functionality. You may control cookie preferences through your browser settings."}
         </p>
       </section>
 
@@ -77,9 +75,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Data Retention</h2>
         <p className="text-gray-300">
-          We retain your personal information as long as your account remains active or as required for legal compliance,
-          fraud prevention, financial record-keeping, and dispute resolution. Upon account closure, certain data may still be
-          retained under legal obligations.
+          {"We retain your personal information as long as your account remains active or as required for legal compliance, fraud prevention, financial record-keeping, and dispute resolution. Upon account closure, certain data may still be retained under legal obligations."}
         </p>
       </section>
 
@@ -87,8 +83,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">International Transfers</h2>
         <p className="text-gray-300">
-          Your data may be processed or stored on servers located outside your home country. We comply with applicable cross-border
-          data protection laws and ensure appropriate safeguards are in place.
+          {"Your data may be processed or stored on servers located outside your home country. We comply with applicable cross-border data protection laws and ensure appropriate safeguards are in place."}
         </p>
       </section>
 
@@ -96,7 +91,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Your Privacy Rights</h2>
         <p className="text-gray-300">
-          You have the right to:
+          {"You have the right to:"}
         </p>
         <ul className="list-disc list-inside text-gray-300 space-y-2 mt-2">
           <li>Access and review your personal data</li>
@@ -106,19 +101,19 @@ export default function Privacy() {
           <li>Request a copy of your data in portable format</li>
         </ul>
         <p className="text-gray-300 mt-2">
-          To exercise your rights, please{" "}
+          {"To exercise your rights, please "}
           <Link href="/support/contact">
             <span className="text-electricCyan hover:underline">Contact Support</span>
-          </Link>.
+          </Link>
+          {"."}
         </p>
       </section>
 
       {/* Children's Privacy */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">Children's Privacy</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">Children&apos;s Privacy</h2>
         <p className="text-gray-300">
-          This platform is not intended for individuals under 18 years of age. We do not knowingly collect personal information from minors.
-          If we learn that data has been collected from a minor, we will promptly delete it.
+          {"This platform is not intended for individuals under 18 years of age. We do not knowingly collect personal information from minors. If we learn that data has been collected from a minor, we will promptly delete it."}
         </p>
       </section>
 
@@ -126,8 +121,7 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Policy Updates</h2>
         <p className="text-gray-300">
-          We may update this Privacy Policy periodically. Continued use of the platform after updates constitutes acceptance of the
-          revised policy. We recommend reviewing this policy regularly.
+          {"We may update this Privacy Policy periodically. Continued use of the platform after updates constitutes acceptance of the revised policy. We recommend reviewing this policy regularly."}
         </p>
       </section>
 
@@ -135,12 +129,14 @@ export default function Privacy() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Contact Information</h2>
         <p className="text-gray-300">
-          For any privacy-related questions or data access requests, please{" "}
+          {"For any privacy-related questions or data access requests, please "}
           <Link href="/support/contact">
             <span className="text-electricCyan hover:underline">Contact Support</span>
-          </Link>.
+          </Link>
+          {"."}
         </p>
       </section>
+
     </InfoPageLayout>
   );
 }
