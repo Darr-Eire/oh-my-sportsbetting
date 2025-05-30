@@ -37,3 +37,23 @@ a {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
 }
+@keyframes particles {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+.animate-particles {
+  animation: particles 30s linear infinite;
+}
+
+.bg-radial-yellow {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1), #0a1024, #0a1024);
+}
+
+.bg-radial-green {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1), #0a1024, #0a1024);
+}
+
+.bg-radial-cyan {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1), #0a1024, #0a1024);
+}
