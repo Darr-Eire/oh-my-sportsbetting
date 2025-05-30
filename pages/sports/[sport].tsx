@@ -5,7 +5,20 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 
-const allSportsData = {
+// Create strict typings for your data
+type OddsType = { home: string; away: string; draw?: string } | string;
+
+type EventType = {
+  match?: string;
+  race?: string;
+  fight?: string;
+  league?: string;
+  countryCode: string;
+  time: string;
+  odds: OddsType;
+};
+
+const allSportsData: Record<string, EventType[]> = {
   Football: [
     { match: "Man City vs Arsenal", countryCode: "gb", time: "12:30", odds: { home: "1.90", draw: "3.50", away: "3.80" } },
     { match: "Real Madrid vs Barcelona", countryCode: "es", time: "20:00", odds: { home: "2.10", draw: "3.10", away: "3.20" } }
@@ -61,8 +74,8 @@ export default function AllSportsPage() {
               </summary>
 
               <div className="p-4 space-y-4">
-                {events.map((event: any, i: number) => {
-                  const isObjectOdds = typeof event.odds === 'object' && event.odds !== null;
+                {events.map((event, i) => {
+                  const isObjectOdds = typeof event.odds === 'object';
 
                   return (
                     <div key={i} className="border border-gray-700 rounded-md bg-[#10182f] px-4 py-3 flex justify-between items-center shadow">
@@ -76,7 +89,7 @@ export default function AllSportsPage() {
                         />
                         <div>
                           <p className="text-white font-semibold">
-                            {event.match || event.race || event.fight}
+                            {event.match || event.race || event.fight || event.league}
                           </p>
                           <p className="text-xs text-gray-400">{event.time}</p>
                         </div>
@@ -85,17 +98,21 @@ export default function AllSportsPage() {
                       <div className="flex gap-2">
                         {isObjectOdds ? (
                           <>
-                            <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
-                              Home: {event.odds.home}
-                            </div>
-                            {event.odds.draw && (
+                            {"home" in event.odds && (
+                              <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
+                                Home: {event.odds.home}
+                              </div>
+                            )}
+                            {"draw" in event.odds && (
                               <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
                                 Draw: {event.odds.draw}
                               </div>
                             )}
-                            <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
-                              Away: {event.odds.away}
-                            </div>
+                            {"away" in event.odds && (
+                              <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-3 rounded shadow border border-green-400">
+                                Away: {event.odds.away}
+                              </div>
+                            )}
                           </>
                         ) : (
                           <div className="bg-green-900 text-green-300 text-sm font-bold py-1 px-4 rounded shadow border border-green-400">
