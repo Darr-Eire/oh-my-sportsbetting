@@ -523,41 +523,4 @@ export const races = {
   
 
   ],
-  Tomorrow: [
-    {
-      track: "Limerick",
-      countryCode: "ie",
-      raceTime: "18:30",
-      raceName: "Novice 525m",
-      runners: ["Lucky Lad", "Tiny Dancer", "Electric Dash", "Nocturne", "Star Blazer", "Swift Breeze"],
-    },
-    {
-      track: "Romford",
-      countryCode: "gb",
-      raceTime: "21:00",
-      raceName: "Champion Stakes",
-      runners: ["Fireball", "Steel Runner", "Grey Phantom", "Blitz", "Wild Fury", "Night Runner"],
-    },
-    {
-      track: "Clonmel",
-      countryCode: "ie",
-      raceTime: "17:50",
-      raceName: "Twilight Sprint",
-      runners: ["Dash Dream", "Silver Thunder", "Howler", "Fast Spark", "Deep Dive", "Blue Hound"],
-    },
-    {
-      track: "Towcester",
-      countryCode: "gb",
-      raceTime: "19:15",
-      raceName: "Starlight Stakes",
-      runners: ["Flashpoint", "Razor Edge", "Dark Zone", "Solar Flare", "Gale Force", "Venom"],
-    },
-    {
-      track: "Waterford",
-      countryCode: "ie",
-      raceTime: "20:40",
-      raceName: "Evening Classic",
-      runners: ["Night Shift", "Blackout", "Hurricane Jet", "Silent Storm", "Glide Path", "Quick Shot"],
-    }
-  ]
 };
