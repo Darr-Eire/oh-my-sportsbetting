@@ -47,19 +47,22 @@ export default function Header() {
               <div className="flex justify-between items-center cursor-pointer hover:text-electricCyan transition" onClick={() => setSportsOpen(!sportsOpen)}>
                 <span>Sports</span> {sportsOpen ? <FaChevronUp /> : <FaChevronDown />}
               </div>
-              {sportsOpen && (
-                <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
-                  <li><Link href="/football" className="hover:text-electricCyan">⚽ Football</Link></li>
-                  <li><Link href="/basketball" className="hover:text-electricCyan">🏀 Basketball</Link></li>
-                  <li><Link href="/ufc" className="hover:text-electricCyan">🥊 UFC / MMA</Link></li>
-                  <li><Link href="/tennis" className="hover:text-electricCyan">🎾 Tennis</Link></li>
-                  <li><Link href="/esports" className="hover:text-electricCyan">🎮 eSports</Link></li>
-                  <li><Link href="/golf" className="hover:text-electricCyan">⛳ Golf</Link></li>
-                  <li><Link href="/greyhound-racing" className="hover:text-electricCyan">🐕 Greyhounds</Link></li>
-                  <li><Link href="/horse-racing" className="hover:text-electricCyan">🏇 Horse Racing</Link></li>
-                  <li><Link href="/in-play" className="hover:text-electricCyan">🎮 In-Play</Link></li>
-                </ul>
-              )}
+            {sportsOpen && (
+
+  <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
+    <li><Link href="/sports/football" className="hover:text-electricCyan">⚽ Football</Link></li>
+    <li><Link href="/sports/basketball" className="hover:text-electricCyan">🏀 Basketball</Link></li>
+    <li><Link href="/sports/ufc" className="hover:text-electricCyan">🥊 UFC / MMA</Link></li>
+    <li><Link href="/sports/tennis" className="hover:text-electricCyan">🎾 Tennis</Link></li>
+    <li><Link href="/sports/esports" className="hover:text-electricCyan">🎮 eSports</Link></li>
+    <li><Link href="/sports/golf" className="hover:text-electricCyan">⛳ Golf</Link></li>
+    <li><Link href="/sports/greyhound-racing" className="hover:text-electricCyan">🐕 Greyhounds</Link></li>
+    <li><Link href="/sports/horse-racing" className="hover:text-electricCyan">🏇 Horse Racing</Link></li>
+    <li><Link href="/sports/in-play" className="hover:text-electricCyan">🎮 In-Play</Link></li>
+  </ul>
+)}
+
+
             </li>
 
             
@@ -85,14 +88,15 @@ export default function Header() {
               <div className="flex justify-between items-center cursor-pointer hover:text-electricCyan transition" onClick={() => setCompetitionsOpen(!competitionsOpen)}>
                 <span>Competitions</span> {competitionsOpen ? <FaChevronUp /> : <FaChevronDown />}
               </div>
-              {competitionsOpen && (
-                <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
-                  <li><Link href="/leaderboards/weekly" className="hover:text-electricCyan">🏅 Weekly Leaderboard</Link></li>
-                  <li><Link href="/jackpots/monthly" className="hover:text-electricCyan">💎 Monthly Jackpot</Link></li>
-                  <li><Link href="/tournaments/free" className="hover:text-electricCyan">🎮 Free-to-Play Tournaments</Link></li>
-                  <li><Link href="/predictor" className="hover:text-electricCyan">📊 Predictor Challenges</Link></li>
-                </ul>
-              )}
+             {competitionsOpen && (
+  <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
+    <li><Link href="/competitions/weekly-leaderboard" className="hover:text-electricCyan">🏅 Weekly Leaderboard</Link></li>
+    <li><Link href="/competitions/monthly-jackpot" className="hover:text-electricCyan">💎 Monthly Jackpot</Link></li>
+    <li><Link href="/competitions/free-to-play" className="hover:text-electricCyan">🎮 Free-to-Play Tournaments</Link></li>
+    <li><Link href="/competitions/predictor-challenges" className="hover:text-electricCyan">📊 Predictor Challenges</Link></li>
+  </ul>
+)}
+
             </li>
 
             {/* Support */}
@@ -100,15 +104,16 @@ export default function Header() {
               <div className="flex justify-between items-center cursor-pointer hover:text-electricCyan transition" onClick={() => setSupportOpen(!supportOpen)}>
                 <span>Support</span> {supportOpen ? <FaChevronUp /> : <FaChevronDown />}
               </div>
-              {supportOpen && (
-                <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
-                  <li><Link href="/help" className="hover:text-electricCyan">🛠 Help Center</Link></li>
-                  <li><Link href="/contact" className="hover:text-electricCyan">💬 Contact Us</Link></li>
-                  <li><Link href="/faq" className="hover:text-electricCyan">❓ FAQs</Link></li>
-                  <li><Link href="/terms" className="hover:text-electricCyan">📄 Terms & Conditions</Link></li>
-                  <li><Link href="/privacy" className="hover:text-electricCyan">🔒 Privacy Policy</Link></li>
-                </ul>
-              )}
+            {supportOpen && (
+  <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
+    <li><Link href="/support/help" className="hover:text-electricCyan">🛠 Help Center</Link></li>
+    <li><Link href="/support/contact" className="hover:text-electricCyan">💬 Contact Us</Link></li>
+    <li><Link href="/support/faq" className="hover:text-electricCyan">❓ FAQs</Link></li>
+    <li><Link href="/support/terms" className="hover:text-electricCyan">📄 Terms & Conditions</Link></li>
+    <li><Link href="/support/privacy" className="hover:text-electricCyan">🔒 Privacy Policy</Link></li>
+  </ul>
+)}
+
             </li>
 
             {/* About */}
@@ -116,15 +121,16 @@ export default function Header() {
               <div className="flex justify-between items-center cursor-pointer hover:text-electricCyan transition" onClick={() => setAboutOpen(!aboutOpen)}>
                 <span>About</span> {aboutOpen ? <FaChevronUp /> : <FaChevronDown />}
               </div>
-              {aboutOpen && (
-                <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
-                  <li><Link href="/about" className="hover:text-electricCyan">ℹ️ About Us</Link></li>
-                  <li><Link href="/licensing" className="hover:text-electricCyan">📄 Licensing</Link></li>
-                  <li><Link href="/partners" className="hover:text-electricCyan">🤝 Partners</Link></li>
-                  <li><Link href="/affiliates" className="hover:text-electricCyan">💼 Affiliates</Link></li>
-                  <li><Link href="/developer" className="hover:text-electricCyan">🧩 Developer</Link></li>
-                </ul>
-              )}
+           {aboutOpen && (
+  <ul className="mt-2 ml-3 space-y-2 text-sm text-gray-300">
+    <li><Link href="/support/about-us" className="hover:text-electricCyan">ℹ️ About Us</Link></li>
+    <li><Link href="/support/licensing" className="hover:text-electricCyan">📄 Licensing</Link></li>
+    <li><Link href="/support/partners" className="hover:text-electricCyan">🤝 Partners</Link></li>
+    <li><Link href="/support/affiliates" className="hover:text-electricCyan">💼 Affiliates</Link></li>
+    <li><Link href="/support/developer" className="hover:text-electricCyan">🧩 Developer</Link></li>
+  </ul>
+)}
+
             </li>
 
           </ul>

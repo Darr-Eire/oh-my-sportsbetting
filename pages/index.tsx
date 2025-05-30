@@ -166,11 +166,7 @@ export default function Home({ todayMatches, basketballMatches }: { todayMatches
   )}
 </section>
 
-
-
-
-
-          {/* Today's Football Matches */}
+ {/* Today's Football Matches */}
  <section className="w-full max-w-3xl space-y-4">
   <h2 className="text-lg font-bold text-white mb-3">Today’s Football Matches</h2>
 
