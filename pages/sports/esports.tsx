@@ -17,7 +17,7 @@ export default function EsportsPage() {
     "Rocket League Championships",
     "Overwatch League",
     "Call of Duty League"
-  ];
+  ] as const;
 
   const logoMap = {
     "CS:GO Major": "/logos/esports/csgo.png",
@@ -92,11 +92,11 @@ export default function EsportsPage() {
                 </svg>
               </summary>
 
-              {(esportsMatches[tournament] || []).map((match, i) => (
+              {(esportsMatches[tournament as keyof typeof esportsMatches] || []).map((match, i) => (
                 <div key={i} className="border border-white rounded-lg bg-[#0a1024] mb-2 px-4 py-3 flex items-center justify-between shadow">
                   <div className="flex items-center gap-3 flex-1">
                     <Image
-                      src={logoMap[tournament]}
+                      src={logoMap[tournament as keyof typeof logoMap]}
                       alt={`${tournament} logo`}
                       width={28}
                       height={28}
