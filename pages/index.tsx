@@ -1,26 +1,23 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import Slider from "react-slick";
+
 import PromoCarousel from "../components/PromoCarousel";
 import PowerPriceCarousel from "../components/PowerPriceCarousel";
 import BetBuilderCarousel from "../components/BetBuilderCarousel";
 import SportsCarousel from "../components/SportsCarousel";
-import { useState } from "react";
-import Slider from "react-slick";
-import { horseRaces } from "../data/horseRaces";
 import LiveGamesFeed from "../components/LiveGamesFeed";
+import HeaderLayout from "../components/Header";
+import Footer from "../components/Footer";
 
+import { horseRaces } from "../data/horseRaces";
+
+// Icons (no changes needed)
 import {
-  FaFutbol,
-  FaHorseHead,
-  FaStopwatch,
-  FaTicketAlt,
-  FaDog,
-
-  FaBasketballBall,
-  FaUserNinja,
-  FaGamepad,
-  FaThList
+  FaFutbol, FaHorseHead, FaStopwatch, FaTicketAlt, FaDog,
+  FaBasketballBall, FaUserNinja, FaGamepad, FaThList
 } from "react-icons/fa";
 
 const sports = [
@@ -34,40 +31,11 @@ const sports = [
   { name: "A–Z", icon: FaThList, slug: "all-sports" },
 ];
 
+type Match = { teams: string; time: string; odds: { home: number; draw?: number; away: number; } };
+type LeagueBlock = { league: string; countryCode: string; leagueLogo: string; matches: Match[]; };
+type BasketballBlock = { league: string; matches: Match[]; };
 
-
-
-type Match = {
-  teams: string;
-  time: string;
-  odds: {
-    home: number;
-    draw?: number;
-    away: number;
-  };
-};
-
-type LeagueBlock = {
-  league: string;
-  countryCode: string;
-  leagueLogo: string;
-  matches: Match[];
-};
-
-type BasketballBlock = {
-  league: string;
-  matches: Match[];
-};
-
-export default function Home({
-  todayMatches,
-  basketballMatches,
-}: {
-  todayMatches: LeagueBlock[];
-  basketballMatches: BasketballBlock[];
-}) {
-
-  const [menuOpen, setMenuOpen] = useState(false);
+export default function Home({ todayMatches, basketballMatches }: { todayMatches: LeagueBlock[], basketballMatches: BasketballBlock[] }) {
   const [openLeague, setOpenLeague] = useState<string | null>(null);
   const [openBasketball, setOpenBasketball] = useState(false);
   const [openHorseRacing, setOpenHorseRacing] = useState(false);
@@ -80,53 +48,15 @@ export default function Home({
 
   return (
     <>
-      <Head>
-        <title>Oh My Sportsbets</title>
-        <meta name="description" content="Bet on sports using Pi Network" />
-      </Head>
+      <Head><title>Oh My Sportsbets</title></Head>
 
       <div className="flex flex-col min-h-screen bg-[#0a1024] text-white font-sans">
-        {/* Header */}
-        <header className="w-full flex items-center justify-between px-4 py-2 border-b border-white">
-          <button
-            className="text-2xl hover:text-electricCyan transition"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-          >
-            ☰
-          </button>
-
-          <h1 className="text-lg font-bold font-futuristic tracking-wide">
-            OhMySportsbetting
-          </h1>
-
-          <Link href="/login" passHref>
-            <button className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full shadow hover:brightness-110 transition">
-              Login
-            </button>
-          </Link>
-        </header>
-
-        {/* Dropdown Menu */}
-        {menuOpen && (
-          <nav
-            className="absolute top-[56px] left-0 w-64 bg-[#12182f] z-50 shadow-lg border-r border-gray-700 rounded-br-lg"
-            role="menu"
-            aria-label="Main navigation"
-          >
-            {/* Your dropdown menu JSX here */}
-          </nav>
-        )}
+        <HeaderLayout />
 
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
-<PromoCarousel />
-
-
-     
-
+          <PromoCarousel />
           <SportsCarousel />
-          <PowerPriceCarousel /> 
+          <PowerPriceCarousel />
         
 
           {/* Basketball Section */}
@@ -519,113 +449,11 @@ export default function Home({
     ))}
   </div>
 )}
-
 </section>
+      </main>
+      <Footer />
 
-
-
-
-
-
-
-        </main>
-
-        {/* Footer */}
-        <footer className="bg-[#0a1024] text-white text-sm px-6 py-10">
-          <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 border-b border-gray-700 pb-8">
-            <div>
-              <h4 className="font-bold mb-3 text-electricCyan">Company</h4>
-              <ul className="space-y-1">
-                <li>
-                  <Link href="/about" legacyBehavior>
-                    <a className="hover:underline">About Us</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/roadmap" legacyBehavior>
-                    <a className="hover:underline">Roadmap</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" legacyBehavior>
-                    <a className="hover:underline">Contact</a>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-3 text-electricCyan">Support</h4>
-              <ul className="space-y-1">
-                <li>
-                  <Link href="/how-to-play" legacyBehavior>
-                    <a className="hover:underline">How to Bet with Pi</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/faq" legacyBehavior>
-                    <a className="hover:underline">FAQ</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/support" legacyBehavior>
-                    <a className="hover:underline">Contact Support</a>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-3 text-electricCyan">Legal</h4>
-              <ul className="space-y-1">
-                <li>
-                  <Link href="/terms" legacyBehavior>
-                    <a className="hover:underline">Terms of Use</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" legacyBehavior>
-                    <a className="hover:underline">Privacy Policy</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/responsible-gambling" legacyBehavior>
-                    <a className="hover:underline">Responsible Gambling</a>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-3 text-electricCyan">Powered by Pi</h4>
-              <p className="text-gray-300 text-sm mb-3">100% Pi-based betting — no fiat, no banks.</p>
-              <div className="flex gap-3">
-                <a href="https://x.com" className="hover:text-electricCyan">
-                  Twitter
-                </a>
-                <a href="https://t.me" className="hover:text-electricCyan">
-                  Telegram
-                </a>
-                <a href="https://discord.gg" className="hover:text-electricCyan">
-                  Discord
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="max-w-7xl mx-auto mt-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              <Image src="/pi-logo.png" alt="Pi Network" width={32} height={32} />
-              <span className="text-gray-300">Transactions powered by the Pi SDK</span>
-            </div>
-            <div className="flex gap-4 items-center">
-              <Image src="/18plus.png" alt="18+" width={24} height={24} />
-              <Image src="/responsible.png" alt="Responsible" width={24} height={24} />
-            </div>
-          </div>
-
-          <div className="text-center text-xs mt-8 text-gray-400">
-            © {new Date().getFullYear()} OhMySports. Built for Pioneers. Play smart. Bet responsibly.
-          </div>
-        </footer>
-      </div>
+  </div>
     </>
   );
 }
