@@ -38,7 +38,8 @@ import laLiga2 from "../../data/leagues/la_liga_2.json";
 // YOUR FULL LEAGUE GROUPS STAYS EXACTLY AS IT WAS:
 const leagueGroups = [
   { country: "England", flag: "/flags/uk.png", leagues: [
-      { name: "Premier League", logo: "/logos/premier_league.png", matches: premierLeague },
+{ name: "Premier League", logo: "/logos/premier_league.png", matches: premierLeague }
+
       { name: "Championship", logo: "/logos/championship.png", matches: championship },
       { name: "EFL League One", logo: "/logos/efl1.png", matches: eflLeagueOne },
       { name: "EFL League Two", logo: "/logos/efl2.png", matches: eflLeagueTwo },
