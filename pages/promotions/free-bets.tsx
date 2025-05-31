@@ -40,7 +40,7 @@ export default function WeeklyFreeBets() {
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Example</h2>
         <p className="text-gray-300">
-          If you place 5 bets of 5 Pi and 5 bets of 10 Pi in the same week, you'll receive a 5 Pi Free Bet and a 10 Pi Free Bet — 15 Pi total free bets on Monday.
+          If you place 5 bets of 5 Pi and 5 bets of 10 Pi in the same week, you&apos;ll receive a 5 Pi Free Bet and a 10 Pi Free Bet — 15 Pi total free bets on Monday.
         </p>
       </section>
 
