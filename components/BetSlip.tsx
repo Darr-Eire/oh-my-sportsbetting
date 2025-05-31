@@ -3,7 +3,25 @@
 import React, { useState } from "react";
 import { useBetSlip } from "../context/BetSlipContext";
 
-function getMultipleLabel(count: number) {
+type Selection = {
+  id: string;
+  event: string;
+  type: string;
+  odds: number;
+};
+
+interface SlipContentProps {
+  selections: Selection[];
+  singleStakes: Record<string, number>;
+  multiStake: number;
+  handleSingleStakeChange: (id: string, value: string) => void;
+  setMultiStake: (value: number) => void;
+  removeSelection: (id: string) => void;
+  calculateSingleReturns: (id: string, odds: number) => string;
+  calculateMultipleReturns: () => string;
+}
+
+function getMultipleLabel(count: number): string {
   if (count === 2) return "Double";
   if (count === 3) return "Treble";
   return `${count}-Fold`;
@@ -11,7 +29,7 @@ function getMultipleLabel(count: number) {
 
 export default function BetSlip() {
   const { selections, removeSelection, clearSelections } = useBetSlip();
-  const [singleStakes, setSingleStakes] = useState<{ [key: string]: number }>({});
+  const [singleStakes, setSingleStakes] = useState<Record<string, number>>({});
   const [multiStake, setMultiStake] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,12 +38,12 @@ export default function BetSlip() {
     setSingleStakes((prev) => ({ ...prev, [id]: isNaN(stake) ? 0 : stake }));
   };
 
-  const calculateSingleReturns = (id: string, odds: number) => {
+  const calculateSingleReturns = (id: string, odds: number): string => {
     const stake = singleStakes[id] || 0;
     return (stake * odds).toFixed(2);
   };
 
-  const calculateMultipleReturns = () => {
+  const calculateMultipleReturns = (): string => {
     if (selections.length < 2) return "0.00";
     const accOdds = selections.reduce((acc, sel) => acc * sel.odds, 1);
     return (multiStake * accOdds).toFixed(2);
@@ -33,7 +51,6 @@ export default function BetSlip() {
 
   return (
     <div className="fixed bottom-0 left-0 w-full z-50">
-      {/* Top toggle bar */}
       <div
         className="bg-[#10182f] border-t border-gray-700 text-white p-2 flex justify-between items-center cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
@@ -42,21 +59,14 @@ export default function BetSlip() {
         <span className="text-lg">{isOpen ? "▼" : "▲"}</span>
       </div>
 
-      {/* The actual drawer */}
       <div
         className="w-full bg-[#0a1024] border-t border-gray-700 shadow-xl transition-transform duration-300"
-        style={{
-          height: isOpen ? "70vh" : "0",
-          overflow: "hidden",
-        }}
+        style={{ height: isOpen ? "70vh" : "0", overflow: "hidden" }}
       >
-        {/* Inner content */}
         <div className="p-2 flex justify-between items-center bg-[#10182f] border-b border-gray-600 text-white">
           <h2 className="font-semibold text-sm">Bet Slip</h2>
           <div className="flex gap-2">
-            <button onClick={clearSelections} className="text-xs bg-red-600 px-2 py-1 rounded shadow hover:bg-red-700">
-              Clear
-            </button>
+            <button onClick={clearSelections} className="text-xs bg-red-600 px-2 py-1 rounded shadow hover:bg-red-700">Clear</button>
             <button onClick={() => setIsOpen(false)} className="text-lg font-bold text-red-400">×</button>
           </div>
         </div>
@@ -87,7 +97,7 @@ function SlipContent({
   removeSelection,
   calculateSingleReturns,
   calculateMultipleReturns,
-}: any) {
+}: SlipContentProps) {
   if (selections.length === 0) {
     return (
       <div className="p-3 text-center text-softText text-xs">
@@ -99,7 +109,7 @@ function SlipContent({
   return (
     <>
       <div className="space-y-2">
-        {selections.map((selection: any) => (
+        {selections.map((selection) => (
           <div key={selection.id} className="bg-[#12182f] p-2 rounded border border-[#2a2a3d] text-xs">
             <div className="flex justify-between mb-1">
               <span className="font-semibold text-white">{selection.event}</span>
@@ -131,7 +141,7 @@ function SlipContent({
             <div className="flex justify-between mb-1">
               <span className="text-white">{getMultipleLabel(selections.length)}</span>
               <span className="text-white font-bold">
-                {(selections.reduce((acc: any, sel: any) => acc * sel.odds, 1) - 1).toFixed(2)}/1
+                {(selections.reduce((acc, sel) => acc * sel.odds, 1) - 1).toFixed(2)}/1
               </span>
             </div>
 
