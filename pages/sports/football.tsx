@@ -1,15 +1,13 @@
 "use client";
-import { useState } from "react";
 
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MatchCard from "../../components/MatchCard";
-import PopularFootballBetsCarousel from "../../components/PopularFootballBetsCarousel";
 import Slider from "react-slick";
 
-// ✅ Imports (your existing data imports)
 import serieB from "../../data/leagues/serie_b.json";
 import coppaItalia from "../../data/leagues/coppa_italia.json";
 import ligue2 from "../../data/leagues/ligue_2.json";
@@ -36,7 +34,6 @@ import copaDelRey from "../../data/leagues/copa_del_rey.json";
 import supercopaDeEspana from "../../data/leagues/supercopa_de_espana.json";
 import laLiga2 from "../../data/leagues/la_liga_2.json";
 
-// ✅ Grouped data
 const leagueGroups = [
   {
     country: "England",
@@ -87,7 +84,7 @@ const leagueGroups = [
       { name: "Coupe de France", logo: "/logos/coupedefrance.png", matches: coupeDeFrance }
     ],
   },
-    {
+  {
     country: "Ireland",
     flag: "/flags/ireland.png",
     leagues: [
@@ -124,7 +121,7 @@ const leagueGroups = [
   },
   {
     country: "USA",
-    flag: "/flags/usa.png",
+    flag: "/logos/usa.png",
     leagues: [
       { name: "Major League Soccer", logo: "/logos/mls.png", matches: mls }
     ],
@@ -134,6 +131,19 @@ const leagueGroups = [
 export default function FootballPage() {
   const [openCountries, setOpenCountries] = useState<{ [key: string]: boolean }>({});
   const [openLeagues, setOpenLeagues] = useState<{ [key: string]: boolean }>({});
+  const [dates, setDates] = useState<Date[]>([]);
+  const [activeDate, setActiveDate] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const today = new Date();
+    const dateArray = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today);
+      d.setDate(d.getDate() + i);
+      return d;
+    });
+    setDates(dateArray);
+    setActiveDate(today);
+  }, []);
 
   const toggleCountry = (country: string) => {
     setOpenCountries((prev) => ({ ...prev, [country]: !prev[country] }));
@@ -144,120 +154,75 @@ export default function FootballPage() {
   };
 
   const carouselSettings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 640,
-        settings: { slidesToShow: 1 }
-      }
-    ]
+    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
   return (
     <>
-      <Head>
-        <title>Football – OhMySportsbetting</title>
-      </Head>
-
+      <Head><title>Football – OhMySportsbetting</title></Head>
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
-        {/* Title Box */}
         <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] border border-white shadow text-center">
-          <h1 className="text-2xl sm:text-2xl font-semibold text-white tracking-wide">
-            Leagues From Around The World
-          </h1>
-          <p className="text-sm sm:text-base text-white mt-2 max-w-xl mx-auto">
-            Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.
-          </p>
-
+          <h1 className="text-2xl font-semibold">Leagues From Around The World</h1>
+          <p className="text-sm mt-2 max-w-xl mx-auto">Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.</p>
           <div className="mt-4 flex justify-center flex-wrap gap-4">
-            {[
-              "/flags/uk.png",
-              "/flags/spain.png",
-              "/flags/italy.png",
-              "/flags/germany.png",
-              "/flags/france.png",
-            ].map((flag, index) => (
-              <div key={index}>
-                <img src={flag} alt="flag" className="w-12 h-12 object-contain" />
-              </div>
+            {["/flags/uk.png", "/flags/spain.png", "/flags/italy.png", "/flags/germany.png", "/flags/france.png"].map((flag, index) => (
+              <div key={index}><img src={flag} alt="flag" className="w-12 h-12 object-contain" /></div>
             ))}
           </div>
         </div>
 
-        {/* Popular Football Bets Carousel */}
         <div className="max-w-5xl mx-auto px-4 pb-10">
-          <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Football Bets</h2>
-
+          <h2 className="text-xl font-semibold text-center mb-6">Popular Football Bets</h2>
           <Slider {...carouselSettings}>
-            <div className="p-2">
-              <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                <div className="font-semibold text-white mb-1">Man City vs Arsenal</div>
-                <div className="text-sm text-blue-400 mb-3">Both Teams to Score: Yes</div>
-                <div className="text-white font-bold text-lg">Odds: 4/5</div>
-              </div>
-            </div>
-
-            <div className="p-2">
-              <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                <div className="font-semibold text-white mb-1">Liverpool vs Chelsea</div>
-                <div className="text-sm text-blue-400 mb-3">Over 2.5 Goals</div>
-                <div className="text-white font-bold text-lg">Odds: 11/10</div>
-              </div>
-            </div>
-
-            <div className="p-2">
-              <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                <div className="font-semibold text-white mb-1">Real Madrid vs Barcelona</div>
-                <div className="text-sm text-blue-400 mb-3">Correct Score: 2-1 Madrid</div>
-                <div className="text-white font-bold text-lg">Odds: 7/1</div>
-              </div>
-            </div>
+            <div className="p-2"><div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+              <div className="font-semibold mb-1">Man City vs Arsenal</div><div className="text-sm text-blue-400 mb-3">Both Teams to Score: Yes</div><div className="font-bold text-lg">Odds: 4/5</div></div></div>
+            <div className="p-2"><div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+              <div className="font-semibold mb-1">Liverpool vs Chelsea</div><div className="text-sm text-blue-400 mb-3">Over 2.5 Goals</div><div className="font-bold text-lg">Odds: 11/10</div></div></div>
+            <div className="p-2"><div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+              <div className="font-semibold mb-1">Real Madrid vs Barcelona</div><div className="text-sm text-blue-400 mb-3">Correct Score: 2-1 Madrid</div><div className="font-bold text-lg">Odds: 7/1</div></div></div>
           </Slider>
+        </div>
+
+        {/* Date Selector Carousel injected here */}
+        <div className="flex justify-center mt-6 mb-8">
+          <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 scroll-snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
+            {dates.map((date, idx) => (
+              <button key={idx} onClick={() => setActiveDate(date)} className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
+                activeDate?.toDateString() === date.toDateString() ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
+              } snap-start`}>
+                {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Leagues */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {leagueGroups.map((group) => (
             <div key={group.country} className="mb-8 border border-white rounded-lg">
-              <button
-                onClick={() => toggleCountry(group.country)}
-                className="flex items-center gap-3 w-full px-4 py-3 text-left text-white font-bold text-lg hover:bg-[#14215c] transition rounded-t-lg"
-              >
+              <button onClick={() => toggleCountry(group.country)} className="flex items-center gap-3 w-full px-4 py-3 text-left text-white font-bold text-lg hover:bg-[#14215c] transition rounded-t-lg">
                 <img src={group.flag} alt={`${group.country} flag`} className="w-6 h-6 object-contain rounded-sm" />
                 <span>{group.country}</span>
-                <svg className={`ml-auto h-5 w-5 transition-transform ${openCountries[group.country] ? "rotate-180" : ""}`}
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <svg className={`ml-auto h-5 w-5 transition-transform ${openCountries[group.country] ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </button>
-
               {openCountries[group.country] && (
                 <div className="px-4 pb-4">
                   {group.leagues.map((league) => (
                     <div key={league.name} className="mb-4 border border-white rounded-lg">
-                      <button
-                        onClick={() => toggleLeague(league.name)}
-                        className="flex items-center gap-3 w-full px-4 py-3 text-left text-white font-semibold hover:bg-[#203275] transition rounded-t-lg"
-                      >
+                      <button onClick={() => toggleLeague(league.name)} className="flex items-center gap-3 w-full px-4 py-3 text-left text-white font-semibold hover:bg-[#203275] transition rounded-t-lg">
                         <img src={league.logo} alt={`${league.name} logo`} className="w-6 h-6 object-contain" />
                         <span>{league.name}</span>
-                        <svg className={`ml-auto h-5 w-5 transition-transform ${openLeagues[league.name] ? "rotate-180" : ""}`}
-                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <svg className={`ml-auto h-5 w-5 transition-transform ${openLeagues[league.name] ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
-
                       {openLeagues[league.name] && (
                         <div className="grid gap-3 p-3 bg-[#0a1024]">
-                          {league.matches.map((match, i) => (
-                            <MatchCard key={i} match={match} />
-                          ))}
+                          {league.matches.map((match, i) => <MatchCard key={i} match={match} />)}
                         </div>
                       )}
                     </div>
@@ -270,9 +235,7 @@ export default function FootballPage() {
 
         <div className="flex justify-center mb-8">
           <Link href="/" passHref legacyBehavior>
-            <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
-              Back to Home
-            </a>
+            <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">Back to Home</a>
           </Link>
         </div>
 

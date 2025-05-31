@@ -107,16 +107,24 @@ export default function BasketballPage() {
         </div>
 
         {/* Date Tabs */}
-        <div className="flex justify-center mb-8 space-x-3 overflow-x-auto">
-          {dates.map((date, idx) => (
-            <button key={idx} onClick={() => setActiveDate(date)}
-              className={`px-4 py-2 rounded-md font-semibold text-sm border border-white min-w-[90px] ${
-                activeDate.toDateString() === date.toDateString()
-                  ? "bg-[#0a1024] text-yellow-400" : "bg-[#0a1024] text-white"}`}>
-              {formatDate(date)}
-            </button>
-          ))}
-        </div>
+ <div className="flex justify-center mt-6 mb-8">
+  <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 scroll-snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
+    {dates.map((date, idx) => (
+      <button
+        key={idx}
+        onClick={() => setActiveDate(date)}
+        className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
+          activeDate?.toDateString() === date.toDateString()
+            ? "bg-white text-black border-white shadow-lg"
+            : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
+        } snap-start`}
+      >
+        {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+      </button>
+    ))}
+  </div>
+</div>
+
 
         {/* League Dropdowns */}
         <div className="max-w-5xl mx-auto px-4 pb-16">

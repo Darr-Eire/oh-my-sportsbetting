@@ -71,7 +71,7 @@ export default function Basketball() {
                   {match.status === "live" ? (
                     <LiveBadge />
                   ) : (
-                    <div className="text-xs bg-yellow-400 text-black px-2 py-1 rounded font-semibold uppercase">
+                    <div className="text-xs bg-white text-black px-2 py-1 rounded font-semibold uppercase">
                       Upcoming
                     </div>
                   )}

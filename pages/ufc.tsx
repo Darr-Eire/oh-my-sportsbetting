@@ -109,7 +109,7 @@ export default function UFC() {
                         : "—"}
                     </button>
                     <button className="bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded text-gray-300 font-semibold col-span-2 sm:col-span-1">
-                      ➕ Add to Bet Slip
+                       Add to Bet Slip
                     </button>
                   </div>
 
