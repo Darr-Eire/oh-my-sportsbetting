@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, MouseEvent } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -15,13 +15,14 @@ export default function Header() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+    const handleClickOutside = (e: Event) => {
+      const target = e.target as Node;
       if (
         menuOpen &&
         menuRef.current &&
-        !menuRef.current.contains(e.target as Node) &&
+        !menuRef.current.contains(target) &&
         buttonRef.current &&
-        !buttonRef.current.contains(e.target as Node)
+        !buttonRef.current.contains(target)
       ) {
         setMenuOpen(false);
       }
@@ -178,7 +179,9 @@ function Dropdown({ label, open, setOpen, links }: DropdownProps) {
         <ul className="mt-2 ml-3 space-y-2 text-sm text-white">
           {links.map((link, idx) => (
             <li key={idx}>
-              <Link href={link.href} className="underline hover:text-electricCyan">{link.label}</Link>
+              <Link href={link.href} className="underline hover:text-electricCyan">
+                {link.label}
+              </Link>
             </li>
           ))}
         </ul>
