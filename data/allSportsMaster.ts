@@ -1,82 +1,33 @@
 // data/allSportsMaster.ts
 
-import { horseRaces } from "./horseRacing";
-import { races as greyhoundRaces } from "./greyhoundRaces";
-import { tennisEvents } from "./tennis";
-import { ufcEvents } from "./ufc";
-import { esportsEvents } from "./esports";
-import { inPlayEvents } from "./inPlay";
-import { basketballGames } from "./basketball";
-import { footballLeagues } from "./football";
+import { horseRaces } from "../data/horseRacing";
+import { races as greyhoundRaces } from "../data/greyhoundRaces";
+import { tennisEvents } from "../data/tennis";
+import { ufcEvents } from "../data/ufc";
+import { esportsEvents } from "../data/esports";
+import { inPlayEvents } from "../data/inPlay";
+import { basketballGames } from "../data/basketball";
+import { footballLeagues } from "../data/football";
 
-const allSportsData: Record<string, any> = {
-  Football: Object.entries(footballLeagues).flatMap(([leagueName, matches]: [string, any[]]) =>
-    matches.map(match => ({
-      league: leagueName,
-      match: match.match,
-      time: match.time,
-      countryCode: match.countryCode || "gb",
-      odds: match.odds,
-    }))
-  ),
-
-  Basketball: Object.entries(basketballGames).flatMap(([date, games]: [string, any[]]) =>
-    games.map(game => ({
-      league: game.league,
-      match: game.game,
-      time: game.tipOff,
-      countryCode: game.countryCode,
-      odds: game.odds,
-    }))
-  ),
-
-  Tennis: Object.entries(tennisEvents).flatMap(([tournament, matches]: [string, any[]]) =>
+const allSportsData = {
+  Football: Object.values(footballLeagues).flatMap(matches => matches),
+  HorseRacing: horseRaces,
+  Greyhounds: Object.values(greyhoundRaces).flatMap(race => race),
+  Basketball: Object.values(basketballGames).flatMap(games => games),
+  Tennis: Object.entries(tennisEvents).flatMap(([tournament, matches]) =>
     matches.map(match => ({
       tournament,
-      match: match.match,
-      time: match.startTime,
-      odds: match.odds,
+      ...match
     }))
   ),
-
-  UFC: ufcEvents.map(event => ({
-    fight: event.fight,
-    time: event.time,
-    countryCode: event.countryCode,
-    odds: event.odds,
-  })),
-
-  HorseRacing: horseRaces.map(race => ({
-    track: race.track,
-    race: race.raceName,
-    time: race.raceTime,
-    countryCode: race.countryCode,
-    runners: race.runners,
-  })),
-
-  Greyhounds: greyhoundRaces.Today.map(race => ({
-    track: race.track,
-    race: race.raceName,
-    time: race.raceTime,
-    countryCode: race.countryCode,
-    runners: race.runners,
-  })),
-
-  eSports: Object.entries(esportsEvents).flatMap(([tournament, matches]: [string, any[]]) =>
+  UFC: ufcEvents,
+  eSports: Object.entries(esportsEvents).flatMap(([league, matches]) =>
     matches.map(match => ({
-      tournament,
-      match: match.match,
-      time: match.startTime,
-      odds: match.odds,
+      league,
+      ...match
     }))
   ),
-
-  InPlay: inPlayEvents.map(event => ({
-    match: event.match,
-    time: event.time,
-    countryCode: event.countryCode,
-    odds: event.odds,
-  })),
+  InPlay: inPlayEvents,
 };
 
 export default allSportsData;
