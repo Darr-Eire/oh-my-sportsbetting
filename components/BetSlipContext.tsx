@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-interface Selection {
+// Type definitions
+export interface Selection {
   id: string;
   event: string;
   type: string;
@@ -16,14 +17,17 @@ interface BetSlipContextType {
   clearSelections: () => void;
 }
 
+// Create context with initial undefined state for safety
 const BetSlipContext = createContext<BetSlipContextType | undefined>(undefined);
 
+// Provider component
 export const BetSlipProvider = ({ children }: { children: ReactNode }) => {
   const [selections, setSelections] = useState<Selection[]>([]);
 
   const addSelection = (selection: Selection) => {
     setSelections(prev => {
-      if (prev.find(s => s.id === selection.id)) return prev; // prevent duplicate
+      // Prevent duplicates
+      if (prev.some(s => s.id === selection.id)) return prev;
       return [...prev, selection];
     });
   };
@@ -32,7 +36,9 @@ export const BetSlipProvider = ({ children }: { children: ReactNode }) => {
     setSelections(prev => prev.filter(s => s.id !== id));
   };
 
-  const clearSelections = () => setSelections([]);
+  const clearSelections = () => {
+    setSelections([]);
+  };
 
   return (
     <BetSlipContext.Provider value={{ selections, addSelection, removeSelection, clearSelections }}>
@@ -41,7 +47,8 @@ export const BetSlipProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useBetSlip = () => {
+// Hook for using the context safely
+export const useBetSlip = (): BetSlipContextType => {
   const context = useContext(BetSlipContext);
   if (!context) {
     throw new Error("useBetSlip must be used within a BetSlipProvider");

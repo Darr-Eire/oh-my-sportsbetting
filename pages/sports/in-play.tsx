@@ -1,14 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+type SelectionType = {
+  id: string;
+  event: string;
+  type: string;
+  odds: number;
+};
+
+// Utility
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
@@ -41,13 +50,7 @@ const popularInPlayBets = [
 ];
 
 export default function InPlayPage() {
-  const [clock, setClock] = useState(Date.now());
-  const [selections, setSelections] = useState<any[]>([]);
-
-  useEffect(() => {
-    const interval = setInterval(() => setClock(Date.now()), 30000);
-    return () => clearInterval(interval);
-  }, []);
+  const [selections, setSelections] = useState<SelectionType[]>([]);
 
   const toggleSelection = (id: string, event: string, type: string, fractionalOdds: string) => {
     const exists = selections.some(sel => sel.id === id);
@@ -74,15 +77,11 @@ export default function InPlayPage() {
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
-        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg shadow text-center">
+        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg border border-white shadow text-center">
           <h1 className="text-3xl font-bold">In-Play Sports Betting</h1>
           <p className="text-sm mt-2 max-w-xl mx-auto">
             In-Play From Around The World, Real-time odds, game momentum, and watch live action across sports.
           </p>
-          <div className="flex justify-center items-center gap-4 mt-4">
-            <Image src="/logos/usa.png" alt="USA Flag" width={60} height={40} className="rounded shadow-md" unoptimized />
-            <Image src="/logos/europe.png" alt="Europe Flag" width={60} height={40} className="rounded shadow-md" unoptimized />
-          </div>
         </div>
 
         <div className="max-w-5xl mx-auto px-4 pb-10">
@@ -93,7 +92,7 @@ export default function InPlayPage() {
                 <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
                   <div className="font-semibold mb-1">{bet.title}</div>
                   <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
-                  <div className="font-bold text-lg">{bet.odds}</div>
+                  <div className="font-bold text-lg border border-white px-4 py-2 rounded">{bet.odds}</div>
                 </div>
               </div>
             ))}
@@ -112,7 +111,7 @@ export default function InPlayPage() {
 
               <div className="px-4 py-4 space-y-4">
                 {matches.map(({ id, match, countryCode, timeElapsed, odds }) => (
-                  <div key={id} className="bg-[#0a1024] border border-white rounded-lg shadow-lg p-4">
+                  <div key={id} className="bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
                     <div className="flex justify-between items-center mb-3">
                       <div className="flex items-center gap-3">
                         <Image src={`https://flagcdn.com/w20/${countryCode}.png`} alt="flag" width={20} height={14} className="rounded-sm" unoptimized />
@@ -121,25 +120,26 @@ export default function InPlayPage() {
                       <span className="text-xs text-gray-400">Live {timeElapsed}'</span>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="flex gap-2 text-center text-xs">
                       {Object.entries(odds).map(([type, fractional]) => {
                         const selectionId = `${match}-${type}`;
                         const isSelected = selections.some(sel => sel.id === selectionId);
                         return (
-                          <button
-                            key={type}
-                            onClick={() => toggleSelection(selectionId, match, type, fractional)}
-                            className={`px-4 py-2 rounded border font-semibold text-lg ${
-                              isSelected
-                                ? "bg-white text-cyan-700 border-white"
-                                : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
-                            }`}
-                          >
-                            {fractional}
-                            <div className="text-xs text-gray-400 mt-1">
+                          <div key={type} className="flex flex-col items-center">
+                            <button
+                              onClick={() => toggleSelection(selectionId, match, type, fractional)}
+                              className={`border px-3 py-1 rounded font-medium transition ${
+                                isSelected
+                                  ? "bg-white text-cyan-700 border-white"
+                                  : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                              }`}
+                            >
+                              {fractional}
+                            </button>
+                            <span className="text-softText mt-1">
                               {type === "home" ? "Home" : type === "away" ? "Away" : "Draw"}
-                            </div>
-                          </button>
+                            </span>
+                          </div>
                         );
                       })}
                     </div>
@@ -150,7 +150,6 @@ export default function InPlayPage() {
           ))}
         </div>
 
-        {/* Back to Home Button */}
         <div className="flex justify-center mb-8">
           <Link href="/" passHref legacyBehavior>
             <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
