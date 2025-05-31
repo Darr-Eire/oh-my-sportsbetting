@@ -12,7 +12,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useBetSlip } from "../../context/BetSlipContext";
 
-// Fraction to decimal conversion helper
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
@@ -92,7 +91,6 @@ export default function UFCPage() {
           </div>
         </div>
 
-        {/* Popular UFC Bets */}
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular UFC Bets</h2>
           <Slider {...carouselSettings}>
@@ -106,9 +104,7 @@ export default function UFCPage() {
                     <div className="font-semibold text-white mb-1">{bet.title}</div>
                     <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
                     <button
-                      onClick={() =>
-                        toggleSelection(betId, bet.title, bet.market, decimalOdds)
-                      }
+                      onClick={() => toggleSelection(betId, bet.title, bet.market, decimalOdds)}
                       className={`font-bold text-lg px-4 py-2 rounded border transition ${
                         isSelected
                           ? "bg-white text-cyan-700 border-white"
@@ -124,8 +120,6 @@ export default function UFCPage() {
           </Slider>
         </div>
 
-       
-       {/* Date Tabs */}
         <div className="flex justify-center mt-6 mb-8">
           <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
             {dates.map((date, idx) => (
@@ -144,7 +138,6 @@ export default function UFCPage() {
           </div>
         </div>
 
-        {/* Fight Listings */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
           {eventsForDate.map((event, idx) => (
             <details key={idx} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md group">
@@ -176,7 +169,7 @@ export default function UFCPage() {
                             className={`border px-3 py-2 rounded font-semibold ${
                               homeSelected ? "bg-white text-black border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
                             }`}
-                            onClick={() => handleToggle(homeId, fight.fight, "Home", parseFloat(fight.odds.home))}
+                            onClick={() => toggleSelection(homeId, fight.fight, "Home", parseFloat(fight.odds.home))}
                           >
                             {parseFloat(fight.odds.home).toFixed(2)}
                             <div className="text-xs text-gray-400">Home</div>
@@ -186,7 +179,7 @@ export default function UFCPage() {
                             className={`border px-3 py-2 rounded font-semibold ${
                               awaySelected ? "bg-white text-black border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
                             }`}
-                            onClick={() => handleToggle(awayId, fight.fight, "Away", parseFloat(fight.odds.away))}
+                            onClick={() => toggleSelection(awayId, fight.fight, "Away", parseFloat(fight.odds.away))}
                           >
                             {parseFloat(fight.odds.away).toFixed(2)}
                             <div className="text-xs text-gray-400">Away</div>
@@ -218,7 +211,6 @@ export default function UFCPage() {
   );
 }
 
-// Popular UFC Bets (fractional)
 const popularBets = [
   { title: "Jon Jones vs Stipe Miocic", market: "Jones Submission", fractional: "3/1" },
   { title: "Adesanya vs Pereira", market: "Fight To Go Distance: No", fractional: "6/4" },
