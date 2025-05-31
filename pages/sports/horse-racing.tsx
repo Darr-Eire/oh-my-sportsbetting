@@ -394,15 +394,17 @@ const popularHorseBets = [
   { race: "Leopardstown 16:45", bet: "Echo Flame Tricast", odds: "5/1" },
 ];
 
+
 const carouselSettings = {
-  dots: true,
+  dots: false,  // disables dots
   infinite: true,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 3000,
+  autoplaySpeed: 3000
 };
+
 
 export default function HorseRacingPage() {
   const groupedRaces = horseRaces.reduce((acc: Record<string, typeof horseRaces>, race) => {
