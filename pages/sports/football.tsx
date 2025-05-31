@@ -89,8 +89,10 @@ const leagueGroups = [
 export default function FootballPage() {
   const [openCountries, setOpenCountries] = useState({});
   const [openLeagues, setOpenLeagues] = useState({});
-  const [dates, setDates] = useState([]);
-  const [activeDate, setActiveDate] = useState(null);
+  const [dates, setDconst [dates, setDates] = useState<Date[]>([]);
+ates] = useState([]);
+  const [activeDate, setActiveDate] = useState<Date | null>(null);
+
 
   useEffect(() => {
     const today = new Date();
