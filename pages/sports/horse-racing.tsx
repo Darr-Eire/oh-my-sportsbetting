@@ -425,8 +425,8 @@ export default function HorseRacingPage() {
         </div>
 
         {/* Popular Bets */}
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          <h2 className="text-xl font-bold text-center mb-4">Popular Horse Racing Bets</h2>
+       <div className="max-w-5xl mx-auto px-4 pb-10">
+          <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Horse Racing Bets</h2>
           <div className="flex justify-center flex-wrap gap-4">
             {popularHorseBets.map(({ race, bet, odds }, idx) => (
               <div key={idx} className="bg-[#0a1024] border border-white rounded-lg p-4 w-64 text-center shadow-md">

@@ -98,7 +98,7 @@ export default function TennisPage() {
 
 
         {/* Popular Tennis Bets Carousel */}
-        <div className="max-w-5xl mx-auto px-4 pb-10">
+       <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Tennis Bets</h2>
 
           <Slider {...carouselSettings}>
