@@ -37,7 +37,7 @@ import supercopaDeEspana from "../../data/leagues/supercopa_de_espana.json";
 import laLiga2 from "../../data/leagues/la_liga_2.json";
 
 // ✅ Grouped data
-const leagueGroups = [
+export const leagueGroups = [
   {
     country: "England",
     flag: "/flags/uk.png",
@@ -48,8 +48,8 @@ const leagueGroups = [
       { name: "EFL League Two", logo: "/logos/efl2.png", matches: eflLeagueTwo },
       { name: "Football League First Division", logo: "/logos/footballleague.png", matches: footballLeagueFirstDivision },
       { name: "FA Cup", logo: "/logos/facup.png", matches: faCup },
-      { name: "EFL Cup", logo: "/logos/eflcup.png", matches: eflCup },
-    ],
+      { name: "EFL Cup", logo: "/logos/eflcup.png", matches: eflCup }
+    ]
   },
   {
     country: "Germany",
@@ -57,7 +57,7 @@ const leagueGroups = [
     leagues: [
       { name: "Bundesliga", logo: "/logos/bundesliga.png", matches: bundesliga },
       { name: "DFB-Pokal", logo: "/logos/dfb.png", matches: dfbPokal }
-    ],
+    ]
   },
   {
     country: "Spain",
@@ -76,7 +76,7 @@ const leagueGroups = [
       { name: "Serie A", logo: "/logos/serie_a.png", matches: serieA },
       { name: "Serie B", logo: "/logos/serieb.png", matches: serieB },
       { name: "Coppa Italia", logo: "/logos/coppaitalia.png", matches: coppaItalia }
-    ],
+    ]
   },
   {
     country: "France",
@@ -85,50 +85,50 @@ const leagueGroups = [
       { name: "Ligue 1", logo: "/logos/ligue_1.png", matches: ligue1 },
       { name: "Ligue 2", logo: "/logos/ligue2.png", matches: ligue2 },
       { name: "Coupe de France", logo: "/logos/coupedefrance.png", matches: coupeDeFrance }
-    ],
+    ]
   },
-    {
+  {
     country: "Ireland",
     flag: "/flags/ireland.png",
     leagues: [
       { name: "League of Ireland Premier Division", logo: "/logos/league_of_ireland.png", matches: league_of_ireland }
-    ],
+    ]
   },
   {
     country: "Brazil",
     flag: "/flags/brazil.png",
     leagues: [
       { name: "Brazilian Série A", logo: "/logos/Brazilian_Serie_A.png", matches: brazilianseriea }
-    ],
+    ]
   },
   {
     country: "Japan",
     flag: "/flags/japan.png",
     leagues: [
       { name: "J1 League", logo: "/logos/j_1.png", matches: j1league }
-    ],
+    ]
   },
   {
     country: "Mexico",
     flag: "/flags/mexico.png",
     leagues: [
       { name: "Liga MX", logo: "/logos/liga_mx.png", matches: ligamx }
-    ],
+    ]
   },
   {
     country: "Turkey",
     flag: "/flags/turkey.png",
     leagues: [
       { name: "Turkish Süper Lig", logo: "/logos/super_lig.png", matches: superlig }
-    ],
+    ]
   },
   {
     country: "USA",
     flag: "/flags/usa.png",
     leagues: [
       { name: "Major League Soccer", logo: "/logos/mls.png", matches: mls }
-    ],
-  },
+    ]
+  }
 ];
 
 
