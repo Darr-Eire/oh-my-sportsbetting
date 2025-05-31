@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
 import Head from "next/head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
-import { ufcEvents } from "../../data/ufc";  // Make sure your data file matches this structure
+import Link from "next/link";
+import { ufcEvents } from "../../data/ufc";
 
-const fightDates = ["Today", "Tomorrow", "Sunday", "June 7th", "June 8th", "June 15th"];
+const fightDates = ["Today", "Tomorrow"] as const;
+type DateKey = typeof fightDates[number];
 
 export default function UFCPage() {
   return (
@@ -18,46 +19,24 @@ export default function UFCPage() {
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
-     
-    {/* Banner */}
-<div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] border border-white shadow text-center">
-  <div className="flex justify-center items-center gap-4 mb-2">
-    <Image
-      src="/logos/ufc.png"
-      alt="UFC Logo"
-      width={60}
-      height={60}
-      className="object-contain"
-    />
-    <Image
-      src="/flags/usa.png"
-      alt="USA Flag"
-      width={40}
-      height={30}
-      className="rounded shadow-md"
-    />
-  </div>
-  <h1 className="text-3xl font-bold">UFC Betting</h1>
-  <p className="text-sm mt-2 max-w-xl mx-auto">
-    Fight night odds, round winners, method of victory and more.
-  </p>
-</div>
+        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] border border-white shadow text-center">
+          <h1 className="text-3xl font-bold">UFC Betting</h1>
+          <p className="text-sm mt-2 max-w-xl mx-auto">
+            Full fight cards, live odds, main events and prelims.
+          </p>
+        </div>
 
-
-        {/* Fight Dates Dropdown */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
           {fightDates.map((date) => (
-            <details key={date} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md overflow-hidden group">
+            <details key={date} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md group">
               <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-bold text-lg hover:bg-[#111b3a] transition">
                 <span>{date}</span>
-                <svg className="ml-auto h-5 w-5 transition-transform group-open:rotate-180"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
+                <svg className="ml-auto h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </summary>
 
-              {(ufcEvents[date] || []).map((event, idx) => (
+              {(ufcEvents[date as DateKey] || []).map((event, idx) => (
                 <details key={idx} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md overflow-hidden group">
                   <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold hover:bg-[#111b3a] transition">
                     <div className="flex items-center gap-3 text-lg">
@@ -93,6 +72,14 @@ export default function UFCPage() {
               ))}
             </details>
           ))}
+        </div>
+
+        <div className="flex justify-center mb-8">
+          <Link href="/" passHref legacyBehavior>
+            <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
+              Back to Home
+            </a>
+          </Link>
         </div>
 
         <Footer />
