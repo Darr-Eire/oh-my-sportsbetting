@@ -3,14 +3,23 @@ import "slick-carousel/slick/slick-theme.css";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { BetSlipProvider } from "../context/BetSlipContext";
-import BetSlip from "../components/BetSlip";  // <-- Import here
+import BetSlip from "../components/BetSlip";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <BetSlipProvider>
       <>
-        <Component {...pageProps} />
-        <BetSlip />  {/* <-- Mounted globally here */}
+        <Header />
+
+        {/* Main content pushed down under fixed header */}
+        <main className="pt-[72px] min-h-screen bg-[#0a1024] text-white font-sans">
+          <Component {...pageProps} />
+        </main>
+
+        <Footer />
+        <BetSlip />
       </>
     </BetSlipProvider>
   );

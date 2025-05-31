@@ -66,12 +66,6 @@ export default function MatchCard({ match }: { match: MatchCardProps }) {
           <div className="text-softText italic">Odds unavailable</div>
         )}
       </div>
-
-      <div className="mt-2 text-right">
-        <Link href={`/match/${slug}`}>
-          <span className="text-cyan-400 text-xs hover:underline">View Match</span>
-        </Link>
-      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { races } from "../../data/greyhoundRaces";
+import { races } from "../../data/greyhoundRaces"; // <-- your file
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -18,14 +18,6 @@ const trapColors = [
   "bg-orange-400 text-black",
   "bg-[repeating-linear-gradient(45deg,_#000_0_10px,_#fff_10px_20px)] text-red-600",
 ];
-
-type Race = {
-  track: string;
-  countryCode: string;
-  raceTime: string;
-  raceName: string;
-  runners: string[];
-};
 
 export default function GreyhoundRacing() {
   const [dates, setDates] = useState<Date[]>([]);
@@ -42,7 +34,7 @@ export default function GreyhoundRacing() {
     setActiveDate(today);
   }, []);
 
-  const groupedRaces = races["Today"].reduce((acc: Record<string, Race[]>, race: Race) => {
+  const groupedRaces = races["Today"].reduce((acc: Record<string, typeof races["Today"]>, race) => {
     if (!acc[race.track]) acc[race.track] = [];
     acc[race.track].push(race);
     return acc;
@@ -70,8 +62,8 @@ export default function GreyhoundRacing() {
         <Header />
 
         {/* Banner */}
-        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg border border-white shadow text-center">
-          <h1 className="text-2xl font-bold">Greyhound Racing From Around The World</h1>
+        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg shadow text-center">
+          <h1 className="text-3xl font-bold">Greyhound Racing</h1>
           <p className="text-sm mt-2 max-w-xl mx-auto">
             Live races, trap stats, betting odds and results. All greyhound action in one place.
           </p>
@@ -90,7 +82,7 @@ export default function GreyhoundRacing() {
                 <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
                   <div className="font-semibold mb-1">{title}</div>
                   <div className="text-sm text-blue-400 mb-3">{market}</div>
-                  <div className="font-bold text-lg">Odds: {odds}</div>
+                  <div className="font-bold text-lg">{odds}</div>
                 </div>
               </div>
             ))}
@@ -103,8 +95,8 @@ export default function GreyhoundRacing() {
             {dates.map((date, idx) => (
               <button key={idx} onClick={() => setActiveDate(date)}
                 className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-                  activeDate?.toDateString() === date.toDateString() 
-                    ? "bg-white text-black border-white shadow-lg" 
+                  activeDate?.toDateString() === date.toDateString()
+                    ? "bg-white text-black border-white shadow-lg"
                     : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
                 } snap-start`}>
                 {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
@@ -115,7 +107,7 @@ export default function GreyhoundRacing() {
 
         {/* Race Groups */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
-          {Object.entries(groupedRaces).map(([track, trackRaces]: [string, Race[]]) => {
+          {Object.entries(groupedRaces).map(([track, trackRaces]) => {
             const countryCode = trackRaces[0].countryCode;
             return (
               <details key={track} className="mb-8 border border-white rounded-lg bg-[#0a1024] shadow-md group">
@@ -137,19 +129,22 @@ export default function GreyhoundRacing() {
                     </div>
 
                     <div className="space-y-2">
-                      {race.runners.map((dog, index) => (
-                        <div key={index} className="flex items-center justify-between border border-gray-700 rounded-md px-4 py-3 bg-[#10182f] shadow">
-                          <div className={`w-10 h-10 flex items-center justify-center font-bold text-sm rounded-sm ${trapColors[index % trapColors.length]}`}>
-                            {index + 1}
+                      {race.runners.map((dog, index) => {
+                        const [name, odds] = dog.split(/ (?=\d+\/\d+)/); // split at first fractional odds
+                        return (
+                          <div key={index} className="flex items-center justify-between border border-gray-700 rounded-md px-4 py-3 bg-[#10182f] shadow">
+                            <div className={`w-10 h-10 flex items-center justify-center font-bold text-sm rounded-sm ${trapColors[index % trapColors.length]}`}>
+                              {index + 1}
+                            </div>
+                            <div className="flex-1 px-4">
+                              <p className="text-white font-semibold">{name}</p>
+                            </div>
+                            <div className="bg-[#0a1024] text-white text-sm font-bold py-1 px-3 rounded shadow border border-white min-w-[60px] text-center">
+                              {odds}
+                            </div>
                           </div>
-                          <div className="flex-1 px-4">
-                            <p className="text-white font-semibold">{dog}</p>
-                          </div>
-                          <div className="bg-[#0a1024] text-white text-sm font-bold py-1 px-3 rounded shadow border border-white min-w-[60px] text-center">
-                            {/* Odds can be extracted if needed */}
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 ))}
