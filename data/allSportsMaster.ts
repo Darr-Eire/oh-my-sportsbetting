@@ -1,54 +1,82 @@
-// Full master data aggregator file
+// data/allSportsMaster.ts
 
-import premierLeague from "./leagues/premier_league.json";
-import championship from "./leagues/championship.json";
-import bundesliga from "./leagues/bundesliga.json";
-import laLiga from "./leagues/la_liga.json";
-import serieA from "./leagues/serie_a.json";
-import ligue1 from "./leagues/ligue_1.json";
-import mls from "./leagues/mls.json";
-import leagueOfIreland from "./leagues/league_of_ireland.json";
-import brazilianSerieA from "./leagues/brazilian_serie_a.json";
-import ligaMx from "./leagues/liga_mx.json";
-import j1League from "./leagues/j1_league.json";
-import superLig from "./leagues/super_lig.json";
-import faCup from "./leagues/fa_cup.json";
-import eflCup from "./leagues/efl_cup.json";
-import coppaItalia from "./leagues/coppa_italia.json";
-import copaDelRey from "./leagues/copa_del_rey.json";
-import supercopaDeEspana from "./leagues/supercopa_de_espana.json";
-
-import { tennisEvents } from "./tennis";
-import { ufcEvents } from "./ufc";
 import { horseRaces } from "./horseRacing";
 import { races as greyhoundRaces } from "./greyhoundRaces";
+import { tennisEvents } from "./tennis";
+import { ufcEvents } from "./ufc";
 import { esportsEvents } from "./esports";
 import { inPlayEvents } from "./inPlay";
+import { basketballGames } from "./basketball";
+import { footballLeagues } from "./football";
 
-export const allSportsMaster = {
-  Football: [
-    ...premierLeague,
-    ...championship,
-    ...bundesliga,
-    ...laLiga,
-    ...serieA,
-    ...ligue1,
-    ...mls,
-    ...leagueOfIreland,
-    ...brazilianSerieA,
-    ...ligaMx,
-    ...j1League,
-    ...superLig,
-    ...faCup,
-    ...eflCup,
-    ...coppaItalia,
-    ...copaDelRey,
-    ...supercopaDeEspana,
-  ],
-  Tennis: tennisEvents,
-  UFC: ufcEvents,
-  HorseRacing: horseRaces,
-  Greyhounds: greyhoundRaces,
-  eSports: esportsEvents,
-  InPlay: inPlayEvents,
+const allSportsData: Record<string, any> = {
+  Football: Object.entries(footballLeagues).flatMap(([leagueName, matches]: [string, any[]]) =>
+    matches.map(match => ({
+      league: leagueName,
+      match: match.match,
+      time: match.time,
+      countryCode: match.countryCode || "gb",
+      odds: match.odds,
+    }))
+  ),
+
+  Basketball: Object.entries(basketballGames).flatMap(([date, games]: [string, any[]]) =>
+    games.map(game => ({
+      league: game.league,
+      match: game.game,
+      time: game.tipOff,
+      countryCode: game.countryCode,
+      odds: game.odds,
+    }))
+  ),
+
+  Tennis: Object.entries(tennisEvents).flatMap(([tournament, matches]: [string, any[]]) =>
+    matches.map(match => ({
+      tournament,
+      match: match.match,
+      time: match.startTime,
+      odds: match.odds,
+    }))
+  ),
+
+  UFC: ufcEvents.map(event => ({
+    fight: event.fight,
+    time: event.time,
+    countryCode: event.countryCode,
+    odds: event.odds,
+  })),
+
+  HorseRacing: horseRaces.map(race => ({
+    track: race.track,
+    race: race.raceName,
+    time: race.raceTime,
+    countryCode: race.countryCode,
+    runners: race.runners,
+  })),
+
+  Greyhounds: greyhoundRaces.Today.map(race => ({
+    track: race.track,
+    race: race.raceName,
+    time: race.raceTime,
+    countryCode: race.countryCode,
+    runners: race.runners,
+  })),
+
+  eSports: Object.entries(esportsEvents).flatMap(([tournament, matches]: [string, any[]]) =>
+    matches.map(match => ({
+      tournament,
+      match: match.match,
+      time: match.startTime,
+      odds: match.odds,
+    }))
+  ),
+
+  InPlay: inPlayEvents.map(event => ({
+    match: event.match,
+    time: event.time,
+    countryCode: event.countryCode,
+    odds: event.odds,
+  })),
 };
+
+export default allSportsData;
