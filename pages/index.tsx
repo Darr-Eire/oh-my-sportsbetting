@@ -331,7 +331,7 @@ export default function Home({ todayMatches, basketballMatches }: HomeProps) {
                  {/* HORSE RACING SECTION */}
           <h2 className="text-lg font-bold text-white mb-3 mt-8">Today’s Horse Racing</h2>
 
-        import { useBetSlip } from "../context/BetSlipContext";
+      
 
 <section className="mt-12 w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg">
   <button
