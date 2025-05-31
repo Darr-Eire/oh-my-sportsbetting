@@ -17,7 +17,7 @@ export default function BasketballPage() {
   };
 
   const carouselSettings = {
-    dots: true,
+    dots: false,  // <-- Dots removed
     infinite: true,
     speed: 500,
     slidesToShow: 2,
@@ -49,13 +49,6 @@ export default function BasketballPage() {
     acc[match.league].push(match);
     return acc;
   }, {});
-
-  function formatDate(date: Date): string {
-    const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = date.toLocaleDateString("en-US", { month: "short" });
-    return `${weekday} ${day} ${month}`;
-  }
 
   return (
     <>
@@ -89,6 +82,7 @@ export default function BasketballPage() {
                 <div className="text-white font-bold text-lg">Odds: 10/11</div>
               </div>
             </div>
+
             <div className="p-2">
               <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
                 <div className="font-semibold text-white mb-1">Warriors vs Suns</div>
@@ -96,6 +90,7 @@ export default function BasketballPage() {
                 <div className="text-white font-bold text-lg">Odds: 5/1</div>
               </div>
             </div>
+
             <div className="p-2">
               <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
                 <div className="font-semibold text-white mb-1">Real Madrid vs Barcelona (EuroLeague)</div>
@@ -107,24 +102,23 @@ export default function BasketballPage() {
         </div>
 
         {/* Date Tabs */}
- <div className="flex justify-center mt-6 mb-8">
-  <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 scroll-snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
-    {dates.map((date, idx) => (
-      <button
-        key={idx}
-        onClick={() => setActiveDate(date)}
-        className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-          activeDate?.toDateString() === date.toDateString()
-            ? "bg-white text-black border-white shadow-lg"
-            : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
-        } snap-start`}
-      >
-        {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-      </button>
-    ))}
-  </div>
-</div>
-
+        <div className="flex justify-center mt-6 mb-8">
+          <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 scroll-snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
+            {dates.map((date, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveDate(date)}
+                className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
+                  activeDate?.toDateString() === date.toDateString()
+                    ? "bg-white text-black border-white shadow-lg"
+                    : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
+                } snap-start`}
+              >
+                {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* League Dropdowns */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
