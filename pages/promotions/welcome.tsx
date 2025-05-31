@@ -12,7 +12,7 @@ export default function WelcomeOffer() {
         <h2 className="text-xl font-semibold text-white mb-2">Bonus Overview</h2>
         <p className="text-gray-300">
           Join Oh My Sports Betting and get your first Pi deposit matched 100% up to <span className="text-white font-bold">1000 Pi</span>. 
-          Plus receive an instant <span className="text-white font-bold">25 Pi Free Bet Tokens</span> and a <span className="text-yellow-400 font-bold">Second Chance Bet</span> up to 500 Pi if your first bet loses.
+          Plus receive an instant <span className="text-white font-bold">25 Pi Free Bet Tokens</span> and a <span className="text-white font-bold">Second Chance Bet</span> up to 500 Pi if your first bet loses.
         </p>
       </section>
 
