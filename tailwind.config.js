@@ -7,12 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Define custom colors
         darkBlue: "#0b112c",
         deepCard: "#10182f",
         neonBlue: "#00d0ff",
         softText: "#a0aec0",
-        // Override default colors
         white: "#ffffff",
         black: "#000000",
       },
@@ -22,8 +20,12 @@ module.exports = {
       fontFamily: {
         futuristic: ["Orbitron", "sans-serif"],
       },
+      translate: {
+        '80vh': '80vh',  // ✅ Now allows translate-y-[80vh]
+        '90vh': '90vh',
+        '100vh': '100vh',
+      },
     },
   },
   plugins: [],
 };
-

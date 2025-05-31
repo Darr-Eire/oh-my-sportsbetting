@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useBetSlip } from "../context/BetSlipContext";
 
 const betBuilders = [
   {
@@ -22,10 +23,24 @@ const betBuilders = [
 
 export default function BetBuilderCarousel() {
   const [index, setIndex] = useState(0);
+  const { addSelection } = useBetSlip();
 
   const next = () => setIndex((prev) => (prev + 1) % betBuilders.length);
   const prev = () => setIndex((prev) => (prev - 1 + betBuilders.length) % betBuilders.length);
   const current = betBuilders[index];
+
+  const handleAddToBetSlip = () => {
+    // Convert fractional odds to decimal
+    const [numerator, denominator] = current.odds.split("/").map(Number);
+    const decimalOdds = (numerator / denominator + 1).toFixed(2);
+
+    addSelection({
+      id: `${current.title}-${current.odds}`,
+      event: `${current.title} (${current.options.join(", ")})`,
+      type: "Bet Builder",
+      odds: parseFloat(decimalOdds),
+    });
+  };
 
   return (
     <section className="w-full max-w-3xl mx-auto mt-6 mb-6 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
@@ -40,11 +55,18 @@ export default function BetBuilderCarousel() {
           ))}
         </ul>
 
-        <div>
+        <div className="mb-4">
           <span className="bg-electricCyan text-white px-4 py-1 rounded-full text-sm font-bold shadow">
             {current.odds}
           </span>
         </div>
+
+        <button
+          onClick={handleAddToBetSlip}
+          className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded transition"
+        >
+          Add To Bet Slip
+        </button>
 
         {/* Arrows */}
         <div className="absolute top-1/2 left-2 -translate-y-1/2 cursor-pointer">
@@ -57,3 +79,5 @@ export default function BetBuilderCarousel() {
     </section>
   );
 }
+
+
