@@ -17,7 +17,6 @@ type SelectionType = {
   odds: number;
 };
 
-// Utility
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
@@ -117,7 +116,7 @@ export default function InPlayPage() {
                         <Image src={`https://flagcdn.com/w20/${countryCode}.png`} alt="flag" width={20} height={14} className="rounded-sm" unoptimized />
                         <span className="font-semibold">{match}</span>
                       </div>
-                      <span className="text-xs text-gray-400">Live {timeElapsed}'</span>
+                      <span className="text-xs text-gray-400">Live {timeElapsed}&apos;</span>
                     </div>
 
                     <div className="flex gap-2 text-center text-xs">
