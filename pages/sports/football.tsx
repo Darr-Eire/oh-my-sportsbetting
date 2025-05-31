@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
+
 import Head from "next/head";
 import Link from "next/link";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MatchCard from "../../components/MatchCard";
 import PopularFootballBetsCarousel from "../../components/PopularFootballBetsCarousel";
+import Slider from "react-slick";
 
 // ✅ Imports (your existing data imports)
 import serieB from "../../data/leagues/serie_b.json";
@@ -129,7 +131,18 @@ const leagueGroups = [
   },
 ];
 
+
+// Generate rolling 7 days from today
+const getNext7Days = () => {
+  return Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    return date;
+  });
+};
+
 export default function FootballPage() {
+  const [activeDate, setActiveDate] = useState(new Date());
   const [openCountries, setOpenCountries] = useState<{ [key: string]: boolean }>({});
   const [openLeagues, setOpenLeagues] = useState<{ [key: string]: boolean }>({});
 
@@ -141,6 +154,24 @@ export default function FootballPage() {
     setOpenLeagues((prev) => ({ ...prev, [league]: !prev[league] }));
   };
 
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 640, settings: { slidesToShow: 1 } }
+    ]
+  };
+
+  const dates = getNext7Days();
+
+  const isMatchOnDate = (matchDate: string, selectedDate: Date) => {
+    // In production you'd check real dates — for now return true for all
+    return true;
+  };
+
   return (
     <>
       <Head>
@@ -150,34 +181,75 @@ export default function FootballPage() {
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
+        {/* Title Box */}
         <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] border border-white shadow text-center">
-          <h1 className="text-2xl sm:text-3xl font-semibold text-white tracking-wide">
-            Leagues From Around The World
+          <h1 className="text-2xl sm:text-2xl font-semibold text-white tracking-wide">
+            Football Leagues From Around The World
           </h1>
           <p className="text-sm sm:text-base text-white mt-2 max-w-xl mx-auto">
             Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.
           </p>
-
-          <div className="mt-4">
-            <div className="mt-6 flex justify-center flex-wrap gap-4">
-  {[
-    "/flags/uk.png",
-    "/flags/spain.png",
-    "/flags/italy.png",
-    "/flags/germany.png",
-    "/flags/france.png",
-
-  ].map((flag, index) => (
-    <div key={index}>
-      <img src={flag} alt="flag" className="w-12 h-12 object-contain" />
-    </div>
-  ))}
-</div>
-
-            <PopularFootballBetsCarousel />
+          <div className="mt-4 flex justify-center flex-wrap gap-4">
+            {["/flags/uk.png", "/flags/spain.png", "/flags/italy.png", "/flags/germany.png", "/flags/france.png"].map((flag, index) => (
+              <div key={index}>
+                <img src={flag} alt="flag" className="w-12 h-12 object-contain" />
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* Popular Football Bets Carousel */}
+        <div className="max-w-5xl mx-auto px-4 pb-10">
+          <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Football Bets</h2>
+
+          <Slider {...carouselSettings}>
+            <div className="p-2">
+              <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+                <div className="font-semibold text-white mb-1">Man City vs Arsenal</div>
+                <div className="text-sm text-blue-400 mb-3">Both Teams to Score: Yes</div>
+                <div className="text-white font-bold text-lg">Odds: 4/5</div>
+              </div>
+            </div>
+
+            <div className="p-2">
+              <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+                <div className="font-semibold text-white mb-1">Liverpool vs Chelsea</div>
+                <div className="text-sm text-blue-400 mb-3">Over 2.5 Goals</div>
+                <div className="text-white font-bold text-lg">Odds: 11/10</div>
+              </div>
+            </div>
+
+            <div className="p-2">
+              <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+                <div className="font-semibold text-white mb-1">Real Madrid vs Barcelona</div>
+                <div className="text-sm text-blue-400 mb-3">Correct Score: 2-1 Madrid</div>
+                <div className="text-white font-bold text-lg">Odds: 7/1</div>
+              </div>
+            </div>
+          </Slider>
+        </div>
+
+<div className="flex justify-center mb-8">
+  <div className="flex overflow-x-auto space-x-3 px-2 scrollbar-hide">
+    {dates.map((date, idx) => (
+      <button
+        key={idx}
+        onClick={() => setActiveDate(date)}
+        className={`min-w-[90px] px-4 py-2 rounded-md font-semibold text-sm border border-white ${
+          activeDate.toDateString() === date.toDateString()
+            ? "bg-[#0a1024] text-white"
+            : "bg-[#0a1024] text-white"
+        }`}
+      >
+        {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+      </button>
+    ))}
+  </div>
+</div>
+
+
+
+        {/* Country -> League Dropdowns */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {leagueGroups.map((group) => (
             <div key={group.country} className="mb-8 border border-white rounded-lg">
@@ -187,8 +259,7 @@ export default function FootballPage() {
               >
                 <img src={group.flag} alt={`${group.country} flag`} className="w-6 h-6 object-contain rounded-sm" />
                 <span>{group.country}</span>
-                <svg className={`ml-auto h-5 w-5 transition-transform ${openCountries[group.country] ? "rotate-180" : ""}`}
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className={`ml-auto h-5 w-5 transition-transform ${openCountries[group.country] ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -203,17 +274,18 @@ export default function FootballPage() {
                       >
                         <img src={league.logo} alt={`${league.name} logo`} className="w-6 h-6 object-contain" />
                         <span>{league.name}</span>
-                        <svg className={`ml-auto h-5 w-5 transition-transform ${openLeagues[league.name] ? "rotate-180" : ""}`}
-                          fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg className={`ml-auto h-5 w-5 transition-transform ${openLeagues[league.name] ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
 
                       {openLeagues[league.name] && (
                         <div className="grid gap-3 p-3 bg-[#0a1024]">
-                          {league.matches.map((match, i) => (
-                            <MatchCard key={i} match={match} />
-                          ))}
+                          {league.matches
+                            .filter((match) => isMatchOnDate(match.date, activeDate))
+                            .map((match, i) => (
+                              <MatchCard key={i} match={match} />
+                            ))}
                         </div>
                       )}
                     </div>
