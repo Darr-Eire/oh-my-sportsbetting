@@ -118,7 +118,7 @@ export default function UFCPage() {
               key={idx}
               onClick={() => setActiveDate(date)}
               className={`px-4 py-2 rounded-md font-semibold text-sm border border-white ${
-                activeDate.toDateString() === date.toDateString() ? "bg-[#0a1024] text-yellow-400" : "bg-[#0a1024] text-white"
+                activeDate.toDateString() === date.toDateString() ? "bg-[#0a1024] text-white" : "bg-[#0a1024] text-white"
               }`}
             >
               {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
@@ -166,7 +166,7 @@ export default function UFCPage() {
 
                     <div className="flex justify-center mt-3">
                       <Link href={`/match/${fight.fight.replace(/\s+/g, '-').toLowerCase()}`} passHref legacyBehavior>
-                        <a className="text-sm text-white font-semibold underline hover:text-yellow-300 transition">More Bets</a>
+                        <a className="text-sm text-white font-semibold underline hover:text-white transition">More Bets</a>
                       </Link>
                     </div>
                   </div>
