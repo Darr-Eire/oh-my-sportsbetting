@@ -60,7 +60,6 @@ export default function Header() {
                   <li><Link href="/sports/ufc" className="hover:text-electricCyan">🥊 UFC / MMA</Link></li>
                   <li><Link href="/sports/tennis" className="hover:text-electricCyan">🎾 Tennis</Link></li>
                   <li><Link href="/sports/esports" className="hover:text-electricCyan">🎮 eSports</Link></li>
-                  <li><Link href="/sports/golf" className="hover:text-electricCyan">⛳ Golf</Link></li>
                   <li><Link href="/sports/greyhound-racing" className="hover:text-electricCyan">🐕 Greyhounds</Link></li>
                   <li><Link href="/sports/horse-racing" className="hover:text-electricCyan">🏇 Horse Racing</Link></li>
                   <li><Link href="/sports/in-play" className="hover:text-electricCyan">🎮 In-Play</Link></li>

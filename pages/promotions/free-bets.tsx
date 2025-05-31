@@ -1,57 +1,57 @@
 import InfoPageLayout from "../../components/InfoPageLayout";
 import Link from "next/link";
 
-export default function FreeBets() {
+export default function WeeklyFreeBets() {
   return (
     <InfoPageLayout
-      title="Free Bets"
-      description="Earn free bets through ongoing promotions, loyalty rewards, and special campaigns."
+      title="Weekly Free Bet Club"
+      description="Earn Pi free bets every week based on your weekly action."
     >
-      {/* How Free Bets Work */}
+      {/* Offer Details */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">How Free Bets Work</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">Promotion Overview</h2>
         <p className="text-gray-300">
-          Free Bets allow you to place wagers without using your own Pi balance. If your free bet wins, you keep the winnings — the free bet stake itself is not returned.
+          Bet regularly and get rewarded! Each week, place qualifying bets and receive a Pi Free Bet every Monday.
         </p>
       </section>
 
-      {/* How to Earn */}
+      {/* How It Works */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">How To Earn Free Bets</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">How To Qualify</h2>
         <ul className="list-disc list-inside text-gray-300 space-y-2">
-          <li>Participate in weekly promotions or contests</li>
-          <li>Complete account verification and receive welcome free bets</li>
-          <li>Qualify for loyalty rewards and special events</li>
-          <li>Receive targeted free bets based on your betting activity</li>
+          <li>Place at least <span className="font-bold text-white">5 bets of 5 Pi or more</span> between Monday 00:00 UTC and Sunday 23:59 UTC ➔ Get a 5 Pi Free Bet on Monday.</li>
+          <li>Place at least <span className="font-bold text-white">5 bets of 10 Pi or more</span> in the same week ➔ Get a 10 Pi Free Bet on Monday.</li>
+          <li>You can qualify for both levels — hit both and receive both free bets.</li>
         </ul>
       </section>
 
-      {/* Free Bet Rules */}
+      {/* Key Rules */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">Free Bet Terms</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">Important Rules</h2>
         <ul className="list-disc list-inside text-gray-300 space-y-2">
-          <li>Free bet stake is not included in any winnings</li>
-          <li>Free bets may have specific minimum odds requirements</li>
-          <li>Free bets expire if unused within 7 days</li>
-          <li>Free bet winnings may be subject to 1x wagering before withdrawal</li>
+          <li>Qualifying bets must settle within the week (Monday-Sunday).</li>
+          <li>Only single bets with minimum odds of 1.50 (1/2) or higher count toward qualification.</li>
+          <li>Free Bets will be credited automatically every Monday by 12:00 UTC.</li>
+          <li>Free Bets expire 7 days after being issued.</li>
         </ul>
       </section>
 
+      {/* Example Scenarios */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">Important</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">Example</h2>
         <p className="text-gray-300">
-          Always check the promotional page for full rules and eligibility. Free bets are non-transferable and may be voided if account abuse is suspected.
+          If you place 5 bets of 5 Pi and 5 bets of 10 Pi in the same week, you'll receive a 5 Pi Free Bet and a 10 Pi Free Bet — 15 Pi total free bets on Monday.
         </p>
       </section>
 
+      {/* Responsible Gambling */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">Need Assistance?</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">Responsible Gambling</h2>
         <p className="text-gray-300">
-          Contact{" "}
+          Please bet responsibly. If you need support or want to set limits,{" "}
           <Link href="/support/contact">
-            <span className="text-electricCyan hover:underline">Support</span>
-          </Link>{" "}
-          for any questions about your Free Bets.
+            <span className="text-electricCyan hover:underline">Contact Support</span>
+          </Link>.
         </p>
       </section>
     </InfoPageLayout>

@@ -4,50 +4,54 @@ import Link from "next/link";
 export default function CashbackOffers() {
   return (
     <InfoPageLayout
-      title="Cashback Offers"
-      description="Get part of your losses refunded through our weekly Pi cashback promotions."
+      title="Pi Cash Bash"
+      description="Earn weekly Pi cashback based on your weekly wagering volume — the more you play, the more you get back!"
     >
       {/* Cashback Overview */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">How Cashback Works</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">How Pi Cash Bash Works</h2>
         <p className="text-gray-300">
-          Our cashback promotions give you back a percentage of your weekly net losses as Pi credits. Even when luck doesn’t go your way, you’re still rewarded.
+          Bet regularly and collect Pi Free Bet Tokens every Monday based on your weekly real-money wagering volume. Bigger volume means bigger rewards.
         </p>
       </section>
 
-      {/* Cashback Percentage */}
+      {/* Cashback Tiers */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">Weekly Cashback Rates</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">Weekly Cashback Tiers</h2>
         <ul className="list-disc list-inside text-gray-300 space-y-2">
-          <li>Standard Cashback: 10% of weekly net losses</li>
-          <li>VIP Cashback: Up to 20% based on loyalty tier</li>
-          <li>Cashback paid every Monday automatically</li>
+          <li>50 - 99 Pi wagered: 2% Cashback</li>
+          <li>100 - 499 Pi wagered: 3% Cashback</li>
+          <li>500 - 999 Pi wagered: 4% Cashback</li>
+          <li>1000+ Pi wagered: 5% Cashback</li>
+          <li>Cashback cap: 100 Pi per week</li>
         </ul>
       </section>
 
-      {/* Eligibility */}
+      {/* How To Qualify */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">Eligibility Rules</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">How To Qualify</h2>
         <ul className="list-disc list-inside text-gray-300 space-y-2">
-          <li>Only settled bets are counted toward net loss calculations</li>
-          <li>Voided bets, cashed-out bets, or system errors are excluded</li>
-          <li>Bonus funds do not count toward cashback calculations</li>
-          <li>Account must be in good standing to receive cashback</li>
+          <li>Wager real Pi from Monday 00:00 UTC to Sunday 23:59 UTC.</li>
+          <li>Only settled bets count (voided or cashed out bets excluded).</li>
+          <li>Bonus funds wagers do not count towards cashback.</li>
         </ul>
       </section>
 
-      {/* Cashback Terms */}
+      {/* Cashback Crediting */}
       <section>
-        <h2 className="text-xl font-semibold text-white mb-2">Cashback Terms</h2>
-        <p className="text-gray-300">
-          Cashback credits are issued as non-withdrawable bonus funds, but can be wagered immediately. Wagering requirement is 1x on cashback credits before they can be withdrawn.
-        </p>
+        <h2 className="text-xl font-semibold text-white mb-2">Cashback Payouts</h2>
+        <ul className="list-disc list-inside text-gray-300 space-y-2">
+          <li>Cashback is credited every Monday by 12:00 UTC.</li>
+          <li>Issued as Pi Free Bet Tokens (non-withdrawable; winnings withdrawable).</li>
+          <li>Free Bet Tokens expire 7 days after being issued.</li>
+        </ul>
       </section>
 
+      {/* Responsible Play */}
       <section>
         <h2 className="text-xl font-semibold text-white mb-2">Responsible Play</h2>
         <p className="text-gray-300">
-          We encourage responsible betting at all times. If you feel you need support or wish to apply limits,{" "}
+          Bet responsibly. For assistance or self-exclusion options,{" "}
           <Link href="/support/contact">
             <span className="text-electricCyan hover:underline">contact our support team</span>
           </Link>.
@@ -56,4 +60,3 @@ export default function CashbackOffers() {
     </InfoPageLayout>
   );
 }
-``
