@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -11,22 +11,29 @@ export default function Header() {
   const [supportOpen, setSupportOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       if (
         menuOpen &&
         menuRef.current &&
-        !menuRef.current.contains(e.target) &&
-        !buttonRef.current.contains(e.target)
+        !menuRef.current.contains(e.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target as Node)
       ) {
         setMenuOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, [menuOpen]);
 
   return (
@@ -59,10 +66,9 @@ export default function Header() {
           <ul className="space-y-3">
 
             <li>
-              <Link href="/" className="flex items-center hover:text-electricCyan transition">Home</Link>
+              <Link href="/" className="underline hover:text-electricCyan transition">Home</Link>
             </li>
 
-            {/* Account */}
             <Dropdown
               label="Account"
               open={accountOpen}
@@ -76,7 +82,6 @@ export default function Header() {
               ]}
             />
 
-            {/* Sports */}
             <Dropdown
               label="Sports"
               open={sportsOpen}
@@ -93,7 +98,6 @@ export default function Header() {
               ]}
             />
 
-            {/* Promotions */}
             <Dropdown
               label="Promotions"
               open={promotionsOpen}
@@ -107,7 +111,6 @@ export default function Header() {
               ]}
             />
 
-            {/* Competitions */}
             <Dropdown
               label="Competitions"
               open={competitionsOpen}
@@ -115,12 +118,11 @@ export default function Header() {
               links={[
                 { href: "/competitions/weekly-leaderboard", label: "🏅 Leaderboard" },
                 { href: "/competitions/monthly-jackpot", label: "💎 Monthly Jackpot" },
-                { href: "/competitions/free-to-play", label: "🎮 Free-to-Play " },
+                { href: "/competitions/free-to-play", label: "🎮 Free-to-Play" },
                 { href: "/competitions/predictor-challenges", label: "📊 Predictor" },
               ]}
             />
 
-            {/* Support */}
             <Dropdown
               label="Support"
               open={supportOpen}
@@ -134,7 +136,6 @@ export default function Header() {
               ]}
             />
 
-            {/* About */}
             <Dropdown
               label="About"
               open={aboutOpen}
@@ -155,12 +156,19 @@ export default function Header() {
   );
 }
 
-function Dropdown({ label, open, setOpen, links }) {
+type DropdownProps = {
+  label: string;
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  links: { href: string; label: string }[];
+};
+
+function Dropdown({ label, open, setOpen, links }: DropdownProps) {
   return (
     <li>
       <div
         onClick={() => setOpen(!open)}
-        className="flex justify-between items-center cursor-pointer hover:text-electricCyan transition"
+        className="flex justify-between items-center cursor-pointer underline hover:text-electricCyan transition"
       >
         <span>{label}</span>
         {open ? <FaChevronUp /> : <FaChevronDown />}
@@ -170,9 +178,7 @@ function Dropdown({ label, open, setOpen, links }) {
         <ul className="mt-2 ml-3 space-y-2 text-sm text-white">
           {links.map((link, idx) => (
             <li key={idx}>
-              <Link href={link.href} className="hover:text-electricCyan">
-                {link.label}
-              </Link>
+              <Link href={link.href} className="underline hover:text-electricCyan">{link.label}</Link>
             </li>
           ))}
         </ul>
