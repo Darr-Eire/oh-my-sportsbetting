@@ -394,7 +394,6 @@ const popularHorseBets = [
   { race: "Leopardstown 16:45", bet: "Echo Flame Tricast", odds: "5/1" },
 ];
 
-// Slider settings
 const carouselSettings = {
   dots: true,
   infinite: true,
@@ -402,10 +401,9 @@ const carouselSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 3000
+  autoplaySpeed: 3000,
 };
 
-// Component
 export default function HorseRacingPage() {
   const groupedRaces = horseRaces.reduce((acc: Record<string, typeof horseRaces>, race) => {
     if (!acc[race.track]) acc[race.track] = [];
@@ -425,19 +423,12 @@ export default function HorseRacingPage() {
           <p className="text-sm sm:text-base mt-2 max-w-xl mx-auto">Explore the top races, Best Horses & Pi-powered action — all in one spot.</p>
           <div className="mt-4 flex flex-wrap justify-center gap-4">
             {["gb", "ie", "us"].map((code) => (
-              <Image
-                key={code}
-                src={`https://flagcdn.com/w40/${code}.png`}
-                alt={`${code} flag`}
-                width={40}
-                height={30}
-                className="rounded shadow-md"
-              />
+              <Image key={code} src={`https://flagcdn.com/w40/${code}.png`} alt={`${code} flag`} width={40} height={30} className="rounded shadow-md" />
             ))}
           </div>
         </div>
 
-        {/* Popular Bets */}
+        {/* Popular Horse Bets */}
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Horse Bets</h2>
           <Slider {...carouselSettings}>
@@ -460,14 +451,7 @@ export default function HorseRacingPage() {
               <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold hover:bg-[#111b3a] transition">
                 <span className="flex items-center gap-2 text-lg">
                   {track}
-                  <Image
-                    src={`https://flagcdn.com/w20/${races[0].countryCode}.png`}
-                    alt="flag"
-                    width={20}
-                    height={14}
-                    className="object-contain rounded-sm"
-                    unoptimized
-                  />
+                  <Image src={`https://flagcdn.com/w20/${races[0].countryCode}.png`} alt="flag" width={20} height={14} className="object-contain rounded-sm" unoptimized />
                 </span>
                 <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -497,9 +481,7 @@ export default function HorseRacingPage() {
                               <div className="text-gray-400 text-xs">J: {jockey} | T: {trainer} | F: {form}</div>
                             </div>
                           </div>
-                          <button className="bg-green-800 text-green-300 px-2 py-1 rounded text-sm font-semibold hover:bg-green-600 transition">
-                            {odds}
-                          </button>
+                          <button className="bg-green-800 text-green-300 px-2 py-1 rounded text-sm font-semibold hover:bg-green-600 transition">{odds}</button>
                         </div>
                       ))}
                     </div>

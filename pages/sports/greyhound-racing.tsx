@@ -85,12 +85,12 @@ export default function GreyhoundRacing() {
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Greyhound Bets</h2>
           <Slider {...carouselSettings}>
-            {popularGreyhoundBets.map(({ race, bet, odds }, idx) => (
-              <div key={index} className="p-2">
+            {popularGreyhoundBets.map(({ title, market, odds }, idx) => (
+              <div key={idx} className="p-2">
                 <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                  <div className="font-semibold mb-1">{bet.title}</div>
-                  <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
-                  <div className="font-bold text-lg">Odds: {bet.odds}</div>
+                  <div className="font-semibold mb-1">{title}</div>
+                  <div className="text-sm text-blue-400 mb-3">{market}</div>
+                  <div className="font-bold text-lg">Odds: {odds}</div>
                 </div>
               </div>
             ))}
