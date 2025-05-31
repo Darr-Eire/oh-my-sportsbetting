@@ -85,7 +85,7 @@ export default function GreyhoundRacing() {
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Greyhound Bets</h2>
           <Slider {...carouselSettings}>
-            {popularGreyhoundBets.map((bet, index) => (
+            {popularGreyhoundBets.map(({ race, bet, odds }, idx) => (
               <div key={index} className="p-2">
                 <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
                   <div className="font-semibold mb-1">{bet.title}</div>

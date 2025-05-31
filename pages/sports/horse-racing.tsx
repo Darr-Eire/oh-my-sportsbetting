@@ -3,8 +3,10 @@ import Head from "next/head";
 import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-// Full race data
 const horseRaces = [
  {
   track: "Cheltenham",
@@ -392,6 +394,17 @@ const popularHorseBets = [
   { race: "Leopardstown 16:45", bet: "Echo Flame Tricast", odds: "5/1" },
 ];
 
+// Slider settings
+const carouselSettings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 3000
+};
+
 // Component
 export default function HorseRacingPage() {
   const groupedRaces = horseRaces.reduce((acc: Record<string, typeof horseRaces>, race) => {
@@ -425,17 +438,19 @@ export default function HorseRacingPage() {
         </div>
 
         {/* Popular Bets */}
-       <div className="max-w-5xl mx-auto px-4 pb-10">
-          <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Horse Racing Bets</h2>
-          <div className="flex justify-center flex-wrap gap-4">
+        <div className="max-w-5xl mx-auto px-4 pb-10">
+          <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Horse Bets</h2>
+          <Slider {...carouselSettings}>
             {popularHorseBets.map(({ race, bet, odds }, idx) => (
-              <div key={idx} className="bg-[#0a1024] border border-white rounded-lg p-4 w-64 text-center shadow-md">
-                <h3 className="font-semibold">{race}</h3>
-                <p className="text-blue-400 text-sm mt-1">{bet}</p>
-                <p className="text-lg font-bold mt-2">Odds: {odds}</p>
+              <div key={idx} className="p-2">
+                <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+                  <div className="font-semibold mb-1">{bet}</div>
+                  <div className="text-sm text-blue-400 mb-3">{race}</div>
+                  <div className="font-bold text-lg">Odds: {odds}</div>
+                </div>
               </div>
             ))}
-          </div>
+          </Slider>
         </div>
 
         {/* Race Listings */}
