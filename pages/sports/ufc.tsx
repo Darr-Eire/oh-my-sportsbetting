@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { ufcEvents } from "../../data/ufc"; // still using Today/Tomorrow keys
+import { ufcEvents } from "../../data/ufc";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -20,29 +20,45 @@ export default function UFCPage() {
     slidesToScroll: 1,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } }
-    ]
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
+    ],
   };
 
-  // Setup dates (today + next 6 days)
-  const today = new Date();
-  const dates = Array.from({ length: 7 }, (_, i) => {
-    const date = new Date(today);
-    date.setDate(date.getDate() + i);
-    return date;
-  });
-  const [activeDate, setActiveDate] = useState(today);
+  const [dates, setDates] = useState<Date[]>([]);
+  const [activeDate, setActiveDate] = useState<Date | null>(null);
 
-  // Map Today/Tomorrow keys to actual dates
-  const todayStr = today.toDateString();
+  useEffect(() => {
+    const today = new Date();
+    const dateArray = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today);
+      d.setDate(d.getDate() + i);
+      return d;
+    });
+    setDates(dateArray);
+    setActiveDate(today);
+  }, []);
+
+  if (!activeDate || dates.length === 0) return null;
+
+  // Map legacy Today/Tomorrow keys to dates
+  const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
-  const tomorrowStr = tomorrow.toDateString();
 
-  const mappedUfcEvents: { [key: string]: any } = {
-    [todayStr]: ufcEvents["Today"] || [],
-    [tomorrowStr]: ufcEvents["Tomorrow"] || []
+  const todayKey = today.toDateString();
+  const tomorrowKey = tomorrow.toDateString();
+
+  const mappedUfcEvents: Record<string, any[]> = {
+    [todayKey]: ufcEvents["Today"] || [],
+    [tomorrowKey]: ufcEvents["Tomorrow"] || [],
   };
+
+  function formatDate(date: Date): string {
+    const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = date.toLocaleDateString("en-US", { month: "short" });
+    return `${weekday} ${day} ${month}`;
+  }
 
   return (
     <>
@@ -96,25 +112,24 @@ export default function UFCPage() {
           </Slider>
         </div>
 
-     {/* Date Tabs - Scrollable on Mobile */}
-<div className="flex justify-center mb-8">
-  <div className="flex overflow-x-auto space-x-3 px-2 scrollbar-hide">
-    {dates.map((date, idx) => (
-      <button
-        key={idx}
-        onClick={() => setActiveDate(date)}
-        className={`min-w-[90px] px-4 py-2 rounded-md font-semibold text-sm border border-white ${
-          activeDate.toDateString() === date.toDateString()
-            ? "bg-[#0a1024] text-white"
-            : "bg-[#0a1024] text-white"
-        }`}
-      >
-        {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-      </button>
-    ))}
-  </div>
-</div>
-
+        {/* Date Tabs */}
+        <div className="flex justify-center mb-8">
+          <div className="flex overflow-x-auto space-x-3 px-2 scrollbar-hide">
+            {dates.map((date, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveDate(date)}
+                className={`min-w-[90px] px-4 py-2 rounded-md font-semibold text-sm border border-white ${
+                  activeDate.toDateString() === date.toDateString()
+                    ? "bg-[#0a1024] text-yellow-400"
+                    : "bg-[#0a1024] text-white"
+                }`}
+              >
+                {formatDate(date)}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Fight Listings */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
@@ -130,24 +145,22 @@ export default function UFCPage() {
 
               <div className="p-4 space-y-4">
                 {event.fights.map((fight: any, i: number) => (
-                  <div key={i} className="border border-white rounded-md bg-[#0a1024] px-4 py-4 flex flex-col gap-2 shadow">
+                  <div key={i} className="border border-white rounded-md bg-[#10182f] px-4 py-4 flex flex-col gap-4 shadow">
                     <div className="text-white font-semibold text-center text-lg">{fight.fight}</div>
 
-                    <div className="flex justify-between items-center bg-[#10182f] px-4 py-3 rounded border border-white">
-                      <div className="font-bold text-white text-base w-[40%] text-left">{fight.fight.split(" vs ")[0]}</div>
-
-                      <div className="flex gap-2">
-                        <div className="flex flex-col items-center">
-                          <div className="font-bold text-white">{fight.odds.home}</div>
-                          <div className="text-sm text-gray-400">Home</div>
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <div className="font-bold text-white">{fight.odds.away}</div>
-                          <div className="text-sm text-gray-400">Away</div>
-                        </div>
+                    <div className="flex justify-center gap-6">
+                      <div className="border border-white bg-[#0a1024] rounded-lg px-4 py-3 text-center shadow w-24">
+                        <div className="font-bold text-white">{fight.odds.home}</div>
+                        <div className="text-sm text-gray-400">Home</div>
                       </div>
-
-                      <div className="font-bold text-white text-base w-[40%] text-right">{fight.fight.split(" vs ")[1]}</div>
+                      <div className="border border-white bg-[#0a1024] rounded-lg px-4 py-3 text-center shadow w-24">
+                        <div className="font-bold text-white">N/A</div>
+                        <div className="text-sm text-gray-400">Draw</div>
+                      </div>
+                      <div className="border border-white bg-[#0a1024] rounded-lg px-4 py-3 text-center shadow w-24">
+                        <div className="font-bold text-white">{fight.odds.away}</div>
+                        <div className="text-sm text-gray-400">Away</div>
+                      </div>
                     </div>
 
                     <div className="flex justify-center mt-3">

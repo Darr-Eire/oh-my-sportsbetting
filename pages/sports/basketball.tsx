@@ -13,7 +13,7 @@ export default function BasketballPage() {
     NBA: "/leagues/nba.png",
     EuroLeague: "/leagues/euroleague.png",
     EuroCup: "/leagues/eurocup.png",
-    NCAA: "/leagues/ncaa.png"
+    NCAA: "/leagues/ncaa.png",
   };
 
   const carouselSettings = {
@@ -22,7 +22,7 @@ export default function BasketballPage() {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }]
+    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
   const [dates, setDates] = useState<Date[]>([]);
@@ -49,6 +49,13 @@ export default function BasketballPage() {
     acc[match.league].push(match);
     return acc;
   }, {});
+
+  function formatDate(date: Date): string {
+    const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = date.toLocaleDateString("en-US", { month: "short" });
+    return `${weekday} ${day} ${month}`;
+  }
 
   return (
     <>
@@ -100,13 +107,13 @@ export default function BasketballPage() {
         </div>
 
         {/* Date Tabs */}
-        <div className="flex justify-center mb-8 space-x-3">
+        <div className="flex justify-center mb-8 space-x-3 overflow-x-auto">
           {dates.map((date, idx) => (
             <button key={idx} onClick={() => setActiveDate(date)}
-              className={`px-4 py-2 rounded-md font-semibold text-sm border border-white ${
+              className={`px-4 py-2 rounded-md font-semibold text-sm border border-white min-w-[90px] ${
                 activeDate.toDateString() === date.toDateString()
-                  ? "bg-[#0a1024] text-white" : "bg-[#0a1024] text-white"}`}>
-              {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+                  ? "bg-[#0a1024] text-yellow-400" : "bg-[#0a1024] text-white"}`}>
+              {formatDate(date)}
             </button>
           ))}
         </div>
@@ -137,7 +144,6 @@ export default function BasketballPage() {
                       <div>{match.tipOff}</div>
                     </div>
 
-                    {/* Odds Same As Football Style */}
                     <div className="flex justify-center gap-6">
                       <div className="border border-white bg-[#0a1024] rounded-lg px-4 py-3 text-center shadow w-24">
                         <div className="font-bold text-white">{match.odds.home}</div>
