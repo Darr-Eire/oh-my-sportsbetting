@@ -17,10 +17,7 @@ import Footer from "../components/Footer";
 
 import { horseRaces } from "../data/horseRaces";
 
-import {
-  FaFutbol, FaHorseHead, FaStopwatch, FaTicketAlt, FaDog,
-  FaBasketballBall, FaUserNinja, FaGamepad, FaThList
-} from "react-icons/fa";
+
 
 // Types
 type Match = { teams: string; time: string; odds: { home: number; draw?: number; away: number } };
