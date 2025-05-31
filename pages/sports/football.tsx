@@ -160,17 +160,20 @@ export default function FootballPage() {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    responsive: [
-      { breakpoint: 640, settings: { slidesToShow: 1 } }
-    ]
+    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
+  };
+
+  const getNext7Days = () => {
+    const today = new Date();
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today);
+      d.setDate(d.getDate() + i);
+      return d;
+    });
   };
 
   const dates = getNext7Days();
-
-  const isMatchOnDate = (matchDate: string, selectedDate: Date) => {
-    // In production you'd check real dates — for now return true for all
-    return true;
-  };
+  const activeDateStr = activeDate.toISOString().slice(0, 10);
 
   return (
     <>
@@ -181,7 +184,6 @@ export default function FootballPage() {
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
-        {/* Title Box */}
         <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] border border-white shadow text-center">
           <h1 className="text-2xl sm:text-2xl font-semibold text-white tracking-wide">
             Football Leagues From Around The World
@@ -210,7 +212,6 @@ export default function FootballPage() {
                 <div className="text-white font-bold text-lg">Odds: 4/5</div>
               </div>
             </div>
-
             <div className="p-2">
               <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
                 <div className="font-semibold text-white mb-1">Liverpool vs Chelsea</div>
@@ -218,7 +219,6 @@ export default function FootballPage() {
                 <div className="text-white font-bold text-lg">Odds: 11/10</div>
               </div>
             </div>
-
             <div className="p-2">
               <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
                 <div className="font-semibold text-white mb-1">Real Madrid vs Barcelona</div>
@@ -229,25 +229,22 @@ export default function FootballPage() {
           </Slider>
         </div>
 
-<div className="flex justify-center mb-8">
-  <div className="flex overflow-x-auto space-x-3 px-2 scrollbar-hide">
-    {dates.map((date, idx) => (
-      <button
-        key={idx}
-        onClick={() => setActiveDate(date)}
-        className={`min-w-[90px] px-4 py-2 rounded-md font-semibold text-sm border border-white ${
-          activeDate.toDateString() === date.toDateString()
-            ? "bg-[#0a1024] text-white"
-            : "bg-[#0a1024] text-white"
-        }`}
-      >
-        {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-      </button>
-    ))}
-  </div>
-</div>
-
-
+        {/* Date Tabs */}
+        <div className="flex justify-center mb-8">
+          <div className="flex overflow-x-auto space-x-3 px-2 scrollbar-hide">
+            {dates.map((date, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveDate(date)}
+                className={`min-w-[90px] px-4 py-2 rounded-md font-semibold text-sm border border-white ${
+                  activeDate.toDateString() === date.toDateString() ? "bg-[#0a1024] text-yellow-400" : "bg-[#0a1024] text-white"
+                }`}
+              >
+                {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Country -> League Dropdowns */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
@@ -282,7 +279,7 @@ export default function FootballPage() {
                       {openLeagues[league.name] && (
                         <div className="grid gap-3 p-3 bg-[#0a1024]">
                           {league.matches
-                            .filter((match) => isMatchOnDate(match.date, activeDate))
+                            .filter((match) => match.date === activeDateStr)
                             .map((match, i) => (
                               <MatchCard key={i} match={match} />
                             ))}
