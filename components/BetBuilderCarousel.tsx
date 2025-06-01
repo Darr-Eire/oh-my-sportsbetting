@@ -23,23 +23,29 @@ const betBuilders = [
 
 export default function BetBuilderCarousel() {
   const [index, setIndex] = useState(0);
-  const { addSelection } = useBetSlip();
+  const { addSelection, removeSelection, selections } = useBetSlip();
 
   const next = () => setIndex((prev) => (prev + 1) % betBuilders.length);
   const prev = () => setIndex((prev) => (prev - 1 + betBuilders.length) % betBuilders.length);
   const current = betBuilders[index];
 
-  const handleAddToBetSlip = () => {
-    // Convert fractional odds to decimal
+  const selectionId = `${current.title}-${current.odds}`;
+  const isSelected = selections.some((sel) => sel.id === selectionId);
+
+  const toggleSelection = () => {
     const [numerator, denominator] = current.odds.split("/").map(Number);
     const decimalOdds = (numerator / denominator + 1).toFixed(2);
 
-    addSelection({
-      id: `${current.title}-${current.odds}`,
-      event: `${current.title} (${current.options.join(", ")})`,
-      type: "Bet Builder",
-      odds: parseFloat(decimalOdds),
-    });
+    if (isSelected) {
+      removeSelection(selectionId);
+    } else {
+      addSelection({
+        id: selectionId,
+        event: `${current.title} (${current.options.join(", ")})`,
+        type: "Bet Builder",
+        odds: parseFloat(decimalOdds),
+      });
+    }
   };
 
   return (
@@ -56,17 +62,14 @@ export default function BetBuilderCarousel() {
         </ul>
 
         <div className="mb-4">
-          <span className="bg-electricCyan text-white px-4 py-1 rounded-full text-sm font-bold shadow">
+          <button
+            onClick={toggleSelection}
+            className={`px-6 py-2 text-sm font-bold shadow border 
+              ${isSelected ? "bg-white text-cyan-700 border-white" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-cyan-700 transition"}`}
+          >
             {current.odds}
-          </span>
+          </button>
         </div>
-
-        <button
-          onClick={handleAddToBetSlip}
-          className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded transition"
-        >
-          Add To Bet Slip
-        </button>
 
         {/* Arrows */}
         <div className="absolute top-1/2 left-2 -translate-y-1/2 cursor-pointer">
@@ -79,5 +82,3 @@ export default function BetBuilderCarousel() {
     </section>
   );
 }
-
-
