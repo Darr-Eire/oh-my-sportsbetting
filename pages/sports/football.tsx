@@ -265,9 +265,9 @@ return (
                               </div>
                               {/* Odds buttons */}
                               <div className="flex gap-2 text-center text-xs">
-                                {["home", "draw", "away"].map((type) => {
-                                  const id = `${match.teams}-${type}`;
-                                  const fractional = match.odds[type];
+                              {(["home", "draw", "away"] as const).map((type) => {
+  const id = `${match.teams}-${type}`;
+  const fractional = match.odds[type];
                                   const isSelected = selections.includes(id);
                                   return (
                                     <div key={type} className="flex flex-col items-center">
