@@ -61,22 +61,24 @@ export default function AccaBuilderPage() {
       );
     }
 
-if (activeBetType === "BTTS" && odds.btts) {
+if (activeBetType === "Over/Under") {
   return (
     <div className="flex gap-2">
-      {(["yes", "no"] as const).map((type) => {
-        const id = `${matchId}-btts-${type}`;
+      {["over", "under"].map((type) => {
+        const id = `${matchId}-ou-${type}`;
         const isSelected = selectedBets.includes(id);
         return (
           <button
             key={type}
             onClick={() => toggleSelection(id)}
             className={`border px-4 py-2 rounded font-semibold transition ${
-              isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
+              isSelected
+                ? "bg-white text-cyan-700 border-white"
+                : "border-white text-white hover:bg-white hover:text-black"
             }`}
           >
-            {odds.btts?.[type] ?? "-"}
-            <div className="text-xs text-center mt-1 uppercase">{type}</div>
+            {odds.overUnder?.[type] ?? "-"}
+            <div className="text-xs text-center mt-1 capitalize">{type}</div>
           </button>
         );
       })}
