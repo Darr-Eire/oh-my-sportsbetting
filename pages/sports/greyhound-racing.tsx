@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { races } from "../../data/greyhoundRaces"; // <-- your file
+import { races } from "../../data/greyhoundRaces";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -22,6 +22,7 @@ const trapColors = [
 export default function GreyhoundRacing() {
   const [dates, setDates] = useState<Date[]>([]);
   const [activeDate, setActiveDate] = useState<Date | null>(null);
+  const [selections, setSelections] = useState<string[]>([]); // <-- track selected odds
 
   useEffect(() => {
     const today = new Date();
@@ -33,6 +34,12 @@ export default function GreyhoundRacing() {
     setDates(dateArray);
     setActiveDate(today);
   }, []);
+
+  const toggleSelection = (id: string) => {
+    setSelections(prev => 
+      prev.includes(id) ? prev.filter(sel => sel !== id) : [...prev, id]
+    );
+  };
 
   const groupedRaces = races["Today"].reduce((acc: Record<string, typeof races["Today"]>, race) => {
     if (!acc[race.track]) acc[race.track] = [];
@@ -61,7 +68,6 @@ export default function GreyhoundRacing() {
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
-        {/* Banner */}
         <div className="mx-4 mt-4 mb-6 p-4 rounded-lg shadow text-center">
           <h1 className="text-3xl font-bold">Greyhound Racing</h1>
           <p className="text-sm mt-2 max-w-xl mx-auto">
@@ -77,15 +83,26 @@ export default function GreyhoundRacing() {
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Greyhound Bets</h2>
           <Slider {...carouselSettings}>
-            {popularGreyhoundBets.map(({ title, market, odds }, idx) => (
-              <div key={idx} className="p-2">
-                <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                  <div className="font-semibold mb-1">{title}</div>
-                  <div className="text-sm text-blue-400 mb-3">{market}</div>
-                  <div className="font-bold text-lg">{odds}</div>
+            {popularGreyhoundBets.map(({ title, market, odds }, idx) => {
+              const id = `${title}-${market}`;
+              const isSelected = selections.includes(id);
+              return (
+                <div key={idx} className="p-2">
+                  <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+                    <div className="font-semibold mb-1">{title}</div>
+                    <div className="text-sm text-blue-400 mb-3">{market}</div>
+                    <button
+                      onClick={() => toggleSelection(id)}
+                      className={`font-bold text-lg px-4 py-2 rounded border transition ${
+                        isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                      }`}
+                    >
+                      {odds}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </Slider>
         </div>
 
@@ -130,7 +147,9 @@ export default function GreyhoundRacing() {
 
                     <div className="space-y-2">
                       {race.runners.map((dog, index) => {
-                        const [name, odds] = dog.split(/ (?=\d+\/\d+)/); // split at first fractional odds
+                        const [name, odds] = dog.split(/ (?=\d+\/\d+)/);
+                        const id = `${race.raceName}-${name}`;
+                        const isSelected = selections.includes(id);
                         return (
                           <div key={index} className="flex items-center justify-between border border-gray-700 rounded-md px-4 py-3 bg-[#10182f] shadow">
                             <div className={`w-10 h-10 flex items-center justify-center font-bold text-sm rounded-sm ${trapColors[index % trapColors.length]}`}>
@@ -139,9 +158,14 @@ export default function GreyhoundRacing() {
                             <div className="flex-1 px-4">
                               <p className="text-white font-semibold">{name}</p>
                             </div>
-                            <div className="bg-[#0a1024] text-white text-sm font-bold py-1 px-3 rounded shadow border border-white min-w-[60px] text-center">
+                            <button
+                              onClick={() => toggleSelection(id)}
+                              className={`text-sm font-bold px-4 py-1 border rounded shadow transition ${
+                                isSelected ? "bg-white text-cyan-700 border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-cyan-700"
+                              }`}
+                            >
                               {odds}
-                            </div>
+                            </button>
                           </div>
                         );
                       })}
@@ -153,7 +177,6 @@ export default function GreyhoundRacing() {
           })}
         </div>
 
-        {/* Back to Home */}
         <div className="flex justify-center mb-8">
           <Link href="/" passHref legacyBehavior>
             <a className="px-6 py-3 border border-white rounded-full text-white font-semibold transition hover:bg-white hover:text-black">

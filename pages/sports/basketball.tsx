@@ -2,68 +2,52 @@
 
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import Image from "next/image";
 import Slider from "react-slick";
 import { basketballGames } from "../../data/basketballGames";
 import { useBetSlip } from "../../context/BetSlipContext";
-import Link from "next/link";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-// Utility to convert fractional odds to decimal
+// Convert fractional odds to decimal
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
 
 export default function BasketballPage() {
-  const leagueLogos: Record<string, string> = {
-    NBA: "/leagues/nba.png",
-    EuroLeague: "/leagues/euroleague.png",
-    EuroCup: "/leagues/eurocup.png",
-    NCAA: "/leagues/ncaa.png",
-  };
+  const { addSelection, removeSelection, selections } = useBetSlip();
 
   const carouselSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
+    dots: false, infinite: true, speed: 500, slidesToShow: 2, slidesToScroll: 1,
     responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
   const [dates, setDates] = useState<Date[]>([]);
   const [activeDate, setActiveDate] = useState<Date | null>(null);
-  const { addSelection, removeSelection, selections } = useBetSlip();
 
   useEffect(() => {
     const today = new Date();
-    const dateArray = Array.from({ length: 7 }, (_, i) => {
+    const days = Array.from({ length: 7 }, (_, i) => {
       const d = new Date(today);
-      d.setDate(d.getDate() + i);
+      d.setDate(today.getDate() + i);
       return d;
     });
-    setDates(dateArray);
+    setDates(days);
     setActiveDate(today);
   }, []);
 
-  if (!activeDate || dates.length === 0) return null;
-
-  const dateKey = activeDate.toISOString().slice(0, 10);
-  const gamesForDate = basketballGames[dateKey] || [];
-
-  const groupedGames = gamesForDate.reduce(
-    (acc: Record<string, typeof gamesForDate>, match) => {
-      if (!acc[match.league]) acc[match.league] = [];
-      acc[match.league].push(match);
-      return acc;
-    },
-    {}
-  );
+  const groupedGames = basketballGames.reduce((acc, game) => {
+    acc[game.league] = acc[game.league] || [];
+    acc[game.league].push(game);
+    return acc;
+  }, {} as Record<string, typeof basketballGames>);
 
   const toggleSelection = (id: string, event: string, type: string, odds: number) => {
-    const exists = selections.some((sel) => sel.id === id);
+    const exists = selections.some(sel => sel.id === id);
     if (exists) {
       removeSelection(id);
     } else {
@@ -81,9 +65,7 @@ export default function BasketballPage() {
         <div className="max-w-5xl mx-auto px-4 py-4">
           <div className="mx-4 mb-8 p-4 rounded-lg bg-[#0a1024] shadow text-center">
             <h1 className="text-3xl font-semibold mb-2">Basketball</h1>
-            <p className="text-sm text-white mb-4">
-              NBA, EuroLeague & NCAA fixtures — odds updated for every tip-off.
-            </p>
+            <p className="text-sm text-white mb-4">NBA, EuroLeague & NCAA fixtures — odds updated for every tip-off.</p>
             <div className="flex justify-center gap-4">
               <Image src={`https://flagcdn.com/w40/us.png`} alt="USA" width={40} height={30} className="rounded shadow" />
               <Image src={`https://flagcdn.com/w40/eu.png`} alt="Europe" width={40} height={30} className="rounded shadow" />
@@ -96,7 +78,7 @@ export default function BasketballPage() {
             <Slider {...carouselSettings}>
               {popularBets.map((bet, i) => {
                 const betId = `popular-${bet.title}`;
-                const isSelected = selections.some((sel) => sel.id === betId);
+                const isSelected = selections.some(sel => sel.id === betId);
                 const decimalOdds = fractionalToDecimal(bet.fractional);
                 return (
                   <div key={i} className="p-2">
@@ -104,13 +86,9 @@ export default function BasketballPage() {
                       <div className="font-semibold text-white mb-1">{bet.title}</div>
                       <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
                       <button
-                        onClick={() =>
-                          toggleSelection(betId, bet.title, bet.market, decimalOdds)
-                        }
+                        onClick={() => toggleSelection(betId, bet.title, bet.market, decimalOdds)}
                         className={`font-bold text-lg px-4 py-2 rounded border transition ${
-                          isSelected
-                            ? "bg-white text-cyan-700 border-white"
-                            : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                          isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
                         }`}
                       >
                         {bet.fractional}
@@ -122,22 +100,55 @@ export default function BasketballPage() {
             </Slider>
           </div>
 
-          {/* Date Tabs */}
+          {/* Date Tabs + Dropdown */}
           <div className="flex justify-center mt-6 mb-8">
-            <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 scroll-snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
-              {dates.map((date, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveDate(date)}
-                  className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-                    activeDate?.toDateString() === date.toDateString()
-                      ? "bg-white text-black border-white shadow-lg"
-                      : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
-                  } snap-start`}
+            <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
+              {dates.map((date, idx) => {
+                let label = date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+                const today = new Date();
+                const tomorrow = new Date();
+                tomorrow.setDate(today.getDate() + 1);
+
+                const formatDate = (d: Date) => d.toISOString().slice(0, 10);
+                if (formatDate(date) === formatDate(today)) label = "Today";
+                else if (formatDate(date) === formatDate(tomorrow)) label = "Tomorrow";
+
+                const isActive = activeDate && formatDate(activeDate) === formatDate(date);
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveDate(date)}
+                    className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
+                      isActive ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+
+              {/* Dropdown for next 5 days */}
+              {dates.length > 0 && (
+                <select
+                  className="min-w-[120px] px-4 py-2 rounded-full font-semibold text-sm border border-white bg-[#0a1024] text-white"
+                  onChange={(e) => {
+                    const selectedDate = new Date(e.target.value);
+                    setActiveDate(selectedDate);
+                  }}
                 >
-                  {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-                </button>
-              ))}
+                  <option value="">More Dates</option>
+                  {Array.from({ length: 5 }, (_, i) => {
+                    const lastDate = dates[dates.length - 1];
+                    const futureDate = new Date(lastDate);
+                    futureDate.setDate(lastDate.getDate() + i + 1);
+                    return (
+                      <option key={i} value={futureDate.toISOString()}>
+                        {futureDate.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+                      </option>
+                    );
+                  })}
+                </select>
+              )}
             </div>
           </div>
 
@@ -145,10 +156,7 @@ export default function BasketballPage() {
           {Object.entries(groupedGames).map(([league, matches], idx) => (
             <details key={idx} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md group">
               <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold hover:bg-[#111b3a] transition">
-                <div className="flex items-center gap-3 text-lg">
-                  <Image src={leagueLogos[league] || "/leagues/default.png"} alt={`${league} logo`} width={30} height={30} className="rounded" />
-                  <span>{league}</span>
-                </div>
+                <span className="text-lg">{league}</span>
                 <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -156,7 +164,7 @@ export default function BasketballPage() {
 
               <div className="p-4 space-y-4">
                 {matches.map((match, i) => (
-                  <div key={i} className="cursor-pointer bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
+                  <div key={i} className="bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                       <div>
                         <div className="text-sm font-semibold text-white">{match.game}</div>
@@ -164,32 +172,25 @@ export default function BasketballPage() {
                       </div>
 
                       <div className="flex gap-2 text-center text-xs">
-                        <OddsButton
-                          label="Home"
-                          odds={parseFloat(match.odds.home)}
-                          onClick={() =>
-                            toggleSelection(
-                              `${match.game}-home`,
-                              match.game,
-                              "Home",
-                              parseFloat(match.odds.home)
-                            )
-                          }
-                          isSelected={selections.some(sel => sel.id === `${match.game}-home`)}
-                        />
-                        <OddsButton
-                          label="Away"
-                          odds={parseFloat(match.odds.away)}
-                          onClick={() =>
-                            toggleSelection(
-                              `${match.game}-away`,
-                              match.game,
-                              "Away",
-                              parseFloat(match.odds.away)
-                            )
-                          }
-                          isSelected={selections.some(sel => sel.id === `${match.game}-away`)}
-                        />
+                        {Object.entries(match.odds).map(([type, fractional]) => {
+                          if (type === "draw") return null;
+                          const selectionId = `${match.game}-${type}`;
+                          const isSelected = selections.some(sel => sel.id === selectionId);
+                          const decimal = fractionalToDecimal(fractional);
+                          return (
+                            <div key={type} className="flex flex-col items-center">
+                              <button
+                                onClick={() => toggleSelection(selectionId, match.game, type, decimal)}
+                                className={`border px-3 py-1 rounded font-medium transition ${
+                                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                                }`}
+                              >
+                                {fractional}
+                              </button>
+                              <span className="text-softText mt-1">{type === "home" ? "Home" : "Away"}</span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -198,46 +199,20 @@ export default function BasketballPage() {
             </details>
           ))}
 
-          {/* Back To Home */}
-            <div className="flex justify-center mb-8">
-          <Link href="/" passHref legacyBehavior>
-            <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
+          <div className="flex justify-center mb-8">
+            <Link href="/" className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
               Back to Home
-            </a>
-          </Link>
-        </div>
-        </div>
+            </Link>
+          </div>
 
-        <Footer />
+          <Footer />
+        </div>
       </div>
     </>
   );
 }
 
-type OddsButtonProps = {
-  label: string;
-  odds: number;
-  onClick: () => void;
-  isSelected: boolean;
-};
-
-function OddsButton({ label, odds, onClick, isSelected }: OddsButtonProps) {
-  return (
-    <div className="flex flex-col items-center">
-      <button
-        onClick={onClick}
-        className={`border px-3 py-1 rounded font-medium transition ${
-          isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
-        }`}
-      >
-        {odds.toFixed(2)}
-      </button>
-      <span className="text-softText mt-1">{label}</span>
-    </div>
-  );
-}
-
-// Popular bets with fractional odds
+// Popular Basketball Bets
 const popularBets = [
   { title: "Lakers vs Celtics", market: "Over 220.5", fractional: "4/1" },
   { title: "Warriors vs Suns", market: "Winning Margin: Warriors 6-10", fractional: "3/1" },

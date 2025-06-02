@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MatchCard from "../../components/MatchCard";
 import Slider from "react-slick";
+import Image from "next/image";
 
 // IMPORT LEAGUE DATA
 import serieB from "../../data/leagues/serie_b.json";
@@ -108,11 +109,24 @@ const leagueGroups = [
   }
 ];
 
+function fractionalToDecimal(odds: string | number): number {
+  if (typeof odds === "number") return odds;
+  if (odds.includes("/")) {
+    const [num, denom] = odds.split("/").map(Number);
+    return num / denom + 1;
+  }
+  return parseFloat(odds);
+}
+
+
+
+
 export default function FootballPage() {
   const [openCountries, setOpenCountries] = useState<Record<string, boolean>>({});
   const [openLeagues, setOpenLeagues] = useState<Record<string, boolean>>({});
   const [dates, setDates] = useState<Date[]>([]);
   const [activeDate, setActiveDate] = useState<Date | null>(null);
+  const [selections, setSelections] = useState<string[]>([]);
 
   useEffect(() => {
     const today = new Date();
@@ -133,6 +147,14 @@ export default function FootballPage() {
     setOpenLeagues(prev => ({ ...prev, [league]: !prev[league] }));
   };
 
+  const toggleSelection = (id: string) => {
+    if (selections.includes(id)) {
+      setSelections(selections.filter(sel => sel !== id));
+    } else {
+      setSelections([...selections, id]);
+    }
+  };
+
   const carouselSettings = {
     infinite: true,
     speed: 500,
@@ -149,46 +171,110 @@ export default function FootballPage() {
 
   return (
     <>
-      <Head><title>Football – OhMySportsbetting</title></Head>
-      <div className="min-h-screen bg-[#0a1024] text-white font-sans">
-        <Header />
+   <Head><title>Football – OhMySportsbetting</title></Head>
+<div className="min-h-screen bg-[#0a1024] text-white font-sans">
+  <Header />
 
-        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
-          <h1 className="text-3xl font-semibold">Leagues From Around The World</h1>
-          <p className="text-sm mt-2 max-w-xl mx-auto">
-            Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.
-          </p>
-        </div>
+  <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
+    <h1 className="text-3xl font-semibold">Leagues From Around The World</h1>
+    <p className="text-sm mt-2 max-w-xl mx-auto">
+      Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.
+    </p>
 
+    {/* LOGOS */}
+    <div className="mt-6 flex justify-center gap-6 flex-wrap">
+      <Image src="/logos/premier_league.png" alt="Premier League" width={50} height={50} className="object-contain" />
+      <Image src="/logos/la_liga.png" alt="La Liga" width={50} height={50} className="object-contain" />
+      <Image src="/logos/serie_a.png" alt="Serie A" width={50} height={50} className="object-contain" />
+      <Image src="/logos/bundesliga.png" alt="Bundesliga" width={50} height={50} className="object-contain" />
+      <Image src="/logos/ligue_1.png" alt="Ligue 1" width={50} height={50} className="object-contain" />
+    </div>
+  </div>
+
+        {/* Popular bets */}
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Football Bets</h2>
           <Slider {...carouselSettings}>
-            {popularFootballBets.map((bet, index) => (
-              <div key={index} className="p-2">
-                <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                  <div className="font-semibold text-white mb-1">{bet.title}</div>
-                  <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
-                  <button className="border border-white bg-[#0a1024] text-white px-4 py-2 rounded text-lg font-semibold hover:bg-white hover:text-black transition">
-                    {bet.odds}
-                  </button>
+            {popularFootballBets.map((bet, index) => {
+              const id = `popular-${bet.title}`;
+              const isSelected = selections.includes(id);
+              const decimal = fractionalToDecimal(bet.odds);
+              return (
+                <div key={index} className="p-2">
+                  <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+                    <div className="font-semibold text-white mb-1">{bet.title}</div>
+                    <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
+                    <button
+                      onClick={() => toggleSelection(id)}
+                      className={`border px-4 py-2 rounded text-lg font-semibold transition ${
+                        isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
+                      }`}>
+                      {bet.odds}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </Slider>
         </div>
 
-        <div className="flex justify-center mt-6 mb-8">
-          <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
-            {dates.map((date, idx) => (
-              <button key={idx} onClick={() => setActiveDate(date)} className={`min-w-[90px] px-4 py-2 rounded-full font-semibold text-sm border ${
-                activeDate?.toDateString() === date.toDateString() ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
-              }`}>
-                {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Date Tabs */}
+<div className="flex justify-center mt-6 mb-8">
+  <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
+    {dates.map((date, idx) => {
+      let label = date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
 
+      const today = new Date();
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+
+      const formatDate = (d: Date) => d.toISOString().slice(0, 10);
+      
+      if (formatDate(date) === formatDate(today)) label = "Today";
+      else if (formatDate(date) === formatDate(tomorrow)) label = "Tomorrow";
+
+      const isActive = activeDate && formatDate(activeDate) === formatDate(date);
+
+      return (
+        <button
+          key={idx}
+          onClick={() => setActiveDate(date)}
+         className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
+            isActive ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
+          }`}
+        >
+          {label}
+        </button>
+      );
+    })}
+
+    {dates.length > 0 && (
+      <select
+        className="min-w-[120px] px-4 py-2 rounded-full font-semibold text-sm border border-white bg-[#0a1024] text-white"
+        onChange={(e) => {
+          const selectedDate = new Date(e.target.value);
+          setActiveDate(selectedDate);
+        }}
+      >
+        <option value="">More Dates</option>
+        {Array.from({ length: 5 }, (_, i) => {
+          const lastDate = dates[dates.length - 1];
+          const futureDate = new Date(lastDate);
+          futureDate.setDate(lastDate.getDate() + i + 1);
+          return (
+            <option key={i} value={futureDate.toISOString()}>
+              {futureDate.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+            </option>
+          );
+        })}
+      </select>
+    )}
+  </div>
+</div>
+
+
+
+        {/* Main League Display */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {leagueGroups.map(group => (
             <div key={group.country} className="mb-8 border border-white rounded-lg">
@@ -214,7 +300,38 @@ export default function FootballPage() {
 
                       {openLeagues[league.name] && (
                         <div className="grid gap-3 p-3 bg-[#0a1024]">
-                          {league.matches.map((match, i) => <MatchCard key={i} match={match} />)}
+                          {league.matches.map((match, i) => (
+                            <div key={i} className="flex justify-between items-center border border-white rounded-lg p-3">
+                              <div className="flex-1">
+                                <div className="font-semibold text-white">{match.teams}</div>
+                                <div className="text-sm text-gray-400">{match.date} {match.time}</div>
+                              </div>
+
+                              <div className="flex gap-2 text-center text-xs">
+                                {["home", "draw", "away"].map(type => {
+                                  const id = `${match.teams}-${type}`;
+                                  const fractional = match.odds[type];
+                                  const decimal = fractionalToDecimal(fractional);
+                                  const isSelected = selections.includes(id);
+                                  return (
+                                    <div key={type} className="flex flex-col items-center">
+                                      <button
+                                        onClick={() => toggleSelection(id)}
+                                        className={`border px-3 py-1 rounded font-medium transition ${
+                                          isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                                        }`}
+                                      >
+                                        {fractional}
+                                      </button>
+                                      <span className="text-softText mt-1">
+                                        {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
+                                      </span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>

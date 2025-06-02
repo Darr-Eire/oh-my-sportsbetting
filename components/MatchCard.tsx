@@ -29,7 +29,7 @@ export default function MatchCard({ match }: { match: MatchCardProps }) {
   };
 
   const isSelected = (type: string) =>
-    selections.some(sel => sel.id === `${slug}-${type.toLowerCase()}`);
+    selections.some((sel) => sel.id === `${slug}-${type.toLowerCase()}`);
 
   return (
     <div className="cursor-pointer bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
@@ -70,6 +70,16 @@ export default function MatchCard({ match }: { match: MatchCardProps }) {
   );
 }
 
+// Utility function: decimal to fractional conversion
+function decimalToFraction(decimal: number): string {
+  if (!decimal || decimal <= 1) return "1/1";
+  const numerator = Math.round((decimal - 1) * 100);
+  const denominator = 100;
+  const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
+  const divisor = gcd(numerator, denominator);
+  return `${numerator / divisor}/${denominator / divisor}`;
+}
+
 type OddsButtonProps = {
   label: string;
   odds: number;
@@ -78,6 +88,8 @@ type OddsButtonProps = {
 };
 
 function OddsButton({ label, odds, onClick, isSelected }: OddsButtonProps) {
+  const fractional = decimalToFraction(odds);
+
   return (
     <div className="flex flex-col items-center">
       <button
@@ -88,7 +100,7 @@ function OddsButton({ label, odds, onClick, isSelected }: OddsButtonProps) {
             : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
         }`}
       >
-        {odds.toFixed(2)}
+        {fractional}
       </button>
       <span className="text-softText mt-1">{label}</span>
     </div>

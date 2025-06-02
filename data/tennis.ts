@@ -3,12 +3,12 @@ export const tennisEvents = {
     {
       match: "Djokovic vs Sinner",
       startTime: "13:00",
-      odds: { home: "1.65", away: "2.20" }
+      odds: { home: "8/13", away: "6/5" }
     },
     {
       match: "Alcaraz vs Tsitsipas",
       startTime: "15:00",
-      odds: { home: "1.80", away: "2.00" }
+      odds: { home: "4/5", away: "1/1" }
     }
   ],
 
@@ -16,12 +16,12 @@ export const tennisEvents = {
     {
       match: "Nadal vs Ruud",
       startTime: "14:00",
-      odds: { home: "2.30", away: "1.55" }
+      odds: { home: "13/10", away: "5/9" }
     },
     {
       match: "Swiatek vs Sabalenka",
       startTime: "12:30",
-      odds: { home: "1.40", away: "2.80" }
+      odds: { home: "2/5", away: "9/5" }
     }
   ],
 
@@ -29,7 +29,7 @@ export const tennisEvents = {
     {
       match: "Medvedev vs Zverev",
       startTime: "16:00",
-      odds: { home: "1.90", away: "1.90" }
+      odds: { home: "10/11", away: "10/11" }
     }
   ],
 
@@ -37,7 +37,7 @@ export const tennisEvents = {
     {
       match: "Shelton vs Fritz",
       startTime: "18:00",
-      odds: { home: "2.00", away: "1.80" }
+      odds: { home: "1/1", away: "4/5" }
     }
   ],
 
@@ -45,12 +45,12 @@ export const tennisEvents = {
     {
       match: "Rublev vs Rune",
       startTime: "11:00",
-      odds: { home: "1.70", away: "2.10" }
+      odds: { home: "7/10", away: "11/10" }
     },
     {
       match: "Hurkacz vs Auger-Aliassime",
       startTime: "13:00",
-      odds: { home: "1.90", away: "1.90" }
+      odds: { home: "10/11", away: "10/11" }
     }
   ],
 
@@ -58,7 +58,7 @@ export const tennisEvents = {
     {
       match: "Khachanov vs Monfils",
       startTime: "14:30",
-      odds: { home: "1.55", away: "2.50" }
+      odds: { home: "5/9", away: "6/4" }
     }
   ],
 
@@ -66,7 +66,7 @@ export const tennisEvents = {
     {
       match: "Fognini vs Gasquet",
       startTime: "12:00",
-      odds: { home: "2.20", away: "1.65" }
+      odds: { home: "6/5", away: "8/13" }
     }
   ],
 
@@ -74,7 +74,7 @@ export const tennisEvents = {
     {
       match: "Gauff vs Badosa",
       startTime: "15:30",
-      odds: { home: "1.70", away: "2.10" }
+      odds: { home: "7/10", away: "11/10" }
     }
   ],
 
@@ -82,7 +82,7 @@ export const tennisEvents = {
     {
       match: "Keys vs Sakkari",
       startTime: "16:30",
-      odds: { home: "2.00", away: "1.80" }
+      odds: { home: "1/1", away: "4/5" }
     }
   ],
 
@@ -90,7 +90,7 @@ export const tennisEvents = {
     {
       match: "Muller vs Brouwer",
       startTime: "10:00",
-      odds: { home: "1.50", away: "2.60" }
+      odds: { home: "1/2", away: "8/5" }
     }
   ],
 
@@ -98,7 +98,7 @@ export const tennisEvents = {
     {
       match: "Johnson vs Petrovic",
       startTime: "09:00",
-      odds: { home: "1.80", away: "2.00" }
+      odds: { home: "4/5", away: "1/1" }
     }
   ]
 };

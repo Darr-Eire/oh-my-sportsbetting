@@ -11,6 +11,22 @@ import { useBetSlip } from "../../context/BetSlipContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// Odds converters
+function decimalToFraction(decimalInput) {
+  const decimal = typeof decimalInput === "string" ? parseFloat(decimalInput) : decimalInput;
+  if (!decimal || decimal <= 1) return "1/1";
+  const numerator = Math.round((decimal - 1) * 100);
+  const denominator = 100;
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  const divisor = gcd(numerator, denominator);
+  return `${numerator / divisor}/${denominator / divisor}`;
+}
+
+function fractionalToDecimal(fraction) {
+  const [num, denom] = fraction.split("/").map(Number);
+  return num / denom + 1;
+}
+
 export default function EsportsPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();
 
@@ -62,8 +78,8 @@ export default function EsportsPage() {
     { title: "OpTic vs LA Thieves (COD)", market: "Correct Score: 3-2 OpTic", odds: 5.50 },
   ];
 
-  const [dates, setDates] = useState<Date[]>([]);
-  const [activeDate, setActiveDate] = useState<Date | null>(null);
+  const [dates, setDates] = useState([]);
+  const [activeDate, setActiveDate] = useState(null);
 
   useEffect(() => {
     const today = new Date();
@@ -85,7 +101,7 @@ export default function EsportsPage() {
     responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
-  const handleToggle = (id: string, event: string, type: string, odds: number) => {
+  const handleToggle = (id, event, type, odds) => {
     const exists = selections.some(sel => sel.id === id);
     if (exists) {
       removeSelection(id);
@@ -117,6 +133,7 @@ export default function EsportsPage() {
             {popularEsportsBets.map((bet, index) => {
               const betId = `popular-${bet.title}`;
               const isSelected = selections.some(sel => sel.id === betId);
+              const fractional = decimalToFraction(bet.odds);
               return (
                 <div key={index} className="p-2">
                   <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
@@ -128,7 +145,7 @@ export default function EsportsPage() {
                         isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
                       }`}
                     >
-                      {bet.odds.toFixed(2)}
+                      {fractional}
                     </button>
                   </div>
                 </div>
@@ -137,7 +154,7 @@ export default function EsportsPage() {
           </Slider>
         </div>
 
-        {/* Tournament Matches (MatchCard Layout Style) */}
+        {/* Tournament Matches */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
           {tournaments.map((tournament) => (
             <details key={tournament} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md group">
@@ -148,11 +165,15 @@ export default function EsportsPage() {
                 </svg>
               </summary>
 
-              {(esportsMatches[tournament as keyof typeof esportsMatches] || []).map((match, i) => {
+              {(esportsMatches[tournament] || []).map((match, i) => {
                 const homeId = `${match.match}-home`;
                 const awayId = `${match.match}-away`;
                 const homeSelected = selections.some(sel => sel.id === homeId);
                 const awaySelected = selections.some(sel => sel.id === awayId);
+
+                const fractionalHome = decimalToFraction(match.odds.home);
+                const fractionalAway = decimalToFraction(match.odds.away);
+
                 return (
                   <div key={i} className="cursor-pointer bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
@@ -164,13 +185,15 @@ export default function EsportsPage() {
                       <div className="flex gap-2 text-center text-xs">
                         <OddsButton
                           label="Home"
-                          odds={parseFloat(match.odds.home)}
+                          fractional={fractionalHome}
+                          decimal={parseFloat(match.odds.home)}
                           onClick={() => handleToggle(homeId, match.match, "Home", parseFloat(match.odds.home))}
                           isSelected={homeSelected}
                         />
                         <OddsButton
                           label="Away"
-                          odds={parseFloat(match.odds.away)}
+                          fractional={fractionalAway}
+                          decimal={parseFloat(match.odds.away)}
                           onClick={() => handleToggle(awayId, match.match, "Away", parseFloat(match.odds.away))}
                           isSelected={awaySelected}
                         />
@@ -197,14 +220,16 @@ export default function EsportsPage() {
   );
 }
 
+// OddsButton updated
 type OddsButtonProps = {
   label: string;
-  odds: number;
+  fractional: string;
+  decimal: number;
   onClick: () => void;
   isSelected: boolean;
 };
 
-function OddsButton({ label, odds, onClick, isSelected }: OddsButtonProps) {
+function OddsButton({ label, fractional, onClick, isSelected }: OddsButtonProps) {
   return (
     <div className="flex flex-col items-center">
       <button
@@ -213,7 +238,7 @@ function OddsButton({ label, odds, onClick, isSelected }: OddsButtonProps) {
           isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
         }`}
       >
-        {odds.toFixed(2)}
+        {fractional}
       </button>
       <span className="text-softText mt-1">{label}</span>
     </div>

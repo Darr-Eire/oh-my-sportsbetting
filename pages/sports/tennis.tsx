@@ -12,7 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useBetSlip } from "../../context/BetSlipContext";
 
-// Convert fractional to decimal
+// Fractional to decimal converter
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
@@ -58,7 +58,7 @@ export default function TennisPage() {
   }, []);
 
   const toggleSelection = (id: string, event: string, type: string, odds: number) => {
-    const exists = selections.some(sel => sel.id === id);
+    const exists = selections.some((sel) => sel.id === id);
     if (exists) {
       removeSelection(id);
     } else {
@@ -112,24 +112,25 @@ export default function TennisPage() {
             })}
           </Slider>
         </div>
-   {/* Date Tabs */}
-<div className="flex justify-center mt-6 mb-8">
-  <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 scroll-snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
-    {dates.map((date, idx) => (
-      <button
-        key={idx}
-        onClick={() => setActiveDate(date)}
-        className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-          activeDate?.toDateString() === date.toDateString()
-            ? "bg-white text-black border-white shadow-lg"
-            : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
-        } snap-start`}
-      >
-        {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-      </button>
-    ))}
-  </div>
-</div>
+
+        {/* Date Tabs */}
+        <div className="flex justify-center mt-6 mb-8">
+          <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth">
+            {dates.map((date, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveDate(date)}
+                className={`min-w-[90px] px-4 py-2 rounded-full font-semibold text-sm border ${
+                  activeDate?.toDateString() === date.toDateString()
+                    ? "bg-white text-black border-white shadow-lg"
+                    : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
+                }`}
+              >
+                {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Competitions Section */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
@@ -147,6 +148,7 @@ export default function TennisPage() {
                 const awayId = `${event.match}-away`;
                 const homeSelected = selections.some(sel => sel.id === homeId);
                 const awaySelected = selections.some(sel => sel.id === awayId);
+
                 return (
                   <div key={idx} className="border border-white rounded-lg bg-[#0a1024] mb-2 px-4 py-3 flex items-center justify-between shadow">
                     <div className="flex-1">
@@ -157,21 +159,21 @@ export default function TennisPage() {
                     <div className="flex justify-end items-center gap-2">
                       <button
                         className={`border px-3 py-2 rounded font-semibold ${
-                          homeSelected ? "bg-white text-black border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
+                          homeSelected ? "bg-white text-cyan-700 border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
                         }`}
-                        onClick={() => toggleSelection(homeId, event.match, "Home", parseFloat(event.odds.home))}
+                        onClick={() => toggleSelection(homeId, event.match, "Home", fractionalToDecimal(event.odds.home))}
                       >
-                        {parseFloat(event.odds.home).toFixed(2)}
+                        {event.odds.home}
                         <div className="text-xs text-gray-400">Home</div>
                       </button>
 
                       <button
                         className={`border px-3 py-2 rounded font-semibold ${
-                          awaySelected ? "bg-white text-black border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
+                          awaySelected ? "bg-white text-cyan-700 border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
                         }`}
-                        onClick={() => toggleSelection(awayId, event.match, "Away", parseFloat(event.odds.away))}
+                        onClick={() => toggleSelection(awayId, event.match, "Away", fractionalToDecimal(event.odds.away))}
                       >
-                        {parseFloat(event.odds.away).toFixed(2)}
+                        {event.odds.away}
                         <div className="text-xs text-gray-400">Away</div>
                       </button>
                     </div>

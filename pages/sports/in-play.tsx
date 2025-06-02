@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
+import MatchCard from "../../components/MatchCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -51,13 +52,12 @@ const popularInPlayBets = [
 export default function InPlayPage() {
   const [selections, setSelections] = useState<SelectionType[]>([]);
 
-  const toggleSelection = (id: string, event: string, type: string, fractionalOdds: string) => {
+  const toggleSelection = (id: string, event: string, type: string, odds: number) => {
     const exists = selections.some(sel => sel.id === id);
-    const decimalOdds = fractionalToDecimal(fractionalOdds);
     if (exists) {
       setSelections(selections.filter(sel => sel.id !== id));
     } else {
-      setSelections([...selections, { id, event, type, odds: decimalOdds }]);
+      setSelections([...selections, { id, event, type, odds }]);
     }
   };
 
@@ -71,33 +71,62 @@ export default function InPlayPage() {
 
   return (
     <>
-      <Head><title>In-Play – OhMySports</title></Head>
+    <Head><title>In-Play – OhMySports</title></Head>
 
-      <div className="min-h-screen bg-[#0a1024] text-white font-sans">
-        <Header />
+<div className="min-h-screen bg-[#0a1024] text-white font-sans">
+  <Header />
 
-        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg border border-white shadow text-center">
-          <h1 className="text-3xl font-bold">In-Play Sports Betting</h1>
-          <p className="text-sm mt-2 max-w-xl mx-auto">
-            In-Play From Around The World, Real-time odds, game momentum, and watch live action across sports.
-          </p>
-        </div>
+  <div className="mx-4 mt-4 mb-6 p-4 rounded-lg shadow text-center">
+    <h1 className="text-3xl font-bold">In-Play Sports Betting</h1>
+    <p className="text-sm mt-2 max-w-xl mx-auto">
+      In-Play From Around The World, Real-time odds, game momentum, and watch live action across sports.
+    </p>
 
+    <div className="flex justify-center flex-wrap gap-3 mt-4">
+      <Image src={`https://flagcdn.com/w40/gb.png`} alt="UK" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/es.png`} alt="Spain" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/it.png`} alt="Italy" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/fr.png`} alt="France" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/us.png`} alt="USA" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/jp.png`} alt="Japan" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/br.png`} alt="Brazil" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/kr.png`} alt="South Korea" width={40} height={30} className="rounded shadow" />
+      <Image src={`https://flagcdn.com/w40/au.png`} alt="Australia" width={40} height={30} className="rounded shadow" />
+    </div>
+  </div>
+
+
+        {/* Popular Bets */}
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular In-Play Bets</h2>
           <Slider {...carouselSettings}>
-            {popularInPlayBets.map((bet, index) => (
-              <div key={index} className="p-2">
-                <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                  <div className="font-semibold mb-1">{bet.title}</div>
-                  <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
-                  <div className="font-bold text-lg border border-white px-4 py-2 rounded">{bet.odds}</div>
+            {popularInPlayBets.map((bet, index) => {
+              const betId = `popular-${bet.title}`;
+              const decimalOdds = fractionalToDecimal(bet.odds);
+              const isSelected = selections.some(sel => sel.id === betId);
+              return (
+                <div key={index} className="p-2">
+                  <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
+                    <div className="font-semibold mb-1">{bet.title}</div>
+                    <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
+                    <button
+                      onClick={() => toggleSelection(betId, bet.title, bet.market, decimalOdds)}
+                      className={`font-bold text-lg px-4 py-2 rounded border transition ${
+                        isSelected
+                          ? "bg-white text-cyan-700 border-white"
+                          : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                      }`}
+                    >
+                      {bet.odds}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </Slider>
         </div>
 
+        {/* Live Sports */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {Object.entries(liveGames).map(([sport, matches], i) => (
             <details key={i} className="border border-white rounded-lg bg-[#0a1024] mb-4 shadow-md group">
@@ -109,41 +138,26 @@ export default function InPlayPage() {
               </summary>
 
               <div className="px-4 py-4 space-y-4">
-                {matches.map(({ id, match, countryCode, timeElapsed, odds }) => (
-                  <div key={id} className="bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
-                    <div className="flex justify-between items-center mb-3">
-                      <div className="flex items-center gap-3">
-                        <Image src={`https://flagcdn.com/w20/${countryCode}.png`} alt="flag" width={20} height={14} className="rounded-sm" unoptimized />
-                        <span className="font-semibold">{match}</span>
-                      </div>
-                      <span className="text-xs text-gray-400">Live {timeElapsed}&apos;</span>
-                    </div>
+                {matches.map((match) => {
+                  const convertedOdds: any = {};
+                  for (const key in match.odds) {
+                    convertedOdds[key] = fractionalToDecimal(match.odds[key]);
+                  }
 
-                    <div className="flex gap-2 text-center text-xs">
-                      {Object.entries(odds).map(([type, fractional]) => {
-                        const selectionId = `${match}-${type}`;
-                        const isSelected = selections.some(sel => sel.id === selectionId);
-                        return (
-                          <div key={type} className="flex flex-col items-center">
-                            <button
-                              onClick={() => toggleSelection(selectionId, match, type, fractional)}
-                              className={`border px-3 py-1 rounded font-medium transition ${
-                                isSelected
-                                  ? "bg-white text-cyan-700 border-white"
-                                  : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
-                              }`}
-                            >
-                              {fractional}
-                            </button>
-                            <span className="text-softText mt-1">
-                              {type === "home" ? "Home" : type === "away" ? "Away" : "Draw"}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
+                  return (
+                    <MatchCard
+                      key={match.id}
+                      match={{
+                        slug: `${match.match}-${match.timeElapsed}`,
+                        teams: match.match,
+                        time: `Live ${match.timeElapsed}'`,
+                        odds: convertedOdds
+                      }}
+                      selections={selections}
+                      toggleSelection={toggleSelection}
+                    />
+                  );
+                })}
               </div>
             </details>
           ))}

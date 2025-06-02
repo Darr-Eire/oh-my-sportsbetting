@@ -7,29 +7,16 @@ import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import Slider from "react-slick";
-import { ufcEvents } from "../../data/ufc";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useBetSlip } from "../../context/BetSlipContext";
+import { ufcEvents } from "../../data/ufcEvents";
 
-function fractionalToDecimal(fraction: string): number {
+// Fractional to decimal converter
+function fractionalToDecimal(fraction) {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
-
-interface Fight {
-  fight: string;
-  odds: { home: string; away: string };
-  homeRecord: string;
-  awayRecord: string;
-}
-interface Event {
-  event: string;
-  countryCode: string;
-  startTime: string;
-  fights: Fight[];
-}
-type UFCEvents = Record<string, Event[]>;
 
 export default function UFCPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();
@@ -46,8 +33,8 @@ export default function UFCPage() {
     ],
   };
 
-  const [dates, setDates] = useState<Date[]>([]);
-  const [activeDate, setActiveDate] = useState<Date | null>(null);
+  const [dates, setDates] = useState([]);
+  const [activeDate, setActiveDate] = useState(null);
 
   useEffect(() => {
     const today = new Date();
@@ -63,10 +50,10 @@ export default function UFCPage() {
   if (!activeDate || dates.length === 0) return null;
 
   const dateKey = activeDate.toISOString().slice(0, 10);
-  const eventsForDate = (ufcEvents as UFCEvents)[dateKey] || [];
+  const eventsForDate = ufcEvents[dateKey] || [];
 
-  const toggleSelection = (id: string, event: string, type: string, odds: number) => {
-    const exists = selections.some((sel) => sel.id === id);
+  const toggleSelection = (id, event, type, odds) => {
+    const exists = selections.some(sel => sel.id === id);
     if (exists) {
       removeSelection(id);
     } else {
@@ -77,11 +64,12 @@ export default function UFCPage() {
   return (
     <>
       <Head><title>UFC – OhMySports</title></Head>
+
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
         <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
-          <h1 className="text-3xl sm:text-2xl font-semibold text-white tracking-wide">UFC / MMA</h1>
+          <h1 className="text-3xl font-semibold">UFC / MMA</h1>
           <p className="text-sm mt-2 max-w-xl mx-auto">
             Full fight cards, live odds, prelims, main cards & all major UFC Pay-Per-View events.
           </p>
@@ -91,6 +79,7 @@ export default function UFCPage() {
           </div>
         </div>
 
+        {/* Popular UFC Bets */}
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular UFC Bets</h2>
           <Slider {...carouselSettings}>
@@ -120,24 +109,61 @@ export default function UFCPage() {
           </Slider>
         </div>
 
-        <div className="flex justify-center mt-6 mb-8">
-          <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
-            {dates.map((date, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveDate(date)}
-                className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-                  activeDate?.toDateString() === date.toDateString()
-                    ? "bg-white text-black border-white shadow-lg"
-                    : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
-                } snap-start`}
-              >
-                {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-              </button>
-            ))}
-          </div>
-        </div>
+             {/* Date Tabs */}
+<div className="flex justify-center mt-6 mb-8">
+  <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
+    {dates.map((date, idx) => {
+      let label = date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
 
+      const today = new Date();
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+
+      const formatDate = (d: Date) => d.toISOString().slice(0, 10);
+      
+      if (formatDate(date) === formatDate(today)) label = "Today";
+      else if (formatDate(date) === formatDate(tomorrow)) label = "Tomorrow";
+
+      const isActive = activeDate && formatDate(activeDate) === formatDate(date);
+
+      return (
+        <button
+          key={idx}
+          onClick={() => setActiveDate(date)}
+         className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
+            isActive ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
+          }`}
+        >
+          {label}
+        </button>
+      );
+    })}
+
+    {dates.length > 0 && (
+      <select
+        className="min-w-[120px] px-4 py-2 rounded-full font-semibold text-sm border border-white bg-[#0a1024] text-white"
+        onChange={(e) => {
+          const selectedDate = new Date(e.target.value);
+          setActiveDate(selectedDate);
+        }}
+      >
+        <option value="">More Dates</option>
+        {Array.from({ length: 5 }, (_, i) => {
+          const lastDate = dates[dates.length - 1];
+          const futureDate = new Date(lastDate);
+          futureDate.setDate(lastDate.getDate() + i + 1);
+          return (
+            <option key={i} value={futureDate.toISOString()}>
+              {futureDate.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+            </option>
+          );
+        })}
+      </select>
+    )}
+  </div>
+</div>
+
+        {/* UFC Fights */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
           {eventsForDate.map((event, idx) => (
             <details key={idx} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md group">
@@ -155,11 +181,14 @@ export default function UFCPage() {
                   const awayId = `${fight.fight}-away`;
                   const homeSelected = selections.some(sel => sel.id === homeId);
                   const awaySelected = selections.some(sel => sel.id === awayId);
+                  const decimalHome = fractionalToDecimal(fight.odds.home);
+                  const decimalAway = fractionalToDecimal(fight.odds.away);
+
                   return (
                     <div key={i} className="border border-white rounded-md bg-[#10182f] px-4 py-4 flex flex-col gap-2 shadow">
                       <div className="text-white font-semibold text-center text-lg">{fight.fight}</div>
                       <div className="flex justify-between items-center bg-[#0a1024] px-4 py-3 rounded border border-white">
-                        <div className="font-bold text-white text-base w-[40%] text-left">
+                        <div className="font-bold text-white w-[40%] text-left">
                           {fight.fight.split(" vs ")[0]}
                           <div className="text-xs text-gray-400">{fight.homeRecord}</div>
                         </div>
@@ -169,9 +198,9 @@ export default function UFCPage() {
                             className={`border px-3 py-2 rounded font-semibold ${
                               homeSelected ? "bg-white text-black border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
                             }`}
-                            onClick={() => toggleSelection(homeId, fight.fight, "Home", parseFloat(fight.odds.home))}
+                            onClick={() => toggleSelection(homeId, fight.fight, "Home", decimalHome)}
                           >
-                            {parseFloat(fight.odds.home).toFixed(2)}
+                            {fight.odds.home}
                             <div className="text-xs text-gray-400">Home</div>
                           </button>
 
@@ -179,14 +208,14 @@ export default function UFCPage() {
                             className={`border px-3 py-2 rounded font-semibold ${
                               awaySelected ? "bg-white text-black border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-black"
                             }`}
-                            onClick={() => toggleSelection(awayId, fight.fight, "Away", parseFloat(fight.odds.away))}
+                            onClick={() => toggleSelection(awayId, fight.fight, "Away", decimalAway)}
                           >
-                            {parseFloat(fight.odds.away).toFixed(2)}
+                            {fight.odds.away}
                             <div className="text-xs text-gray-400">Away</div>
                           </button>
                         </div>
 
-                        <div className="font-bold text-white text-base w-[40%] text-right">
+                        <div className="font-bold text-white w-[40%] text-right">
                           {fight.fight.split(" vs ")[1]}
                           <div className="text-xs text-gray-400">{fight.awayRecord}</div>
                         </div>
@@ -211,6 +240,7 @@ export default function UFCPage() {
   );
 }
 
+// Popular UFC Bets (Fractional)
 const popularBets = [
   { title: "Jon Jones vs Stipe Miocic", market: "Jones Submission", fractional: "3/1" },
   { title: "Adesanya vs Pereira", market: "Fight To Go Distance: No", fractional: "6/4" },
