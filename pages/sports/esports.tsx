@@ -25,33 +25,12 @@ function decimalToFraction(decimalInput: string | number): string {
   return `${numerator / divisor}/${denominator / divisor}`;
 }
 
-
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
 
-
-export default function EsportsPage() {
-  const { addSelection, removeSelection, selections } = useBetSlip();
-
-const esportsMatches = {
-  "CS:GO Major": [
-    { match: "NAVI vs FaZe", time: "18:00", odds: { home: "1.80", away: "2.10" } },
-    // more matches...
-  ],
-  "Valorant Champions Tour": [
-    // matches...
-  ],
-  "League of Legends Worlds": [],
-  "Dota 2 The International": [],
-  "Rainbow Six Major": [],
-  "FIFA eWorld Cup": [],
-  "eFootball Pro": [],
-  "Rocket League Championships": [],
-  "Overwatch League": [],
-  "Call of Duty League": []
-};
+// Literal tuple for tournaments
 const tournaments = [
   "CS:GO Major",
   "Valorant Champions Tour",
@@ -63,21 +42,41 @@ const tournaments = [
   "Rocket League Championships",
   "Overwatch League",
   "Call of Duty League"
-];
+] as const;
 
-const logoMap = {
-  "CS:GO Major": "/logos/esports/csgo.png",
-  "Valorant Champions Tour": "/logos/esports/valorant.png",
-  "League of Legends Worlds": "/logos/esports/lol.png",
-  "Dota 2 The International": "/logos/esports/dota2.png",
-  "Rainbow Six Major": "/logos/esports/rainbowsix.png",
-  "FIFA eWorld Cup": "/logos/esports/fifa.png",
-  "eFootball Pro": "/logos/esports/efootball.png",
-  "Rocket League Championships": "/logos/esports/rocketleague.png",
-  "Overwatch League": "/logos/esports/overwatch.png",
-  "Call of Duty League": "/logos/esports/cod.png"
-};
+type Tournament = typeof tournaments[number];
 
+export default function EsportsPage() {
+  const { addSelection, removeSelection, selections } = useBetSlip();
+
+  const esportsMatches: Record<Tournament, { match: string; time: string; odds: { home: string; away: string } }[]> = {
+    "CS:GO Major": [
+      { match: "NAVI vs FaZe", time: "18:00", odds: { home: "1.80", away: "2.10" } },
+      // more matches can be added here
+    ],
+    "Valorant Champions Tour": [],
+    "League of Legends Worlds": [],
+    "Dota 2 The International": [],
+    "Rainbow Six Major": [],
+    "FIFA eWorld Cup": [],
+    "eFootball Pro": [],
+    "Rocket League Championships": [],
+    "Overwatch League": [],
+    "Call of Duty League": []
+  };
+
+  const logoMap: Record<Tournament, string> = {
+    "CS:GO Major": "/logos/esports/csgo.png",
+    "Valorant Champions Tour": "/logos/esports/valorant.png",
+    "League of Legends Worlds": "/logos/esports/lol.png",
+    "Dota 2 The International": "/logos/esports/dota2.png",
+    "Rainbow Six Major": "/logos/esports/rainbowsix.png",
+    "FIFA eWorld Cup": "/logos/esports/fifa.png",
+    "eFootball Pro": "/logos/esports/efootball.png",
+    "Rocket League Championships": "/logos/esports/rocketleague.png",
+    "Overwatch League": "/logos/esports/overwatch.png",
+    "Call of Duty League": "/logos/esports/cod.png"
+  };
 
   const popularEsportsBets = [
     { title: "NAVI vs FaZe (CS:GO)", market: "Map Handicap: FaZe +1.5", odds: 1.60 },
@@ -85,50 +84,49 @@ const logoMap = {
     { title: "OpTic vs LA Thieves (COD)", market: "Correct Score: 3-2 OpTic", odds: 5.50 },
   ];
 
-const [dates, setDates] = useState<Date[]>([]);
-const [activeDate, setActiveDate] = useState<Date | null>(null);
+  const [dates, setDates] = useState<Date[]>([]);
+  const [activeDate, setActiveDate] = useState<Date | null>(null);
 
-useEffect(() => {
-  const today = new Date();
-  const dateArray = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(today);
-    d.setDate(d.getDate() + i);
-    return d;
-  });
-  setDates(dateArray);
-  setActiveDate(today);
-}, []);
+  useEffect(() => {
+    const today = new Date();
+    const dateArray = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today);
+      d.setDate(d.getDate() + i);
+      return d;
+    });
+    setDates(dateArray);
+    setActiveDate(today);
+  }, []);
 
-const carouselSettings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 2,
-  slidesToScroll: 1,
-  responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
-};
+  const carouselSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
+  };
 
-type SelectionType = {
-  id: string;
-  event: string;
-  type: string;
-  odds: number;
-};
+  type SelectionType = {
+    id: string;
+    event: string;
+    type: string;
+    odds: number;
+  };
 
-const handleToggle = (
-  id: string,
-  event: string,
-  type: string,
-  odds: number
-) => {
-  const exists = selections.some(sel => sel.id === id);
-  if (exists) {
-    removeSelection(id);
-  } else {
-    addSelection({ id, event, type, odds });
-  }
-};
-
+  const handleToggle = (
+    id: string,
+    event: string,
+    type: string,
+    odds: number
+  ) => {
+    const exists = selections.some(sel => sel.id === id);
+    if (exists) {
+      removeSelection(id);
+    } else {
+      addSelection({ id, event, type, odds });
+    }
+  };
 
   return (
     <>
@@ -245,13 +243,6 @@ type OddsButtonProps = {
   label: string;
   fractional: string;
   decimal: number;
-  onClick: () => void;
-  isSelected: boolean;
-};
-
-type OddsButtonProps = {
-  label: string;
-  fractional: string;
   onClick: () => void;
   isSelected: boolean;
 };
