@@ -329,9 +329,10 @@ export default function FootballPage() {
                 >
                   <div className="flex-1">
                     <div className="font-semibold text-white">{match.teams}</div>
-                    <div className="text-sm text-gray-400">
-                      {match.date} {match.time}
-                    </div>
+                   <div className="text-sm text-gray-400">
+  {match.time}
+</div>
+
                   </div>
 
                   <div className="flex gap-2 text-center text-xs">
