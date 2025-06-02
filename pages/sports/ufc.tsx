@@ -10,7 +10,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useBetSlip } from "../../context/BetSlipContext";
-import { ufcEvents } from "../../data/ufcEvents";
+import { ufcEvents as ufcEventsRaw } from "../../data/ufcEvents";
 
 // Fractional to decimal converter
 function fractionalToDecimal(fraction: string): number {
@@ -18,6 +18,20 @@ function fractionalToDecimal(fraction: string): number {
   return num / denom + 1;
 }
 
+// Proper type for ufcEvents
+type UFCEvent = {
+  event: string;
+  startTime: string;
+  fights: {
+    fight: string;
+    homeRecord: string;
+    awayRecord: string;
+    odds: { home: string; away: string };
+  }[];
+};
+
+// Assign type to ufcEvents object
+const ufcEvents: Record<string, UFCEvent[]> = ufcEventsRaw;
 
 export default function UFCPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();
@@ -33,10 +47,9 @@ export default function UFCPage() {
       { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
   };
-const [dates, setDates] = useState<Date[]>([]);
 
- const [activeDate, setActiveDate] = useState<Date | null>(null);
-
+  const [dates, setDates] = useState<Date[]>([]);
+  const [activeDate, setActiveDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const today = new Date();
@@ -54,7 +67,7 @@ const [dates, setDates] = useState<Date[]>([]);
   const dateKey = activeDate.toISOString().slice(0, 10);
   const eventsForDate = ufcEvents[dateKey] || [];
 
-  const toggleSelection = (id, event, type, odds) => {
+  const toggleSelection = (id: string, event: string, type: string, odds: number) => {
     const exists = selections.some(sel => sel.id === id);
     if (exists) {
       removeSelection(id);
@@ -111,59 +124,59 @@ const [dates, setDates] = useState<Date[]>([]);
           </Slider>
         </div>
 
-             {/* Date Tabs */}
-<div className="flex justify-center mt-6 mb-8">
-  <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
-    {dates.map((date, idx) => {
-      let label = date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+        {/* Date Tabs */}
+        <div className="flex justify-center mt-6 mb-8">
+          <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
+            {dates.map((date, idx) => {
+              let label = date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
 
-      const today = new Date();
-      const tomorrow = new Date();
-      tomorrow.setDate(today.getDate() + 1);
+              const today = new Date();
+              const tomorrow = new Date();
+              tomorrow.setDate(today.getDate() + 1);
 
-      const formatDate = (d: Date) => d.toISOString().slice(0, 10);
-      
-      if (formatDate(date) === formatDate(today)) label = "Today";
-      else if (formatDate(date) === formatDate(tomorrow)) label = "Tomorrow";
+              const formatDate = (d: Date) => d.toISOString().slice(0, 10);
 
-      const isActive = activeDate && formatDate(activeDate) === formatDate(date);
+              if (formatDate(date) === formatDate(today)) label = "Today";
+              else if (formatDate(date) === formatDate(tomorrow)) label = "Tomorrow";
 
-      return (
-        <button
-          key={idx}
-          onClick={() => setActiveDate(date)}
-         className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-            isActive ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
-          }`}
-        >
-          {label}
-        </button>
-      );
-    })}
+              const isActive = activeDate && formatDate(activeDate) === formatDate(date);
 
-    {dates.length > 0 && (
-      <select
-        className="min-w-[120px] px-4 py-2 rounded-full font-semibold text-sm border border-white bg-[#0a1024] text-white"
-        onChange={(e) => {
-          const selectedDate = new Date(e.target.value);
-          setActiveDate(selectedDate);
-        }}
-      >
-        <option value="">More Dates</option>
-        {Array.from({ length: 5 }, (_, i) => {
-          const lastDate = dates[dates.length - 1];
-          const futureDate = new Date(lastDate);
-          futureDate.setDate(lastDate.getDate() + i + 1);
-          return (
-            <option key={i} value={futureDate.toISOString()}>
-              {futureDate.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-            </option>
-          );
-        })}
-      </select>
-    )}
-  </div>
-</div>
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveDate(date)}
+                  className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
+                    isActive ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+
+            {dates.length > 0 && (
+              <select
+                className="min-w-[120px] px-4 py-2 rounded-full font-semibold text-sm border border-white bg-[#0a1024] text-white"
+                onChange={(e) => {
+                  const selectedDate = new Date(e.target.value);
+                  setActiveDate(selectedDate);
+                }}
+              >
+                <option value="">More Dates</option>
+                {Array.from({ length: 5 }, (_, i) => {
+                  const lastDate = dates[dates.length - 1];
+                  const futureDate = new Date(lastDate);
+                  futureDate.setDate(lastDate.getDate() + i + 1);
+                  return (
+                    <option key={i} value={futureDate.toISOString()}>
+                      {futureDate.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+                    </option>
+                  );
+                })}
+              </select>
+            )}
+          </div>
+        </div>
 
         {/* UFC Fights */}
         <div className="max-w-5xl mx-auto px-4 pb-16">
@@ -242,7 +255,7 @@ const [dates, setDates] = useState<Date[]>([]);
   );
 }
 
-// Popular UFC Bets (Fractional)
+// Popular UFC Bets
 const popularBets = [
   { title: "Jon Jones vs Stipe Miocic", market: "Jones Submission", fractional: "3/1" },
   { title: "Adesanya vs Pereira", market: "Fight To Go Distance: No", fractional: "6/4" },
