@@ -15,6 +15,7 @@ import HeaderLayout from "../components/Header";
 import Footer from "../components/Footer";
 import { horseRaces } from "../data/horseRaces";
 import { useBetSlip } from "../context/BetSlipContext";
+import PromotionsBanner from "../components/PromotionsBanner";
 
 import premierLeague from "../data/leagues/premier_league.json";
 import laLiga from "../data/leagues/la_liga.json";
@@ -103,6 +104,30 @@ export default function Home() {
       });
     }
   };
+  const greyhoundRaces = [
+  {
+    track: "Shelbourne Park",
+    raceTime: "18:45",
+    raceName: "Sprint Stakes",
+    runners: [
+      { number: 1, name: "Rapid Bullet", form: "121", odds: "2/1" },
+      { number: 2, name: "Speedster", form: "132", odds: "5/2" },
+      { number: 3, name: "Lightning Dash", form: "213", odds: "3/1" },
+      { number: 4, name: "Sonic Boom", form: "334", odds: "9/2" }
+    ]
+  },
+  {
+    track: "Romford",
+    raceTime: "19:30",
+    raceName: "Evening Chase",
+    runners: [
+      { number: 1, name: "Fast Rocket", form: "322", odds: "7/2" },
+      { number: 2, name: "Night Fury", form: "413", odds: "4/1" },
+      { number: 3, name: "Blazing Comet", form: "231", odds: "5/1" }
+    ]
+  }
+];
+
   return (
     <>
       <Head><title>Oh My Sportsbets</title></Head>
@@ -112,7 +137,9 @@ export default function Home() {
 
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
 
-          <PromoCarousel />
+  <PromotionsBanner />
+
+
           <SportsCarousel />
           <PowerPriceCarousel />
 
@@ -288,6 +315,44 @@ export default function Home() {
               </div>
             )}
           </section>
+<section className="w-full max-w-3xl border border-white bg-[#0a1024] rounded-lg mt-10">
+  <div className="flex items-center justify-between px-4 py-3 text-left font-semibold border-b border-white">
+    <h2 className="text-2xl font-bold text-white">🐕 Greyhound Racing</h2>
+  </div>
+
+  <div className="p-4 space-y-6">
+    {greyhoundRaces.map(({ track, raceTime, raceName, runners }, i) => (
+      <div key={i} className="border border-white rounded-lg bg-[#0a1024] p-4 space-y-4">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-white font-bold text-base">{track} - {raceName}</h3>
+          <span className="text-sm text-white font-medium">{raceTime}</span>
+        </div>
+
+        <div className="divide-y divide-gray-700">
+          {runners.map(({ number, name, form, odds }, idx) => (
+            <div key={idx} className="flex items-center py-3 text-sm">
+              <div className="flex items-center gap-3 w-10 font-bold text-white">
+                <span>{number}</span>
+                <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-white font-semibold">{number}</div>
+              </div>
+
+              <div className="flex flex-col flex-grow ml-2 text-left">
+                <span className="font-semibold text-white">{name}</span>
+                <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
+                  <span>F: {form}</span>
+                </div>
+              </div>
+
+              <div className="ml-auto font-semibold text-green-400 bg-green-900 bg-opacity-20 px-3 py-1 rounded-md">
+                {odds}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
 
         </main>
         <Footer />
