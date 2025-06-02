@@ -8,7 +8,7 @@ import { useBetSlip } from "../context/BetSlipContext";
 type PromoOffer = {
   match: string;
   promo: string;
-  odds: string;
+  odds: string; // fractional odds as string
 };
 
 const promoOffers: PromoOffer[] = [
@@ -24,6 +24,12 @@ const responsive = {
   mobile: { breakpoint: { max: 640, min: 0 }, items: 1 },
 };
 
+// helper to convert fractional odds to decimal
+function fractionalToDecimal(fraction: string): number {
+  const [numerator, denominator] = fraction.split('/').map(Number);
+  return numerator / denominator + 1;
+}
+
 export default function PromoCarousel() {
   const { selections, addSelection, removeSelection } = useBetSlip();
 
@@ -38,7 +44,7 @@ export default function PromoCarousel() {
         id: id,
         event: promo.match,
         type: promo.promo,
-        odds: promo.odds,
+        odds: fractionalToDecimal(promo.odds), // ✅ THIS IS THE KEY FIX
       });
     }
   };
