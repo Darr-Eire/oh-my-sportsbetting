@@ -1,17 +1,20 @@
 "use client";
+
 import { useState } from "react";
 import { liveGames } from "../data/liveGames";
+
+type OddsType = {
+  home: string;
+  draw?: string;
+  away: string;
+};
 
 type Game = {
   sport: string;
   match: string;
   time: string;
   status: string;
-  odds?: {
-    home: string;
-    draw: string;
-    away: string;
-  };
+  odds?: OddsType;
 };
 
 const sportEmojis: Record<string, string> = {
@@ -22,7 +25,6 @@ const sportEmojis: Record<string, string> = {
   "Horse Racing": "🐎",
   eSports: "🎮",
   UFC: "🥊",
-
   "Greyhound Racing": "🐕",
   Boxing: "🥊",
   Cricket: "🏏",
@@ -33,7 +35,7 @@ const sportEmojis: Record<string, string> = {
   Volleyball: "🏐",
 };
 
-
+// Group the games by sport
 const grouped = liveGames.reduce((acc: Record<string, Game[]>, game: Game) => {
   if (!acc[game.sport]) acc[game.sport] = [];
   acc[game.sport].push(game);
@@ -105,10 +107,8 @@ export default function LiveGamesFeed() {
                     </div>
                   </div>
 
-                  {/* Centered Button */}
                   <div className="pt-2 flex justify-center">
-                    <button className="text-sm px-4 
- text-white rounded-full hover:bg-cyan-600 transition">
+                    <button className="text-sm px-4 py-1 border border-white text-white rounded-full hover:bg-cyan-600 transition">
                       View More Bets
                     </button>
                   </div>
@@ -119,9 +119,8 @@ export default function LiveGamesFeed() {
         </div>
       ))}
 
-      {/* FINAL BUTTON BELOW ALL */}
       <div className="mt-6 flex justify-center">
-        <button className="text-sm px-6 py-2 border border-electricCyan text-electricCyan rounded-full hover:bg-electricCyan hover:text-black transition">
+        <button className="text-sm px-6 py-2 border border-cyan-400 text-cyan-400 rounded-full hover:bg-cyan-400 hover:text-black transition">
           View All In-Play Markets
         </button>
       </div>
