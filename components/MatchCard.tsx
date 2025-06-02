@@ -73,10 +73,14 @@ export default function MatchCard({ match }: { match: MatchCardProps }) {
 // Utility function: decimal to fractional conversion
 function decimalToFraction(decimal: number): string {
   if (!decimal || decimal <= 1) return "1/1";
+
   const numerator = Math.round((decimal - 1) * 100);
   const denominator = 100;
+
   const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
+
   const divisor = gcd(numerator, denominator);
+
   return `${numerator / divisor}/${denominator / divisor}`;
 }
 

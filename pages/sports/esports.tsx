@@ -12,15 +12,19 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // Odds converters
-function decimalToFraction(decimalInput) {
+function decimalToFraction(decimalInput: string | number): string {
   const decimal = typeof decimalInput === "string" ? parseFloat(decimalInput) : decimalInput;
   if (!decimal || decimal <= 1) return "1/1";
+
   const numerator = Math.round((decimal - 1) * 100);
   const denominator = 100;
-  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+
+  const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
   const divisor = gcd(numerator, denominator);
+
   return `${numerator / divisor}/${denominator / divisor}`;
 }
+
 
 function fractionalToDecimal(fraction) {
   const [num, denom] = fraction.split("/").map(Number);
