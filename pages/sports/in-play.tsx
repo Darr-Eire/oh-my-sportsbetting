@@ -134,34 +134,32 @@ export default function InPlayPage() {
               </summary>
 
               <div className="px-4 py-4 space-y-4">
-                {matches.map(match => {
-                  type OddsKey = "home" | "draw" | "away";
-                  const convertedOdds: Partial<Record<OddsKey, number>> = {};
+{matches.map(match => {
+  type OddsKey = "home" | "draw" | "away";
+  const keys: OddsKey[] = ["home", "draw", "away"];
+  const convertedOdds: Partial<Record<OddsKey, number>> = {};
 
-                const keys: ("home" | "draw" | "away")[] = ["home", "draw", "away"];
-const convertedOdds: Record<string, number> = {};
+  keys.forEach(key => {
+    if (key in match.odds) {
+      convertedOdds[key] = fractionalToDecimal(match.odds[key]);
+    }
+  });
 
-keys.forEach(key => {
-  // Skip or handle N/A if you want
-  if (match.odds[key] === "N/A") return;
-  convertedOdds[key] = fractionalToDecimal(match.odds[key]);
-});
+  return (
+    <MatchCard
+      key={match.id}
+      match={{
+        slug: `${match.match}-${match.timeElapsed}`,
+        teams: match.match,
+        time: `Live ${match.timeElapsed}'`,
+        odds: convertedOdds as Record<OddsKey, number>,
+      }}
+      selections={selections}
+      toggleSelection={toggleSelection}
+    />
+  );
+})}
 
-
-                  return (
-                    <MatchCard
-                      key={match.id}
-                      match={{
-                        slug: `${match.match}-${match.timeElapsed}`,
-                        teams: match.match,
-                        time: `Live ${match.timeElapsed}'`,
-                        odds: convertedOdds as Record<OddsKey, number>,
-                      }}
-                      selections={selections}
-                      toggleSelection={toggleSelection}
-                    />
-                  );
-                })}
               </div>
             </details>
           ))}
