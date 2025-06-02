@@ -13,10 +13,11 @@ import { useBetSlip } from "../../context/BetSlipContext";
 import { ufcEvents } from "../../data/ufcEvents";
 
 // Fractional to decimal converter
-function fractionalToDecimal(fraction) {
+function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
+
 
 export default function UFCPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();

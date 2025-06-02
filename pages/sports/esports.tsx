@@ -26,10 +26,11 @@ function decimalToFraction(decimalInput: string | number): string {
 }
 
 
-function fractionalToDecimal(fraction) {
+function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
+
 
 export default function EsportsPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();
