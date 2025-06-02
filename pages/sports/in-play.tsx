@@ -75,9 +75,7 @@ export default function InPlayPage() {
 
   return (
     <>
-      <Head>
-        <title>In-Play – OhMySports</title>
-      </Head>
+      <Head><title>In-Play – OhMySports</title></Head>
 
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
@@ -140,11 +138,12 @@ export default function InPlayPage() {
                   type OddsKey = "home" | "draw" | "away";
                   const convertedOdds: Partial<Record<OddsKey, number>> = {};
 
-                  for (const key in match.odds) {
-                    if (key === "home" || key === "draw" || key === "away") {
+                  const keys: OddsKey[] = ["home", "draw", "away"];
+                  keys.forEach(key => {
+                    if (key in match.odds) {
                       convertedOdds[key] = fractionalToDecimal(match.odds[key]);
                     }
-                  }
+                  });
 
                   return (
                     <MatchCard
