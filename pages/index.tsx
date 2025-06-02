@@ -22,7 +22,12 @@ import laLiga from "../data/leagues/la_liga.json";
 import bundesliga from "../data/leagues/bundesliga.json";
 import serieA from "../data/leagues/serie_a.json";
 import ligue1 from "../data/leagues/ligue_1.json";
-
+type Accumulator = {
+  id: string;
+  event: string;
+  type: string;
+  odds: number;
+};
 const todayMatches = [
   {
     league: "Premier League",
@@ -73,12 +78,7 @@ export default function Home() {
     { id: "acc3", teams: "Bayern & Juventus & AC Milan", odds: "4/1" },
   ];
 
-type Accumulator = {
-  id: string;
-  event: string;
-  type: string;
-  odds: number;
-};
+
 
   const exists = selections.find(sel => sel.id === acc.id);
   if (exists) {
