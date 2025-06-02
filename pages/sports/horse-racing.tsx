@@ -216,7 +216,3 @@ function fractionalToDecimal(fraction: string): number {
 }
 
 
-  const [num, denom] = fraction.split("/").map(Number);
-  return num / denom + 1;
-}
-

@@ -18,17 +18,15 @@ function fractionalToDecimal(fraction: string): number {
   return num / denom + 1;
 }
 
-
-  const [num, denom] = fraction.split("/").map(Number);
-  return num / denom + 1;
-}
-
-
 export default function BasketballPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();
 
   const carouselSettings = {
-    dots: false, infinite: true, speed: 500, slidesToShow: 2, slidesToScroll: 1,
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
     responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
@@ -63,7 +61,9 @@ export default function BasketballPage() {
 
   return (
     <>
-      <Head><title>Basketball – OhMySports</title></Head>
+      <Head>
+        <title>Basketball – OhMySports</title>
+      </Head>
 
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
@@ -71,16 +71,32 @@ export default function BasketballPage() {
         <div className="max-w-5xl mx-auto px-4 py-4">
           <div className="mx-4 mb-8 p-4 rounded-lg bg-[#0a1024] shadow text-center">
             <h1 className="text-3xl font-semibold mb-2">Basketball</h1>
-            <p className="text-sm text-white mb-4">NBA, EuroLeague & NCAA fixtures — odds updated for every tip-off.</p>
+            <p className="text-sm text-white mb-4">
+              NBA, EuroLeague & NCAA fixtures — odds updated for every tip-off.
+            </p>
             <div className="flex justify-center gap-4">
-              <Image src={`https://flagcdn.com/w40/us.png`} alt="USA" width={40} height={30} className="rounded shadow" />
-              <Image src={`https://flagcdn.com/w40/eu.png`} alt="Europe" width={40} height={30} className="rounded shadow" />
+              <Image
+                src="https://flagcdn.com/w40/us.png"
+                alt="USA"
+                width={40}
+                height={30}
+                className="rounded shadow"
+              />
+              <Image
+                src="https://flagcdn.com/w40/eu.png"
+                alt="Europe"
+                width={40}
+                height={30}
+                className="rounded shadow"
+              />
             </div>
           </div>
 
           {/* Popular Bets Carousel */}
           <div className="mb-10">
-            <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Basketball Bets</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">
+              Popular Basketball Bets
+            </h2>
             <Slider {...carouselSettings}>
               {popularBets.map((bet, i) => {
                 const betId = `popular-${bet.title}`;
@@ -94,7 +110,9 @@ export default function BasketballPage() {
                       <button
                         onClick={() => toggleSelection(betId, bet.title, bet.market, decimalOdds)}
                         className={`font-bold text-lg px-4 py-2 rounded border transition ${
-                          isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                          isSelected
+                            ? "bg-white text-cyan-700 border-white"
+                            : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
                         }`}
                       >
                         {bet.fractional}
@@ -110,7 +128,11 @@ export default function BasketballPage() {
           <div className="flex justify-center mt-6 mb-8">
             <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
               {dates.map((date, idx) => {
-                let label = date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+                let label = date.toLocaleDateString("en-GB", {
+                  weekday: "short",
+                  day: "2-digit",
+                  month: "short",
+                });
                 const today = new Date();
                 const tomorrow = new Date();
                 tomorrow.setDate(today.getDate() + 1);
@@ -125,7 +147,9 @@ export default function BasketballPage() {
                     key={idx}
                     onClick={() => setActiveDate(date)}
                     className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-                      isActive ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
+                      isActive
+                        ? "bg-white text-black border-white shadow-lg"
+                        : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
                     }`}
                   >
                     {label}
@@ -149,7 +173,11 @@ export default function BasketballPage() {
                     futureDate.setDate(lastDate.getDate() + i + 1);
                     return (
                       <option key={i} value={futureDate.toISOString()}>
-                        {futureDate.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
+                        {futureDate.toLocaleDateString("en-GB", {
+                          weekday: "short",
+                          day: "2-digit",
+                          month: "short",
+                        })}
                       </option>
                     );
                   })}
@@ -160,17 +188,28 @@ export default function BasketballPage() {
 
           {/* League Matches */}
           {Object.entries(groupedGames).map(([league, matches], idx) => (
-            <details key={idx} className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md group">
+            <details
+              key={idx}
+              className="border border-white rounded-lg bg-[#0a1024] mb-6 shadow-md group"
+            >
               <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold hover:bg-[#111b3a] transition">
                 <span className="text-lg">{league}</span>
-                <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-5 w-5 transition-transform group-open:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </summary>
 
               <div className="p-4 space-y-4">
                 {matches.map((match, i) => (
-                  <div key={i} className="bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
+                  <div
+                    key={i}
+                    className="bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150"
+                  >
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                       <div>
                         <div className="text-sm font-semibold text-white">{match.game}</div>
@@ -188,7 +227,9 @@ export default function BasketballPage() {
                               <button
                                 onClick={() => toggleSelection(selectionId, match.game, type, decimal)}
                                 className={`border px-3 py-1 rounded font-medium transition ${
-                                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                                  isSelected
+                                    ? "bg-white text-cyan-700 border-white"
+                                    : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
                                 }`}
                               >
                                 {fractional}
@@ -206,7 +247,10 @@ export default function BasketballPage() {
           ))}
 
           <div className="flex justify-center mb-8">
-            <Link href="/" className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
+            <Link
+              href="/"
+              className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition"
+            >
               Back to Home
             </Link>
           </div>
