@@ -83,39 +83,50 @@ export default function EsportsPage() {
     { title: "OpTic vs LA Thieves (COD)", market: "Correct Score: 3-2 OpTic", odds: 5.50 },
   ];
 
-  const [dates, setDates] = useState<Date[]>([]);
+const [dates, setDates] = useState<Date[]>([]);
+const [activeDate, setActiveDate] = useState<Date | null>(null);
 
-  const [activeDate, setActiveDate] = useState<Date | null>(null);
+useEffect(() => {
+  const today = new Date();
+  const dateArray = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(today);
+    d.setDate(d.getDate() + i);
+    return d;
+  });
+  setDates(dateArray);
+  setActiveDate(today);
+}, []);
 
+const carouselSettings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
+};
 
-  useEffect(() => {
-    const today = new Date();
-    const dateArray = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(today);
-      d.setDate(d.getDate() + i);
-      return d;
-    });
-    setDates(dateArray);
-    setActiveDate(today);
-  }, []);
+type SelectionType = {
+  id: string;
+  event: string;
+  type: string;
+  odds: number;
+};
 
-  const carouselSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
-  };
+const handleToggle = (
+  id: string,
+  event: string,
+  type: string,
+  odds: number
+) => {
+  const exists = selections.some(sel => sel.id === id);
+  if (exists) {
+    removeSelection(id);
+  } else {
+    addSelection({ id, event, type, odds });
+  }
+};
 
-  const handleToggle = (id, event, type, odds) => {
-    const exists = selections.some(sel => sel.id === id);
-    if (exists) {
-      removeSelection(id);
-    } else {
-      addSelection({ id, event, type, odds });
-    }
-  };
 
   return (
     <>
