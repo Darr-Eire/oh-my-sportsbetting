@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { horseRaces } from "@/data/horseRaces";
 
-
 // Flatten and sort all upcoming races globally
 const allUpcomingRaces = horseRaces
   .flatMap((race) => ({ ...race }))
@@ -45,9 +44,6 @@ export default function HorseRacingSection() {
               <h3 className="text-white font-bold text-lg">
                 Next Race: {selectedRace.raceName} @ {selectedRace.track}
               </h3>
-              <p className="text-sm text-gray-300">
-                {selectedRace.distance} {selectedRace.surface}
-              </p>
             </div>
             <div className="text-white text-sm font-semibold">
               Starts in {calculateCountdown()}
