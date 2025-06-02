@@ -13,10 +13,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { useBetSlip } from "../../context/BetSlipContext";
 
 // Fractional to decimal converter
+
 function fractionalToDecimal(fraction: string): number {
+  if (!fraction || !fraction.includes("/")) return 1;
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
+
 
 const competitions = [
   "Australian Open", "French Open", "Wimbledon", "US Open",

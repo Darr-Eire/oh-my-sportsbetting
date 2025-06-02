@@ -210,7 +210,10 @@ export default function HorseRacingPage() {
 }
 
 // Fractional odds helper
+
 function fractionalToDecimal(fraction: string): number {
+  if (!fraction || !fraction.includes("/")) return 1;
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
+
