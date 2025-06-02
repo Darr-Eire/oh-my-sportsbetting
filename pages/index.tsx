@@ -22,7 +22,6 @@ import bundesliga from "../data/leagues/bundesliga.json";
 import serieA from "../data/leagues/serie_a.json";
 import ligue1 from "../data/leagues/ligue_1.json";
 
-// ✅ DROP THIS TYPE RIGHT HERE, OUTSIDE OF EVERYTHING
 type Accumulator = {
   id: string;
   event: string;
@@ -30,12 +29,7 @@ type Accumulator = {
   odds: number;
 };
 
-// ✅ Then your actual component code starts below this
-
 const todayMatches = [
-  // your matches...
-
-
   {
     league: "Premier League",
     countryCode: "gb",
