@@ -83,8 +83,10 @@ export default function EsportsPage() {
     { title: "OpTic vs LA Thieves (COD)", market: "Correct Score: 3-2 OpTic", odds: 5.50 },
   ];
 
-  const [dates, setDates] = useState([]);
-  const [activeDate, setActiveDate] = useState(null);
+  const [dates, setDates] = useState<Date[]>([]);
+
+  const [activeDate, setActiveDate] = useState<Date | null>(null);
+
 
   useEffect(() => {
     const today = new Date();

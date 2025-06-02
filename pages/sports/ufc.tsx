@@ -33,9 +33,10 @@ export default function UFCPage() {
       { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
   };
+const [dates, setDates] = useState<Date[]>([]);
 
-  const [dates, setDates] = useState([]);
-  const [activeDate, setActiveDate] = useState(null);
+ const [activeDate, setActiveDate] = useState<Date | null>(null);
+
 
   useEffect(() => {
     const today = new Date();
