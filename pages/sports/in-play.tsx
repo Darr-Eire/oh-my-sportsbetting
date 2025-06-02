@@ -11,6 +11,15 @@ import MatchCard from "../../components/MatchCard";
 // Type for odds conversion
 type OddsKey = "home" | "away" | "draw";
 
+interface MatchType {
+  id: number;
+  match: string;
+  countryCode: string;
+  timeElapsed: number;
+  odds: Partial<Record<OddsKey, string>>;
+  sport: string;
+}
+
 // Fractional odds converter
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
@@ -49,17 +58,19 @@ export default function InPlayPage() {
     matches.map(match => ({ ...match, sport }))
   );
 
-  const displayGames = activeSport === "All"
+  const displayGames: MatchType[] = activeSport === "All"
     ? allGames
     : liveGames[activeSport]?.map(match => ({ ...match, sport: activeSport })) ?? [];
 
   // Grouped display for dropdowns
-  const groupedDisplay = activeSport === "All"
-    ? Object.entries(allGames.reduce<Record<string, typeof allGames>>((acc, game) => {
-        if (!acc[game.sport]) acc[game.sport] = [];
-        acc[game.sport].push(game);
-        return acc;
-      }, {}))
+  const groupedDisplay: [string, MatchType[]][] = activeSport === "All"
+    ? Object.entries(
+        allGames.reduce<Record<string, MatchType[]>>((acc, game) => {
+          if (!acc[game.sport]) acc[game.sport] = [];
+          acc[game.sport].push(game);
+          return acc;
+        }, {})
+      )
     : [[activeSport, displayGames]];
 
   return (
@@ -69,7 +80,6 @@ export default function InPlayPage() {
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
 
-        {/* Banner */}
         <div className="mx-4 mt-4 mb-6 p-4 rounded-lg shadow text-center">
           <h1 className="text-3xl font-bold">In-Play Sports Betting</h1>
           <p className="text-sm mt-2 max-w-xl mx-auto">
@@ -82,7 +92,6 @@ export default function InPlayPage() {
           </div>
         </div>
 
-        {/* Tabs */}
         <div className="flex justify-center mb-8">
           <div className="flex gap-3 flex-wrap justify-center">
             {sportsList.map((sport) => (
@@ -101,7 +110,6 @@ export default function InPlayPage() {
           </div>
         </div>
 
-        {/* Dropdowns */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {groupedDisplay.map(([sport, matches], idx) => (
             <details key={idx} className="border border-white rounded-lg mb-6 group bg-[#0a1024]">
@@ -146,7 +154,6 @@ export default function InPlayPage() {
           ))}
         </div>
 
-        {/* Back To Home */}
         <div className="flex justify-center mb-8">
           <Link href="/" passHref legacyBehavior>
             <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
