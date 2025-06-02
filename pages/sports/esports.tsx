@@ -36,10 +36,15 @@ export default function EsportsPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();
 
 const esportsMatches = {
-  "CS:GO Major": [...],
-  "Valorant Champions Tour": [...],
-  "League of Legends Worlds": [...],
-  "Dota 2 The International": [...],
+  "CS:GO Major": [
+    { match: "NAVI vs FaZe", time: "18:00", odds: { home: "1.80", away: "2.10" } },
+    // more matches...
+  ],
+  "Valorant Champions Tour": [
+    // matches...
+  ],
+  "League of Legends Worlds": [],
+  "Dota 2 The International": [],
   "Rainbow Six Major": [],
   "FIFA eWorld Cup": [],
   "eFootball Pro": [],
@@ -48,18 +53,19 @@ const esportsMatches = {
   "Call of Duty League": []
 };
 
-  const logoMap = {
-    "CS:GO Major": "/logos/esports/csgo.png",
-    "Valorant Champions Tour": "/logos/esports/valorant.png",
-    "League of Legends Worlds": "/logos/esports/lol.png",
-    "Dota 2 The International": "/logos/esports/dota2.png",
-    "Rainbow Six Major": "/logos/esports/rainbowsix.png",
-    "FIFA eWorld Cup": "/logos/esports/fifa.png",
-    "eFootball Pro": "/logos/esports/efootball.png",
-    "Rocket League Championships": "/logos/esports/rocketleague.png",
-    "Overwatch League": "/logos/esports/overwatch.png",
-    "Call of Duty League": "/logos/esports/cod.png"
-  };
+const logoMap = {
+  "CS:GO Major": "/logos/esports/csgo.png",
+  "Valorant Champions Tour": "/logos/esports/valorant.png",
+  "League of Legends Worlds": "/logos/esports/lol.png",
+  "Dota 2 The International": "/logos/esports/dota2.png",
+  "Rainbow Six Major": "/logos/esports/rainbowsix.png",
+  "FIFA eWorld Cup": "/logos/esports/fifa.png",
+  "eFootball Pro": "/logos/esports/efootball.png",
+  "Rocket League Championships": "/logos/esports/rocketleague.png",
+  "Overwatch League": "/logos/esports/overwatch.png",
+  "Call of Duty League": "/logos/esports/cod.png"
+};
+
 
   const esportsMatches = {
     "CS:GO Major": [
