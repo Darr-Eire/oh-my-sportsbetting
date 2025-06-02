@@ -61,32 +61,28 @@ export default function AccaBuilderPage() {
       );
     }
 
-if (activeBetType === "Over/Under") {
-  return (
-    <div className="flex gap-2">
-      {(["over", "under"] as const).map((type) => {
-        const id = `${matchId}-ou-${type}`;
-        const isSelected = selectedBets.includes(id);
-        return (
-          <button
-            key={type}
-            onClick={() => toggleSelection(id)}
-            className={`border px-4 py-2 rounded font-semibold transition ${
-              isSelected
-                ? "bg-white text-cyan-700 border-white"
-                : "border-white text-white hover:bg-white hover:text-black"
-            }`}
-          >
-            {odds.overUnder?.[type] ?? "-"}
-            <div className="text-xs text-center mt-1 capitalize">{type}</div>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-
+    if (activeBetType === "BTTS") {
+      return (
+        <div className="flex gap-2">
+          {(["yes", "no"] as const).map((type) => {
+            const id = `${matchId}-btts-${type}`;
+            const isSelected = selectedBets.includes(id);
+            return (
+              <button
+                key={type}
+                onClick={() => toggleSelection(id)}
+                className={`border px-4 py-2 rounded font-semibold transition ${
+                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
+                }`}
+              >
+                {odds.btts?.[type] ?? "-"}
+                <div className="text-xs text-center mt-1 uppercase">{type}</div>
+              </button>
+            );
+          })}
+        </div>
+      );
+    }
 
     if (activeBetType === "Over/Under") {
       return (
@@ -102,7 +98,7 @@ if (activeBetType === "Over/Under") {
                   isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
                 }`}
               >
-                {odds.overUnder[type]}
+                {odds.overUnder?.[type] ?? "-"}
                 <div className="text-xs text-center mt-1 capitalize">{type}</div>
               </button>
             );
@@ -114,7 +110,7 @@ if (activeBetType === "Over/Under") {
     if (activeBetType === "Correct Score") {
       return (
         <div className="grid grid-cols-3 gap-2">
-          {Object.entries(odds.correctScore).map(([score, price]) => {
+          {Object.entries(odds.correctScore ?? {}).map(([score, price]) => {
             const id = `${matchId}-cs-${score}`;
             const isSelected = selectedBets.includes(id);
             return (
@@ -153,7 +149,6 @@ if (activeBetType === "Over/Under") {
           </p>
         </div>
 
-        {/* Bet Type Tabs */}
         <div className="flex justify-center mb-8 flex-wrap gap-3">
           {betTypes.map((tab) => (
             <button
@@ -168,7 +163,6 @@ if (activeBetType === "Over/Under") {
           ))}
         </div>
 
-        {/* All Leagues */}
         <div className="max-w-6xl mx-auto px-4 pb-16">
           {Object.entries(accaMatches).map(([league, matches]) => (
             <details key={league} className="border border-white rounded-lg mb-6 group">
@@ -200,7 +194,6 @@ if (activeBetType === "Over/Under") {
           ))}
         </div>
 
-        {/* Back to Home */}
         <div className="flex justify-center mb-10">
           <Link href="/" className="inline-block border border-white text-white px-8 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition">
             Back to Home
