@@ -1,117 +1,86 @@
 "use client";
-import { useState, useEffect } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
 
-// 1️⃣ Define types for the radial keys
-type RadialKey = 'radial-green' | 'radial-yellow' | 'radial-cyan';
+import React from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { useBetSlip } from "../context/BetSlipContext";
 
-// 2️⃣ Define slide type
-type Slide = {
-  title: string;
-  description: string;
-  button: string;
-  radial: RadialKey;
-  action: string;
+type PromoOffer = {
+  match: string;
+  promo: string;
+  odds: string;  // fractional odds as string
 };
 
-// 3️⃣ Slides array
-const slides: Slide[] = [
-  {
-    title: "🎯 Have You Used Your FREE SPIN Yet?",
-    description:
-      "Don’t leave your free spin unused! Spin the wheel now for a guaranteed chance to win bonus Pi prizes, free bets, or exclusive rewards.",
-    button: "Spin Now",
-    radial: "radial-green",
-    action: "/spin",
-  },
-  {
-    title: "🔥 Power Price Boosts: Bigger Odds, Bigger Wins!",
-    description:
-      "This weekend’s biggest matches come with exclusive boosted odds you won’t find anywhere else. Maximize your profits with higher payouts on select fixtures.",
-    button: "View Boosts",
-    radial: "radial-yellow",
-    action: "/power-prices",
-  },
-  {
-    title: "🎁 Welcome Bonus: Free Jackpot Entry!",
-    description:
-      "New here? We’re giving every new player a FREE entry into this week’s Pi Jackpot! Register today and instantly secure your chance to win huge cash prizes.",
-    button: "Join & Play",
-    radial: "radial-cyan",
-    action: "/signup",
-  },
+const promoOffers: PromoOffer[] = [
+  { match: "Man City vs Arsenal", promo: "City Win + Haaland Goal", odds: "9/4" },
+  { match: "Liverpool vs Chelsea", promo: "Liverpool Win & BTTS", odds: "7/2" },
+  { match: "Real Madrid vs Barca", promo: "Bellingham Anytime", odds: "5/2" },
+  { match: "Bayern vs Dortmund", promo: "Bayern Win & Over 3.5", odds: "3/1" },
 ];
 
-// 4️⃣ Button color map (now fully type-safe)
-const buttonColors: Record<RadialKey, string> = {
-  "radial-green": "from-[#0a1024] to-[#0a1024] hover:from-green-500 hover:to-green-700",
-  "radial-yellow": "from-[#0a1024] to-[#0a1024] hover:from-yellow-500 hover:to-yellow-700",
-  "radial-cyan": "from-[#0a1024] to-[#0a1024] hover:from-cyan-500 hover:to-cyan-700",
+const responsive = {
+  desktop: { breakpoint: { max: 4000, min: 1024 }, items: 2 },
+  tablet: { breakpoint: { max: 1024, min: 640 }, items: 1 },
+  mobile: { breakpoint: { max: 640, min: 0 }, items: 1 },
 };
 
+// helper to convert fractional odds to decimal
+function fractionalToDecimal(fraction: string): number {
+  const [numerator, denominator] = fraction.split('/').map(Number);
+  return numerator / denominator + 1;
+}
+
 export default function PromoCarousel() {
-  const [index, setIndex] = useState(0);
-  const [mounted, setMounted] = useState(false);
+  const { selections, addSelection, removeSelection } = useBetSlip();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const handleToggle = (promo: PromoOffer) => {
+    const id = `${promo.match}-${promo.promo}`;
+    const exists = selections.find(sel => sel.id === id);
 
-  if (!mounted) return null;
-
-  const next = () => setIndex((prev) => (prev + 1) % slides.length);
-  const prev = () => setIndex((prev) => (prev - 1 + slides.length) % slides.length);
-  const slide = slides[index];
+    if (exists) {
+      removeSelection(id);
+    } else {
+      addSelection({
+        id: id,
+        event: promo.match,
+        type: promo.promo,
+        odds: fractionalToDecimal(promo.odds), // ✅ correctly converted
+      });
+    }
+  };
 
   return (
-    <div className="relative overflow-hidden mb-6 rounded-3xl shadow-2xl h-60 md:h-96 p-4 md:p-8 text-center text-white bg-[#0f172a]">
+    <section className="w-full max-w-3xl mx-auto mt-8 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+      <h2 className="text-lg font-bold text-white mb-4 text-center">🔥 Promo Power Prices</h2>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.92 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative w-full h-full flex justify-center items-center z-10"
-        >
-          <div className="relative w-full max-w-xl h-full bg-black/40 rounded-3xl border border-white/10 backdrop-blur-lg shadow-lg overflow-hidden">
+      <Carousel 
+        responsive={responsive} 
+        infinite 
+        arrows 
+        autoPlay 
+        autoPlaySpeed={7000} 
+        containerClass="carousel-container" 
+        itemClass="px-2"
+      >
+        {promoOffers.map((promo, idx) => {
+          const id = `${promo.match}-${promo.promo}`;
+          const isSelected = selections.some(sel => sel.id === id);
 
-            {/* Radial lighting inside the card */}
-            <div className={`absolute inset-0 bg-${slide.radial}`}></div>
-
-            {/* Particle Motion */}
-            <div className="absolute inset-0 animate-particles bg-[radial-gradient(circle,_rgba(255,255,255,0.08)_1px,_transparent_1px)] bg-[length:20px_20px] opacity-10" />
-
-            {/* Content */}
-            <div className="relative z-20 h-full flex flex-col justify-center items-center p-6 md:p-8 text-white">
-              <h2 className="text-1xl md:text-2xl font-extrabold drop-shadow-lg mb-3">
-                {slide.title}
-              </h2>
-              <p className="text-sm md:text-lg opacity-90 drop-shadow-md">
-                {slide.description}
-              </p>
-              <a href={slide.action}>
-                <button
-                  className={`mt-5 bg-gradient-to-r ${buttonColors[slide.radial]} border border-white/20 text-white font-semibold px-6 py-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 text-base`}
-                >
-                  {slide.button}
-                </button>
-              </a>
+          return (
+            <div
+              key={idx}
+              className={`bg-gradient-to-br from-[#1c2b4a] to-[#0b132b] border rounded-lg p-5 flex flex-col justify-center items-center text-center transition-shadow duration-300 cursor-pointer 
+              ${isSelected ? "border-[#00ffd5] shadow-neon" : "border-white hover:shadow-neon"}`}
+              onClick={() => handleToggle(promo)}
+            >
+              <div className="text-md font-bold text-white">{promo.match}</div>
+              <div className="text-sm italic text-blue-400 mt-1">{promo.promo}</div>
+              <div className="mt-3 text-white text-lg font-bold">{promo.odds}</div>
+              {isSelected && <div className="mt-1 text-green-400 text-xs font-bold">Added to Bet Slip</div>}
             </div>
-
-          </div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Navigation Arrows */}
-      <div className="absolute top-1/2 left-4 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-md p-2 rounded-full shadow-lg cursor-pointer">
-        <FaArrowLeft onClick={prev} className="text-white text-lg hover:scale-125 transition-transform" />
-      </div>
-      <div className="absolute top-1/2 right-4 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-md p-2 rounded-full shadow-lg cursor-pointer">
-        <FaArrowRight onClick={next} className="text-white text-lg hover:scale-125 transition-transform" />
-      </div>
-    </div>
+          );
+        })}
+      </Carousel>
+    </section>
   );
 }
