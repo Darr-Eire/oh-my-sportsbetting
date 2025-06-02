@@ -4,15 +4,12 @@ import Link from "next/link";
 import { useBetSlip } from "../context/BetSlipContext";
 
 type MatchCardProps = {
-  slug: string;
-  teams: string;
-  time: string;
-  odds?: {
-    home: number;
-    draw: number;
-    away: number;
-  };
-};
+  match: { slug: string; teams: string; time: string; odds: Record<OddsKey, number> };
+  selections: SelectionType[];
+  toggleSelection: (id: string, event: string, type: string, odds: number) => void;
+}
+;
+
 
 export default function MatchCard({ match }: { match: MatchCardProps }) {
   const { slug, teams, time, odds } = match || {};
