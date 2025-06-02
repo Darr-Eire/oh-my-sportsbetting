@@ -136,14 +136,22 @@ export default function InPlayPage() {
               <div className="px-4 py-4 space-y-4">
 {matches.map(match => {
   type OddsKey = "home" | "draw" | "away";
-  const keys: OddsKey[] = ["home", "draw", "away"];
-  const convertedOdds: Partial<Record<OddsKey, number>> = {};
+ // Assuming fractionalToDecimal is already defined somewhere
 
-  keys.forEach(key => {
-    if (key in match.odds) {
-      convertedOdds[key] = fractionalToDecimal(match.odds[key]);
-    }
-  });
+// Example keys array
+const keys: OddsKey[] = ['home', 'draw', 'away'];
+
+// Assuming match.odds is of type: { home: string; away: string } | { home: string; draw: string; away: string }
+
+const convertedOdds: Record<string, number> = {};
+
+keys.forEach(key => {
+  if (key in match.odds) {
+    const oddsValue = match.odds[key as keyof typeof match.odds];
+    convertedOdds[key] = fractionalToDecimal(oddsValue);
+  }
+});
+
 
   return (
     <MatchCard
