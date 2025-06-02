@@ -5,7 +5,13 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useBetSlip } from "../context/BetSlipContext";
 
-const promoOffers = [
+type PromoOffer = {
+  match: string;
+  promo: string;
+  odds: string;
+};
+
+const promoOffers: PromoOffer[] = [
   { match: "Man City vs Arsenal", promo: "City Win + Haaland Goal", odds: "9/4" },
   { match: "Liverpool vs Chelsea", promo: "Liverpool Win & BTTS", odds: "7/2" },
   { match: "Real Madrid vs Barca", promo: "Bellingham Anytime", odds: "5/2" },
@@ -18,11 +24,10 @@ const responsive = {
   mobile: { breakpoint: { max: 640, min: 0 }, items: 1 },
 };
 
-
 export default function PromoCarousel() {
   const { selections, addSelection, removeSelection } = useBetSlip();
 
-  const handleToggle = (promo: any) => {
+  const handleToggle = (promo: PromoOffer) => {
     const id = `${promo.match}-${promo.promo}`;
     const exists = selections.find(sel => sel.id === id);
 
