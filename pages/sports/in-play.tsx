@@ -138,16 +138,13 @@ export default function InPlayPage() {
                   type OddsKey = "home" | "draw" | "away";
                   const convertedOdds: Partial<Record<OddsKey, number>> = {};
 
-                const keys = ["home", "away", "draw"] as const;
+                const keys: ("home" | "draw" | "away")[] = ["home", "draw", "away"];
+const convertedOdds: Record<string, number> = {};
 
 keys.forEach(key => {
-  if (key === "draw" && !("draw" in match.odds)) {
-    // Skip if odds object doesn't have 'draw'
-    return;
-  }
-  if (key in match.odds) {
-    convertedOdds[key] = fractionalToDecimal(match.odds[key]);
-  }
+  // Skip or handle N/A if you want
+  if (match.odds[key] === "N/A") return;
+  convertedOdds[key] = fractionalToDecimal(match.odds[key]);
 });
 
 
