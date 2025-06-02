@@ -1,0 +1,17 @@
+{
+  "Premier League": [
+    { "team": "Manchester City", "odds": "4/5" },
+    { "team": "Arsenal", "odds": "5/2" },
+    { "team": "Liverpool", "odds": "9/2" }
+  ],
+  "La Liga": [
+    { "team": "Real Madrid", "odds": "8/13" },
+    { "team": "Barcelona", "odds": "2/1" },
+    { "team": "Atletico Madrid", "odds": "7/1" }
+  ],
+  "Serie A": [
+    { "team": "Inter Milan", "odds": "6/4" },
+    { "team": "Juventus", "odds": "5/2" },
+    { "team": "AC Milan", "odds": "7/2" }
+  ]
+}

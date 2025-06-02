@@ -59,18 +59,23 @@ export default function HorseRacingPage() {
 
   return (
     <>
-      <Head><title>Horse Racing – OhMySportsbetting</title></Head>
-      <div className="min-h-screen bg-[#0a1024] text-white font-sans">
-        <Header />
-        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
-          <h1 className="text-3xl font-semibold tracking-wide">Horse Racing</h1>
-          <p className="text-sm mt-2 max-w-xl mx-auto">Explore the top races, best horses & Pi-powered action.</p>
-          <div className="mt-4 flex flex-wrap justify-center gap-4">
-            {["gb", "ie", "us"].map((code) => (
-              <Image key={code} src={`https://flagcdn.com/w40/${code}.png`} alt={`${code} flag`} width={40} height={30} className="rounded shadow-md" />
-            ))}
-          </div>
-        </div>
+   <Head><title>Horse Racing – OhMySportsbetting</title></Head>
+<div className="min-h-screen bg-[#0a1024] text-white font-sans">
+  <Header />
+
+  {/* Header Banner */}
+  <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
+    <h1 className="text-3xl font-bold">Horse Racing</h1>
+    <p className="text-sm mt-2 max-w-xl mx-auto">
+      Horse Racing Competitions From Around The World — UK, Ireland, USA & International Events
+    </p>
+    <div className="flex justify-center items-center gap-4 mt-4">
+      <Image src="https://flagcdn.com/w40/gb.png" alt="GB Flag" width={60} height={40} className="rounded shadow-md" unoptimized />
+      <Image src="https://flagcdn.com/w40/ie.png" alt="Ireland Flag" width={60} height={40} className="rounded shadow-md" unoptimized />
+      <Image src="https://flagcdn.com/w40/us.png" alt="USA Flag" width={60} height={40} className="rounded shadow-md" unoptimized />
+    </div>
+  </div>
+
 
         {/* Popular Horse Bets */}
         <div className="max-w-5xl mx-auto px-4 pb-10">

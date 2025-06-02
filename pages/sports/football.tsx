@@ -5,11 +5,11 @@ import Head from "next/head";
 import Link from "next/link";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import MatchCard from "../../components/MatchCard";
 import Slider from "react-slick";
 import Image from "next/image";
+import outrightMarkets from "../../data/outright/outright_markets.json";
 
-// IMPORT LEAGUE DATA
+// --- IMPORT LEAGUE DATA ---
 import serieB from "../../data/leagues/serie_b.json";
 import coppaItalia from "../../data/leagues/coppa_italia.json";
 import ligue2 from "../../data/leagues/ligue_2.json";
@@ -36,7 +36,9 @@ import copaDelRey from "../../data/leagues/copa_del_rey.json";
 import supercopaDeEspana from "../../data/leagues/supercopa_de_espana.json";
 import laLiga2 from "../../data/leagues/la_liga_2.json";
 
-// LEAGUE GROUPS
+// --- CONSTANTS ---
+const tabs = ["Popular", "In-Play", "ACCAs", "Today", "Multi-Match Builder"];
+
 const leagueGroups = [
   {
     country: "England", flag: "/flags/uk.png", leagues: [
@@ -109,6 +111,12 @@ const leagueGroups = [
   }
 ];
 
+const popularFootballBets = [
+  { title: "Man City vs Arsenal", market: "Both Teams to Score: Yes", odds: "4/5" },
+  { title: "Liverpool vs Chelsea", market: "Over 2.5 Goals", odds: "11/10" },
+  { title: "Real Madrid vs Barcelona", market: "Correct Score: 2-1 Madrid", odds: "7/1" },
+];
+
 function fractionalToDecimal(odds: string | number): number {
   if (typeof odds === "number") return odds;
   if (odds.includes("/")) {
@@ -118,62 +126,41 @@ function fractionalToDecimal(odds: string | number): number {
   return parseFloat(odds);
 }
 
-
-
-
 export default function FootballPage() {
   const [openCountries, setOpenCountries] = useState<Record<string, boolean>>({});
   const [openLeagues, setOpenLeagues] = useState<Record<string, boolean>>({});
-  const [dates, setDates] = useState<Date[]>([]);
-  const [activeDate, setActiveDate] = useState<Date | null>(null);
   const [selections, setSelections] = useState<string[]>([]);
-
-  useEffect(() => {
-    const today = new Date();
-    const dateArray = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(today);
-      d.setDate(d.getDate() + i);
-      return d;
-    });
-    setDates(dateArray);
-    setActiveDate(today);
-  }, []);
+  const [activeTab, setActiveTab] = useState("Popular");
 
   const toggleCountry = (country: string) => {
-    setOpenCountries(prev => ({ ...prev, [country]: !prev[country] }));
+    setOpenCountries((prev) => ({ ...prev, [country]: !prev[country] }));
   };
 
   const toggleLeague = (league: string) => {
-    setOpenLeagues(prev => ({ ...prev, [league]: !prev[league] }));
+    setOpenLeagues((prev) => ({ ...prev, [league]: !prev[league] }));
   };
 
   const toggleSelection = (id: string) => {
     if (selections.includes(id)) {
-      setSelections(selections.filter(sel => sel !== id));
+      setSelections(selections.filter((sel) => sel !== id));
     } else {
       setSelections([...selections, id]);
     }
   };
 
-  const carouselSettings = {
+  const sliderSettings = {
     infinite: true,
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }]
+    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
-  const popularFootballBets = [
-    { title: "Man City vs Arsenal", market: "Both Teams to Score: Yes", odds: "4/5" },
-    { title: "Liverpool vs Chelsea", market: "Over 2.5 Goals", odds: "11/10" },
-    { title: "Real Madrid vs Barcelona", market: "Correct Score: 2-1 Madrid", odds: "7/1" }
-  ];
-
-  return (
-    <>
-   <Head><title>Football – OhMySportsbetting</title></Head>
-<div className="min-h-screen bg-[#0a1024] text-white font-sans">
-  <Header />
+return (
+  <>
+    <Head><title>Football – OhMySportsbetting</title></Head>
+    <div className="min-h-screen bg-[#0a1024] text-white font-sans">
+      <Header />
 
   <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
     <h1 className="text-3xl font-semibold">Leagues From Around The World</h1>
@@ -191,24 +178,26 @@ export default function FootballPage() {
     </div>
   </div>
 
-        {/* Popular bets */}
-        <div className="max-w-5xl mx-auto px-4 pb-10">
+        {/* Popular Bets */}
+        <div className="max-w-5xl mx-auto px-4 pb-6">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Football Bets</h2>
-          <Slider {...carouselSettings}>
+          <Slider {...sliderSettings}>
             {popularFootballBets.map((bet, index) => {
               const id = `popular-${bet.title}`;
               const isSelected = selections.includes(id);
-              const decimal = fractionalToDecimal(bet.odds);
               return (
                 <div key={index} className="p-2">
                   <div className="border border-white rounded-lg bg-[#0a1024] p-4 shadow text-center">
-                    <div className="font-semibold text-white mb-1">{bet.title}</div>
+                    <div className="font-semibold mb-1">{bet.title}</div>
                     <div className="text-sm text-blue-400 mb-3">{bet.market}</div>
                     <button
                       onClick={() => toggleSelection(id)}
                       className={`border px-4 py-2 rounded text-lg font-semibold transition ${
-                        isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
-                      }`}>
+                        isSelected
+                          ? "bg-white text-cyan-700 border-white"
+                          : "border-white text-white hover:bg-white hover:text-black"
+                      }`}
+                    >
                       {bet.odds}
                     </button>
                   </div>
@@ -218,65 +207,33 @@ export default function FootballPage() {
           </Slider>
         </div>
 
-        {/* Date Tabs */}
-<div className="flex justify-center mt-6 mb-8">
-  <div className="flex overflow-x-auto pl-4 pr-2 gap-3 max-w-full md:max-w-3xl scrollbar-hide">
-    {dates.map((date, idx) => {
-      let label = date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+        {/* Tabs - now underneath Popular Bets */}
+     {/* Tabs with real links */}
+<div className="flex justify-center mb-6">
+  <div className="flex gap-3 flex-wrap justify-center">
+    <Link href="/sports/football" legacyBehavior>
+      <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-white text-black border-white shadow">
+        Popular/Today
+      </a>
+    </Link>
+    <Link href="/sports/in-play" legacyBehavior>
+      <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-[#0a1024] text-white border-white hover:bg-white hover:text-black">
+        In-Play
+      </a>
+    </Link>
+    <Link href="/sports/accas" legacyBehavior>
+      <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-[#0a1024] text-white border-white hover:bg-white hover:text-black">
+        ACCAs
+      </a>
+    </Link>
 
-      const today = new Date();
-      const tomorrow = new Date();
-      tomorrow.setDate(today.getDate() + 1);
-
-      const formatDate = (d: Date) => d.toISOString().slice(0, 10);
-      
-      if (formatDate(date) === formatDate(today)) label = "Today";
-      else if (formatDate(date) === formatDate(tomorrow)) label = "Tomorrow";
-
-      const isActive = activeDate && formatDate(activeDate) === formatDate(date);
-
-      return (
-        <button
-          key={idx}
-          onClick={() => setActiveDate(date)}
-         className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-            isActive ? "bg-white text-black border-white shadow-lg" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
-          }`}
-        >
-          {label}
-        </button>
-      );
-    })}
-
-    {dates.length > 0 && (
-      <select
-        className="min-w-[120px] px-4 py-2 rounded-full font-semibold text-sm border border-white bg-[#0a1024] text-white"
-        onChange={(e) => {
-          const selectedDate = new Date(e.target.value);
-          setActiveDate(selectedDate);
-        }}
-      >
-        <option value="">More Dates</option>
-        {Array.from({ length: 5 }, (_, i) => {
-          const lastDate = dates[dates.length - 1];
-          const futureDate = new Date(lastDate);
-          futureDate.setDate(lastDate.getDate() + i + 1);
-          return (
-            <option key={i} value={futureDate.toISOString()}>
-              {futureDate.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-            </option>
-          );
-        })}
-      </select>
-    )}
   </div>
 </div>
 
 
-
-        {/* Main League Display */}
+        {/* Now leagues section fully added back */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
-          {leagueGroups.map(group => (
+          {leagueGroups.map((group) => (
             <div key={group.country} className="mb-8 border border-white rounded-lg">
               <button onClick={() => toggleCountry(group.country)} className="flex items-center gap-3 w-full px-4 py-3 text-left font-bold text-lg hover:bg-[#14215c] transition">
                 <img src={group.flag} alt={`${group.country} flag`} className="w-6 h-6 object-contain" />
@@ -286,105 +243,107 @@ export default function FootballPage() {
                 </svg>
               </button>
 
-             {openCountries[group.country] && (
-  <div className="px-4 pb-4">
-    {group.leagues.map((league) => (
-      <div key={league.name} className="mb-4 border border-white rounded-lg">
-        <button
-          onClick={() => toggleLeague(league.name)}
-          className="flex items-center gap-3 w-full px-4 py-3 font-semibold hover:bg-[#203275] transition"
-          type="button"
-        >
-          <img
-            src={league.logo}
-            alt={`${league.name} logo`}
-            className="w-6 h-6 object-contain"
-            loading="lazy"
-          />
-          {league.name}
-          <svg
-            className={`ml-auto h-5 w-5 transition-transform ${
-              openLeagues[league.name] ? "rotate-180" : ""
-            }`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
+              {openCountries[group.country] && (
+                <div className="px-4 pb-4">
+                  {group.leagues.map((league) => (
+                    <div key={league.name} className="mb-4 border border-white rounded-lg">
+                      <button onClick={() => toggleLeague(league.name)} className="flex items-center gap-3 w-full px-4 py-3 font-semibold hover:bg-[#203275] transition">
+                        <img src={league.logo} alt={`${league.name} logo`} className="w-6 h-6 object-contain" loading="lazy" />
+                        {league.name}
+                        <svg className={`ml-auto h-5 w-5 transition-transform ${openLeagues[league.name] ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
 
-        {openLeagues[league.name] && (
-          <div className="grid gap-3 p-3 bg-[#0a1024]">
-            {league.matches.map((match, i) => {
-              return (
-                <div
-                  key={i}
-                  className="flex justify-between items-center border border-white rounded-lg p-3"
-                >
-                  <div className="flex-1">
-                    <div className="font-semibold text-white">{match.teams}</div>
-                   <div className="text-sm text-gray-400">
-  {match.time}
-</div>
-
-                  </div>
-
-            <div className="flex gap-2 text-center text-xs">
-  {( ["home", "draw", "away"] as const ).map((type) => {
-    const id = `${match.teams}-${type}`;
-    const fractional = match.odds[type]; // now type is strictly "home" | "draw" | "away"
-    const decimal = typeof fractional === "string" 
-      ? fractionalToDecimal(fractional) 
-      : fractional; // fallback if odds is number
-    const isSelected = selections.includes(id);
-
-    return (
-      <div key={type} className="flex flex-col items-center">
-        <button
-          onClick={() => toggleSelection(id)}
-          className={`border px-3 py-1 rounded font-medium transition ${
-            isSelected 
-              ? "bg-white text-cyan-700 border-white" 
-              : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
-          }`}
-        >
-          {fractional}
-        </button>
-        <span className="text-softText mt-1">
-          {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
-        </span>
-      </div>
-    );
-  })}
-</div>
-
+                      {openLeagues[league.name] && (
+                        <div className="grid gap-3 p-3 bg-[#0a1024]">
+                          {league.matches.map((match, i) => (
+                            <div key={i} className="flex justify-between items-center border border-white rounded-lg p-3">
+                              <div>
+                                <div className="font-semibold">{match.teams}</div>
+                                <div className="text-sm text-gray-400">{match.time}</div>
+                              </div>
+                              {/* Odds buttons */}
+                              <div className="flex gap-2 text-center text-xs">
+                                {["home", "draw", "away"].map((type) => {
+                                  const id = `${match.teams}-${type}`;
+                                  const fractional = match.odds[type];
+                                  const isSelected = selections.includes(id);
+                                  return (
+                                    <div key={type} className="flex flex-col items-center">
+                                      <button onClick={() => toggleSelection(id)} className={`border px-3 py-1 rounded font-medium transition ${isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-cyan-700"}`}>
+                                        {fractional}
+                                      </button>
+                                      <span className="text-softText mt-1">
+                                        {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
+                                      </span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
-)}
-
+              )}
             </div>
           ))}
         </div>
+<div className="max-w-5xl mx-auto px-4 pb-16">
+  <h2 className="text-2xl font-semibold mb-6 text-center">Outright Betting Markets</h2>
 
-        <div className="flex justify-center mb-8">
-          <Link href="/" passHref legacyBehavior>
-            <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
-              Back to Home
-            </a>
-          </Link>
+  {Object.entries(outrightMarkets).map(([league, markets]) => (
+    <details key={league} className="border border-white rounded-lg mb-4 group">
+      <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold text-lg hover:bg-[#111b3a] transition">
+        <div className="flex items-center gap-3">
+          <img 
+            src={`/logos/${league.toLowerCase().replace(/\s+/g, '_')}.png`} 
+            alt={`${league} logo`} 
+            className="w-6 h-6 object-contain" 
+            loading="lazy" 
+          />
+          {league} Winner
         </div>
+        <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </summary>
+
+      <div className="px-4 py-3 space-y-2">
+        {markets.map((market, index) => (
+          <div key={index} className="flex justify-between items-center border border-white rounded-lg px-3 py-2">
+            <span className="font-semibold">{market.team}</span>
+
+            {/* Odds now clickable */}
+            <button 
+              onClick={() => handleOutrightSelection(league, market.team, market.odds)}
+              className="border border-white px-4 py-1 rounded-lg font-semibold transition hover:bg-white hover:text-black"
+            >
+              {market.odds}
+            </button>
+          </div>
+        ))}
+
+        {/* More Teams Button */}
+        <div className="flex justify-center mt-4">
+          <button className="border border-white text-white px-5 py-2 rounded-lg hover:bg-white hover:text-black transition">
+            More Teams
+          </button>
+        </div>
+      </div>
+    </details>
+  ))}
+
+  {/* Global More Outrights Button */}
+  <div className="flex justify-center mt-8">
+    <button className="border border-white text-white px-8 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition">
+      More Outright Betting
+    </button>
+  </div>
+</div>
 
         <Footer />
       </div>

@@ -1,0 +1,6 @@
+[
+  { "key": "winDrawWin", "label": "Win/Draw/Win" },
+  { "key": "btts", "label": "Both Teams To Score" },
+  { "key": "overUnder", "label": "Over/Under 2.5" },
+  { "key": "correctScore", "label": "Correct Score" }
+]
