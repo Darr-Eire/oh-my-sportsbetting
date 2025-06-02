@@ -25,9 +25,6 @@ function fractionalToDecimal(fraction: string): number {
   return num / denom + 1;
 }
 
-
-
-
 // --- In-play game data ---
 const liveGames = {
   Football: [
@@ -78,7 +75,9 @@ export default function InPlayPage() {
 
   return (
     <>
-      <Head><title>In-Play – OhMySports</title></Head>
+      <Head>
+        <title>In-Play – OhMySports</title>
+      </Head>
 
       <div className="min-h-screen bg-[#0a1024] text-white font-sans">
         <Header />
@@ -136,34 +135,32 @@ export default function InPlayPage() {
                 </svg>
               </summary>
 
-             <div className="px-4 py-4 space-y-4">
-  {matches.map(match => {
-    // Define allowed keys explicitly
-    type OddsKey = "home" | "draw" | "away";
-    const convertedOdds: Partial<Record<OddsKey, number>> = {};
+              <div className="px-4 py-4 space-y-4">
+                {matches.map(match => {
+                  type OddsKey = "home" | "draw" | "away";
+                  const convertedOdds: Partial<Record<OddsKey, number>> = {};
 
-    for (const key in match.odds) {
-      if (key === "home" || key === "draw" || key === "away") {
-        convertedOdds[key] = fractionalToDecimal(match.odds[key]);
-      }
-    }
+                  for (const key in match.odds) {
+                    if (key === "home" || key === "draw" || key === "away") {
+                      convertedOdds[key] = fractionalToDecimal(match.odds[key]);
+                    }
+                  }
 
-    return (
-      <MatchCard
-        key={match.id}
-        match={{
-          slug: `${match.match}-${match.timeElapsed}`,
-          teams: match.match,
-          time: `Live ${match.timeElapsed}'`,
-          odds: convertedOdds as Record<OddsKey, number>, // cast for MatchCard prop
-        }}
-        selections={selections}
-        toggleSelection={toggleSelection}
-      />
-    );
-  })}
-</div>
-
+                  return (
+                    <MatchCard
+                      key={match.id}
+                      match={{
+                        slug: `${match.match}-${match.timeElapsed}`,
+                        teams: match.match,
+                        time: `Live ${match.timeElapsed}'`,
+                        odds: convertedOdds as Record<OddsKey, number>,
+                      }}
+                      selections={selections}
+                      toggleSelection={toggleSelection}
+                    />
+                  );
+                })}
+              </div>
             </details>
           ))}
         </div>
