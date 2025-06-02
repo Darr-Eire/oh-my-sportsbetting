@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import Head from "next/head";
 import Image from "next/image";
@@ -14,6 +15,9 @@ import Footer from "../components/Footer";
 import { horseRaces } from "../data/horseRaces";
 import { useBetSlip } from "../context/BetSlipContext";
 import PromotionsBanner from "../components/PromotionsBanner";
+import { greyhoundRaces } from "../data/greyhoundRaces";
+import HorseRacingSection from "@/components/HorseRacingSection";
+import GreyhoundRacingSection from "@/components/GreyhoundRacingSection";
 
 import premierLeague from "../data/leagues/premier_league.json";
 import laLiga from "../data/leagues/la_liga.json";
@@ -46,7 +50,9 @@ const todayMatches = [
 export default function Home() {
   const [openLeague, setOpenLeague] = useState<string | null>(null);
   const [openHorseRacing, setOpenHorseRacing] = useState(false);
+  const [openGreyhound, setOpenGreyhound] = useState(false);
   const { selections, addSelection, removeSelection } = useBetSlip();
+
 
   const toggleLeague = (leagueName: string) => {
     setOpenLeague((prev) => (prev === leagueName ? null : leagueName));
@@ -209,15 +215,19 @@ export default function Home() {
                 )}
               </div>
             ))}
-            <div className="mt-6 flex justify-center">
-              <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
-                View More Football Matches
-              </button>
-            </div>
+          <div className="mt-6 flex justify-center">
+  <Link href="/sports/football">
+    <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition">
+      View More Football Matches
+    </button>
+  </Link>
+</div>
+
           </section>
 
           <BetBuilderCarousel />
           <LiveGamesFeed />
+           
           {/* Popular Horse Racing Bets */}
           <section className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
             <h2 className="text-lg font-bold text-white mb-4">Popular Horse Racing Bets</h2>
@@ -242,115 +252,8 @@ export default function Home() {
               })}
             </Slider>
           </section>
-
-          {/* Horse Racing Full Course View */}
-          <section className="w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg mt-10">
-            <button onClick={toggleHorseRacing} className="flex items-center gap-3 w-full px-4 py-3 text-left font-semibold hover:bg-[#14215c] transition rounded-t-lg">
-              <span>Horse Racing Courses</span>
-              <svg className={`ml-auto h-5 w-5 transition-transform ${openHorseRacing ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            {openHorseRacing && (
-              <div className="p-4 space-y-6 border-t border-gray-700">
-                {Object.entries(
-                  horseRaces.reduce((acc: Record<string, typeof horseRaces>, race) => {
-                    if (!acc[race.track]) acc[race.track] = [];
-                    acc[race.track].push(race);
-                    return acc;
-                  }, {})
-                ).map(([track, races], i) => (
-                  <details key={i} className="border border-gray-700 rounded-lg bg-[#0a1024]">
-                    <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold hover:bg-[#14215c] transition">
-                      <span>{track}</span>
-                      <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </summary>
-
-                    <div className="space-y-6 px-4 py-4">
-                      {races.map(({ raceTime, raceName, runners }, j) => (
-                        <div key={j} className="border border-gray-700 rounded-lg bg-[#0a1024] p-4 space-y-4">
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-white font-bold text-base">{raceName}</h3>
-                            <span className="text-sm text-white font-medium">{raceTime}</span>
-                          </div>
-
-                          <div className="divide-y divide-gray-700">
-                            {runners.map(({ number, name, jockey, trainer, form, odds }, idx) => (
-                              <div key={idx} className="flex items-center py-3 text-sm">
-                                <div className="flex items-center gap-3 w-10 font-bold text-white">
-                                  <span>{number}</span>
-                                  <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-white font-semibold">{number}</div>
-                                </div>
-
-                                <div className="flex flex-col flex-grow ml-2 text-left">
-                                  <span className="font-semibold text-white">{name}</span>
-                                  <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
-                                    <span>J: {jockey}</span>
-                                    <span>T: {trainer}</span>
-                                    <span>F: {form}</span>
-                                  </div>
-                                </div>
-
-                                <div className="ml-auto font-semibold text-green-400 bg-green-900 bg-opacity-20 px-3 py-1 rounded-md">
-                                  {odds}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </details>
-                ))}
-                <div className="mt-6 flex justify-center">
-                  <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
-                    View More Horse Races
-                  </button>
-                </div>
-              </div>
-            )}
-          </section>
-<section className="w-full max-w-3xl border border-white bg-[#0a1024] rounded-lg mt-10">
-  <div className="flex items-center justify-between px-4 py-3 text-left font-semibold border-b border-white">
-    <h2 className="text-2xl font-bold text-white">🐕 Greyhound Racing</h2>
-  </div>
-
-  <div className="p-4 space-y-6">
-    {greyhoundRaces.map(({ track, raceTime, raceName, runners }, i) => (
-      <div key={i} className="border border-white rounded-lg bg-[#0a1024] p-4 space-y-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-white font-bold text-base">{track} - {raceName}</h3>
-          <span className="text-sm text-white font-medium">{raceTime}</span>
-        </div>
-
-        <div className="divide-y divide-gray-700">
-          {runners.map(({ number, name, form, odds }, idx) => (
-            <div key={idx} className="flex items-center py-3 text-sm">
-              <div className="flex items-center gap-3 w-10 font-bold text-white">
-                <span>{number}</span>
-                <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-white font-semibold">{number}</div>
-              </div>
-
-              <div className="flex flex-col flex-grow ml-2 text-left">
-                <span className="font-semibold text-white">{name}</span>
-                <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
-                  <span>F: {form}</span>
-                </div>
-              </div>
-
-              <div className="ml-auto font-semibold text-green-400 bg-green-900 bg-opacity-20 px-3 py-1 rounded-md">
-                {odds}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    ))}
-  </div>
-</section>
+ <HorseRacingSection />
+<GreyhoundRacingSection />
 
         </main>
         <Footer />

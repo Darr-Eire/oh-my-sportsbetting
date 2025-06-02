@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { liveGames } from "../data/liveGames";
 import { useBetSlip } from "../context/BetSlipContext";
+import Link from "next/link";
 
 type OddsType = {
   home: string;
@@ -44,7 +45,7 @@ const fractionToDecimal = (fraction: string): number => {
   return parseFloat(fraction);
 };
 
-// Group the games by sport
+// Group games by sport
 const grouped = liveGames.reduce((acc: Record<string, Game[]>, game: Game) => {
   if (!acc[game.sport]) acc[game.sport] = [];
   acc[game.sport].push(game);
@@ -123,21 +124,25 @@ export default function LiveGamesFeed() {
                       })}
                     </div>
                   </div>
-
-                  <div className="pt-2 flex justify-center">
-                    <button className="text-sm px-4 py-1 border border-white text-white rounded-full hover:bg-cyan-600 transition">
-                      View More Bets
-                    </button>
-                  </div>
                 </div>
               ))}
+
+              {/* ✅ View In-Play Button Per Sport */}
+          <div className="pt-2 flex justify-center">
+  <Link href={`/sports/inplay/${sport.toLowerCase().replace(/\s+/g, "-")}`}>
+    <button className="text-sm px-4 py-1 border border-white text-white rounded-full hover:bg-cyan-600 transition">
+      View In-Play {sport}
+    </button>
+  </Link>
+</div>
+
             </div>
           )}
         </div>
       ))}
 
       <div className="mt-6 flex justify-center">
-        <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
+        <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition">
           View All In-Play Markets
         </button>
       </div>

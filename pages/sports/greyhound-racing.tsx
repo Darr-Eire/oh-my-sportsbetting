@@ -1,11 +1,13 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { races } from "../../data/greyhoundRaces";
+import { greyhoundRaces } from "../../data/greyhoundRaces";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -20,32 +22,21 @@ const trapColors = [
 ];
 
 export default function GreyhoundRacing() {
-  const [dates, setDates] = useState<Date[]>([]);
-  const [activeDate, setActiveDate] = useState<Date | null>(null);
-  const [selections, setSelections] = useState<string[]>([]); // <-- track selected odds
-
-  useEffect(() => {
-    const today = new Date();
-    const dateArray = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(today);
-      d.setDate(d.getDate() + i);
-      return d;
-    });
-    setDates(dateArray);
-    setActiveDate(today);
-  }, []);
+  const [selections, setSelections] = useState<string[]>([]);
 
   const toggleSelection = (id: string) => {
-    setSelections(prev => 
+    setSelections(prev =>
       prev.includes(id) ? prev.filter(sel => sel !== id) : [...prev, id]
     );
   };
 
-  const groupedRaces = races["Today"].reduce((acc: Record<string, typeof races["Today"]>, race) => {
-    if (!acc[race.track]) acc[race.track] = [];
-    acc[race.track].push(race);
-    return acc;
-  }, {});
+  // Group the races by track
+ const groupedRaces = greyhoundRaces.Today.reduce((acc, race) => {
+  if (!acc[race.track]) acc[race.track] = [];
+  acc[race.track].push(race);
+  return acc;
+}, {});
+
 
   const popularGreyhoundBets = [
     { title: "Towcester 19:45", market: "Trap 1 to Win", odds: "3/1" },
@@ -93,9 +84,7 @@ export default function GreyhoundRacing() {
                     <div className="text-sm text-blue-400 mb-3">{market}</div>
                     <button
                       onClick={() => toggleSelection(id)}
-                      className={`font-bold text-lg px-4 py-2 rounded border transition ${
-                        isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
-                      }`}
+                      className={`font-bold text-lg px-4 py-2 rounded border transition ${isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"}`}
                     >
                       {odds}
                     </button>
@@ -104,22 +93,6 @@ export default function GreyhoundRacing() {
               );
             })}
           </Slider>
-        </div>
-
-        {/* Date Selector Carousel */}
-        <div className="flex justify-center mt-6 mb-8">
-          <div className="flex overflow-x-auto pl-4 pr-2 gap-3 scroll-smooth scroll-px-2 scroll-snap-x snap-mandatory max-w-full md:max-w-3xl scrollbar-hide">
-            {dates.map((date, idx) => (
-              <button key={idx} onClick={() => setActiveDate(date)}
-                className={`min-w-[90px] flex-shrink-0 px-4 py-2 rounded-full font-semibold text-sm border ${
-                  activeDate?.toDateString() === date.toDateString()
-                    ? "bg-white text-black border-white shadow-lg"
-                    : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black transition"
-                } snap-start`}>
-                {date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" })}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Race Groups */}
@@ -147,8 +120,7 @@ export default function GreyhoundRacing() {
 
                     <div className="space-y-2">
                       {race.runners.map((dog, index) => {
-                        const [name, odds] = dog.split(/ (?=\d+\/\d+)/);
-                        const id = `${race.raceName}-${name}`;
+                        const id = `${race.raceName}-${dog.name}`;
                         const isSelected = selections.includes(id);
                         return (
                           <div key={index} className="flex items-center justify-between border border-gray-700 rounded-md px-4 py-3 bg-[#10182f] shadow">
@@ -156,15 +128,13 @@ export default function GreyhoundRacing() {
                               {index + 1}
                             </div>
                             <div className="flex-1 px-4">
-                              <p className="text-white font-semibold">{name}</p>
+                              <p className="text-white font-semibold">{dog.name}</p>
                             </div>
                             <button
                               onClick={() => toggleSelection(id)}
-                              className={`text-sm font-bold px-4 py-1 border rounded shadow transition ${
-                                isSelected ? "bg-white text-cyan-700 border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-cyan-700"
-                              }`}
+                              className={`text-sm font-bold px-4 py-1 border rounded shadow transition ${isSelected ? "bg-white text-cyan-700 border-white" : "bg-transparent text-white border-white hover:bg-white hover:text-cyan-700"}`}
                             >
-                              {odds}
+                              {dog.odds}
                             </button>
                           </div>
                         );
