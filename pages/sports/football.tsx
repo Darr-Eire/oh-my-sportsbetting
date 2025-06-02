@@ -37,8 +37,6 @@ import supercopaDeEspana from "../../data/leagues/supercopa_de_espana.json";
 import laLiga2 from "../../data/leagues/la_liga_2.json";
 
 // --- CONSTANTS ---
-const tabs = ["Popular", "In-Play", "ACCAs", "Today", "Multi-Match Builder"];
-
 const leagueGroups = [
   {
     country: "England", flag: "/flags/uk.png", leagues: [
@@ -110,7 +108,6 @@ const leagueGroups = [
     ]
   }
 ];
-
 const popularFootballBets = [
   { title: "Man City vs Arsenal", market: "Both Teams to Score: Yes", odds: "4/5" },
   { title: "Liverpool vs Chelsea", market: "Over 2.5 Goals", odds: "11/10" },
@@ -130,7 +127,6 @@ export default function FootballPage() {
   const [openCountries, setOpenCountries] = useState<Record<string, boolean>>({});
   const [openLeagues, setOpenLeagues] = useState<Record<string, boolean>>({});
   const [selections, setSelections] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState("Popular");
 
   const toggleCountry = (country: string) => {
     setOpenCountries((prev) => ({ ...prev, [country]: !prev[country] }));
@@ -148,6 +144,17 @@ export default function FootballPage() {
     }
   };
 
+  // THIS IS THE FUNCTION THAT WAS MISSING:
+  const handleOutrightSelection = (league: string, team: string, odds: string | number) => {
+    const id = `${league}-${team}`;
+    if (selections.includes(id)) {
+      setSelections(selections.filter((sel) => sel !== id));
+    } else {
+      setSelections([...selections, id]);
+    }
+    console.log("Outright Selected:", league, team, odds);
+  };
+
   const sliderSettings = {
     infinite: true,
     speed: 500,
@@ -156,29 +163,27 @@ export default function FootballPage() {
     responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
-return (
-  <>
-    <Head><title>Football – OhMySportsbetting</title></Head>
-    <div className="min-h-screen bg-[#0a1024] text-white font-sans">
-      <Header />
+  return (
+    <>
+      <Head><title>Football – OhMySportsbetting</title></Head>
+      <div className="min-h-screen bg-[#0a1024] text-white font-sans">
+        <Header />
 
-  <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
-    <h1 className="text-3xl font-semibold">Leagues From Around The World</h1>
-    <p className="text-sm mt-2 max-w-xl mx-auto">
-      Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.
-    </p>
+        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg bg-[#0a1024] shadow text-center">
+          <h1 className="text-3xl font-semibold">Leagues From Around The World</h1>
+          <p className="text-sm mt-2 max-w-xl mx-auto">
+            Explore the top fixtures, fierce rivalries & Pi-powered action — all in one spot.
+          </p>
 
-    {/* LOGOS */}
-    <div className="mt-6 flex justify-center gap-6 flex-wrap">
-      <Image src="/logos/premier_league.png" alt="Premier League" width={50} height={50} className="object-contain" />
-      <Image src="/logos/la_liga.png" alt="La Liga" width={50} height={50} className="object-contain" />
-      <Image src="/logos/serie_a.png" alt="Serie A" width={50} height={50} className="object-contain" />
-      <Image src="/logos/bundesliga.png" alt="Bundesliga" width={50} height={50} className="object-contain" />
-      <Image src="/logos/ligue_1.png" alt="Ligue 1" width={50} height={50} className="object-contain" />
-    </div>
-  </div>
+          <div className="mt-6 flex justify-center gap-6 flex-wrap">
+            <Image src="/logos/premier_league.png" alt="Premier League" width={50} height={50} className="object-contain" />
+            <Image src="/logos/la_liga.png" alt="La Liga" width={50} height={50} className="object-contain" />
+            <Image src="/logos/serie_a.png" alt="Serie A" width={50} height={50} className="object-contain" />
+            <Image src="/logos/bundesliga.png" alt="Bundesliga" width={50} height={50} className="object-contain" />
+            <Image src="/logos/ligue_1.png" alt="Ligue 1" width={50} height={50} className="object-contain" />
+          </div>
+        </div>
 
-        {/* Popular Bets */}
         <div className="max-w-5xl mx-auto px-4 pb-6">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular Football Bets</h2>
           <Slider {...sliderSettings}>
@@ -207,31 +212,26 @@ return (
           </Slider>
         </div>
 
-        {/* Tabs - now underneath Popular Bets */}
-     {/* Tabs with real links */}
-<div className="flex justify-center mb-6">
-  <div className="flex gap-3 flex-wrap justify-center">
-    <Link href="/sports/football" legacyBehavior>
-      <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-white text-black border-white shadow">
-        Popular/Today
-      </a>
-    </Link>
-    <Link href="/sports/in-play" legacyBehavior>
-      <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-[#0a1024] text-white border-white hover:bg-white hover:text-black">
-        In-Play
-      </a>
-    </Link>
-    <Link href="/sports/accas" legacyBehavior>
-      <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-[#0a1024] text-white border-white hover:bg-white hover:text-black">
-        ACCAs
-      </a>
-    </Link>
+        <div className="flex justify-center mb-6">
+          <div className="flex gap-3 flex-wrap justify-center">
+            <Link href="/sports/football" legacyBehavior>
+              <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-white text-black border-white shadow">
+                Popular/Today
+              </a>
+            </Link>
+            <Link href="/sports/in-play" legacyBehavior>
+              <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-[#0a1024] text-white border-white hover:bg-white hover:text-black">
+                In-Play
+              </a>
+            </Link>
+            <Link href="/sports/accas" legacyBehavior>
+              <a className="px-4 py-2 text-sm font-semibold border rounded-full transition bg-[#0a1024] text-white border-white hover:bg-white hover:text-black">
+                ACCAs
+              </a>
+            </Link>
+          </div>
+        </div>
 
-  </div>
-</div>
-
-
-        {/* Now leagues section fully added back */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {leagueGroups.map((group) => (
             <div key={group.country} className="mb-8 border border-white rounded-lg">
@@ -263,31 +263,29 @@ return (
                                 <div className="font-semibold">{match.teams}</div>
                                 <div className="text-sm text-gray-400">{match.time}</div>
                               </div>
-                              {/* Odds buttons */}
-                      <div className="flex gap-2 text-center text-xs">
-  {(["home", "draw", "away"] as const).map((type) => {
-    const id = `${match.teams}-${type}`;
-    const fractional = match.odds[type];
-    const isSelected = selections.includes(id);
-    return (
-      <div key={type} className="flex flex-col items-center">
-        <button
-          onClick={() => toggleSelection(id)}
-          className={`border px-3 py-1 rounded font-medium transition ${
-            isSelected
-              ? "bg-white text-cyan-700 border-white"
-              : "border-white text-white hover:bg-white hover:text-cyan-700"
-          }`}
-        >
-          {fractional}
-        </button>
-        <span className="text-softText mt-1">
-          {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
-        </span>
-      </div>
-    );
-  })}
-
+                              <div className="flex gap-2 text-center text-xs">
+                                {(["home", "draw", "away"] as const).map((type) => {
+                                  const id = `${match.teams}-${type}`;
+                                  const fractional = match.odds[type];
+                                  const isSelected = selections.includes(id);
+                                  return (
+                                    <div key={type} className="flex flex-col items-center">
+                                      <button
+                                        onClick={() => toggleSelection(id)}
+                                        className={`border px-3 py-1 rounded font-medium transition ${
+                                          isSelected
+                                            ? "bg-white text-cyan-700 border-white"
+                                            : "border-white text-white hover:bg-white hover:text-cyan-700"
+                                        }`}
+                                      >
+                                        {fractional}
+                                      </button>
+                                      <span className="text-softText mt-1">
+                                        {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
+                                      </span>
+                                    </div>
+                                  );
+                                })}
                               </div>
                             </div>
                           ))}
@@ -300,58 +298,55 @@ return (
             </div>
           ))}
         </div>
-<div className="max-w-5xl mx-auto px-4 pb-16">
-  <h2 className="text-2xl font-semibold mb-6 text-center">Outright Betting Markets</h2>
 
-  {Object.entries(outrightMarkets).map(([league, markets]) => (
-    <details key={league} className="border border-white rounded-lg mb-4 group">
-      <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold text-lg hover:bg-[#111b3a] transition">
-        <div className="flex items-center gap-3">
-          <img 
-            src={`/logos/${league.toLowerCase().replace(/\s+/g, '_')}.png`} 
-            alt={`${league} logo`} 
-            className="w-6 h-6 object-contain" 
-            loading="lazy" 
-          />
-          {league} Winner
-        </div>
-        <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </summary>
+        <div className="max-w-5xl mx-auto px-4 pb-16">
+          <h2 className="text-2xl font-semibold mb-6 text-center">Outright Betting Markets</h2>
 
-      <div className="px-4 py-3 space-y-2">
-        {markets.map((market, index) => (
-          <div key={index} className="flex justify-between items-center border border-white rounded-lg px-3 py-2">
-            <span className="font-semibold">{market.team}</span>
+          {Object.entries(outrightMarkets).map(([league, markets]) => (
+            <details key={league} className="border border-white rounded-lg mb-4 group">
+              <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold text-lg hover:bg-[#111b3a] transition">
+                <div className="flex items-center gap-3">
+                  <img 
+                    src={`/logos/${league.toLowerCase().replace(/\s+/g, '_')}.png`} 
+                    alt={`${league} logo`} 
+                    className="w-6 h-6 object-contain" 
+                    loading="lazy" 
+                  />
+                  {league} Winner
+                </div>
+                <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
 
-            {/* Odds now clickable */}
-            <button 
-              onClick={() => handleOutrightSelection(league, market.team, market.odds)}
-              className="border border-white px-4 py-1 rounded-lg font-semibold transition hover:bg-white hover:text-black"
-            >
-              {market.odds}
+              <div className="px-4 py-3 space-y-2">
+                {markets.map((market, index) => (
+                  <div key={index} className="flex justify-between items-center border border-white rounded-lg px-3 py-2">
+                    <span className="font-semibold">{market.team}</span>
+                    <button 
+                      onClick={() => handleOutrightSelection(league, market.team, market.odds)}
+                      className="border border-white px-4 py-1 rounded-lg font-semibold transition hover:bg-white hover:text-black"
+                    >
+                      {market.odds}
+                    </button>
+                  </div>
+                ))}
+
+                <div className="flex justify-center mt-4">
+                  <button className="border border-white text-white px-5 py-2 rounded-lg hover:bg-white hover:text-black transition">
+                    More Teams
+                  </button>
+                </div>
+              </div>
+            </details>
+          ))}
+
+          <div className="flex justify-center mt-8">
+            <button className="border border-white text-white px-8 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition">
+              More Outright Betting
             </button>
           </div>
-        ))}
-
-        {/* More Teams Button */}
-        <div className="flex justify-center mt-4">
-          <button className="border border-white text-white px-5 py-2 rounded-lg hover:bg-white hover:text-black transition">
-            More Teams
-          </button>
         </div>
-      </div>
-    </details>
-  ))}
-
-  {/* Global More Outrights Button */}
-  <div className="flex justify-center mt-8">
-    <button className="border border-white text-white px-8 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition">
-      More Outright Betting
-    </button>
-  </div>
-</div>
 
         <Footer />
       </div>
