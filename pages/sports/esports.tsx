@@ -35,18 +35,18 @@ function fractionalToDecimal(fraction: string): number {
 export default function EsportsPage() {
   const { addSelection, removeSelection, selections } = useBetSlip();
 
-  const tournaments = [
-    "CS:GO Major",
-    "Valorant Champions Tour",
-    "League of Legends Worlds",
-    "Dota 2 The International",
-    "Rainbow Six Major",
-    "FIFA eWorld Cup",
-    "eFootball Pro",
-    "Rocket League Championships",
-    "Overwatch League",
-    "Call of Duty League"
-  ] as const;
+const esportsMatches = {
+  "CS:GO Major": [...],
+  "Valorant Champions Tour": [...],
+  "League of Legends Worlds": [...],
+  "Dota 2 The International": [...],
+  "Rainbow Six Major": [],
+  "FIFA eWorld Cup": [],
+  "eFootball Pro": [],
+  "Rocket League Championships": [],
+  "Overwatch League": [],
+  "Call of Duty League": []
+};
 
   const logoMap = {
     "CS:GO Major": "/logos/esports/csgo.png",
