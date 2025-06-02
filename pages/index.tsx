@@ -73,33 +73,42 @@ export default function Home() {
     { id: "acc3", teams: "Bayern & Juventus & AC Milan", odds: "4/1" },
   ];
 
-  const handleToggleAccumulator = (acc: any) => {
-    const exists = selections.find(sel => sel.id === acc.id);
-    if (exists) {
-      removeSelection(acc.id);
-    } else {
-      addSelection({
-        id: acc.id,
-        event: acc.teams,
-        type: "Accumulator",
-        odds: fractionToDecimal(acc.odds),
-      });
-    }
-  };
+const handleToggleAccumulator = (acc: Accumulator) => {
+  const exists = selections.find(sel => sel.id === acc.id);
+  if (exists) {
+    removeSelection(acc.id);
+  } else {
+    addSelection({
+      id: acc.id,
+      event: acc.teams,
+      type: "Accumulator",
+      odds: fractionToDecimal(acc.odds),
+    });
+  }
+};
 
-  const handleToggleFootball = (matchId: string, team: string, odds: string) => {
-    const exists = selections.find(sel => sel.id === matchId);
-    if (exists) {
-      removeSelection(matchId);
-    } else {
-      addSelection({
-        id: matchId,
-        event: team,
-        type: "Match Odds",
-        odds: fractionToDecimal(odds),
-      });
-    }
-  };
+type MatchSelection = {
+  id: string;
+  event: string;
+  type: "Match Odds";
+  odds: number;
+};
+
+const handleToggleFootball = (matchId: string, team: string, odds: string) => {
+  const exists = selections.find((sel) => sel.id === matchId);
+  if (exists) {
+    removeSelection(matchId);
+  } else {
+    const decimalOdds = fractionToDecimal(odds);
+    addSelection({
+      id: matchId,
+      event: team,
+      type: "Match Odds",
+      odds: decimalOdds,
+    });
+  }
+};
+
 
   const handleToggleHorse = (id: string, horseName: string, odds: string) => {
     const exists = selections.find(sel => sel.id === id);
