@@ -13,9 +13,9 @@ import { accaMatches } from "../../data/acca-data";
 // Odds type safety
 type OddsType = {
   winDrawWin: Record<"home" | "draw" | "away", string>;
-  btts: Record<"yes" | "no", string>;
-  overUnder: Record<"over" | "under", string>;
-  correctScore: Record<string, string>;
+  btts?: Partial<Record<"yes" | "no", string>>;
+  overUnder?: Partial<Record<"over" | "under", string>>;
+  correctScore?: Record<string, string>;
 };
 
 // Fractional Odds Converter
@@ -61,28 +61,29 @@ export default function AccaBuilderPage() {
       );
     }
 
-    if (activeBetType === "BTTS") {
-      return (
-        <div className="flex gap-2">
-          {(["yes", "no"] as const).map((type) => {
-            const id = `${matchId}-btts-${type}`;
-            const isSelected = selectedBets.includes(id);
-            return (
-              <button
-                key={type}
-                onClick={() => toggleSelection(id)}
-                className={`border px-4 py-2 rounded font-semibold transition ${
-                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
-                }`}
-              >
-                {odds.btts[type]}
-                <div className="text-xs text-center mt-1 uppercase">{type}</div>
-              </button>
-            );
-          })}
-        </div>
-      );
-    }
+if (activeBetType === "BTTS" && odds.btts) {
+  return (
+    <div className="flex gap-2">
+      {(["yes", "no"] as const).map((type) => {
+        const id = `${matchId}-btts-${type}`;
+        const isSelected = selectedBets.includes(id);
+        return (
+          <button
+            key={type}
+            onClick={() => toggleSelection(id)}
+            className={`border px-4 py-2 rounded font-semibold transition ${
+              isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
+            }`}
+          >
+            {odds.btts?.[type] ?? "-"}
+            <div className="text-xs text-center mt-1 uppercase">{type}</div>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 
     if (activeBetType === "Over/Under") {
       return (
