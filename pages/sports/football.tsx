@@ -264,22 +264,30 @@ return (
                                 <div className="text-sm text-gray-400">{match.time}</div>
                               </div>
                               {/* Odds buttons */}
-                              <div className="flex gap-2 text-center text-xs">
-                              {(["home", "draw", "away"] as const).map((type) => {
-  const id = `${match.teams}-${type}`;
-  const fractional = match.odds[type];
-                                  const isSelected = selections.includes(id);
-                                  return (
-                                    <div key={type} className="flex flex-col items-center">
-                                      <button onClick={() => toggleSelection(id)} className={`border px-3 py-1 rounded font-medium transition ${isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-cyan-700"}`}>
-                                        {fractional}
-                                      </button>
-                                      <span className="text-softText mt-1">
-                                        {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
+                      <div className="flex gap-2 text-center text-xs">
+  {(["home", "draw", "away"] as const).map((type) => {
+    const id = `${match.teams}-${type}`;
+    const fractional = match.odds[type];
+    const isSelected = selections.includes(id);
+    return (
+      <div key={type} className="flex flex-col items-center">
+        <button
+          onClick={() => toggleSelection(id)}
+          className={`border px-3 py-1 rounded font-medium transition ${
+            isSelected
+              ? "bg-white text-cyan-700 border-white"
+              : "border-white text-white hover:bg-white hover:text-cyan-700"
+          }`}
+        >
+          {fractional}
+        </button>
+        <span className="text-softText mt-1">
+          {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
+        </span>
+      </div>
+    );
+  })}
+
                               </div>
                             </div>
                           ))}
