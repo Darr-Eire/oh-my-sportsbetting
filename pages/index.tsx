@@ -5,8 +5,6 @@ import Image from "next/image";
 import { useState } from "react";
 import Slider from "react-slick";
 import { fractionToDecimal } from "@/utils/odds";
-
-import PromoCarousel from "../components/PromoCarousel";
 import PowerPriceCarousel from "../components/PowerPriceCarousel";
 import BetBuilderCarousel from "../components/BetBuilderCarousel";
 import SportsCarousel from "../components/SportsCarousel";
