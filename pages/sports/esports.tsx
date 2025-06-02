@@ -247,6 +247,13 @@ type OddsButtonProps = {
   isSelected: boolean;
 };
 
+type OddsButtonProps = {
+  label: string;
+  fractional: string;
+  onClick: () => void;
+  isSelected: boolean;
+};
+
 function OddsButton({ label, fractional, onClick, isSelected }: OddsButtonProps) {
   return (
     <div className="flex flex-col items-center">
