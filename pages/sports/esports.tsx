@@ -67,22 +67,6 @@ const logoMap = {
 };
 
 
-  const esportsMatches = {
-    "CS:GO Major": [
-      { match: "NAVI vs FaZe", time: "18:00", odds: { home: "1.80", away: "2.10" } },
-      { match: "Vitality vs Heroic", time: "20:00", odds: { home: "1.60", away: "2.30" } }
-    ],
-    "Valorant Champions Tour": [
-      { match: "Fnatic vs Paper Rex", time: "19:00", odds: { home: "1.70", away: "2.20" } }
-    ],
-    "League of Legends Worlds": [
-      { match: "T1 vs G2 Esports", time: "20:00", odds: { home: "1.50", away: "2.50" } }
-    ],
-    "Dota 2 The International": [
-      { match: "Team Spirit vs EG", time: "17:30", odds: { home: "1.90", away: "2.00" } }
-    ]
-  };
-
   const popularEsportsBets = [
     { title: "NAVI vs FaZe (CS:GO)", market: "Map Handicap: FaZe +1.5", odds: 1.60 },
     { title: "T1 vs G2 (LoL)", market: "T1 to Win 3-1", odds: 3.00 },
