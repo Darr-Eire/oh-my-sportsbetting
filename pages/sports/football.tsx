@@ -286,58 +286,94 @@ export default function FootballPage() {
                 </svg>
               </button>
 
-              {openCountries[group.country] && (
-                <div className="px-4 pb-4">
-                  {group.leagues.map(league => (
-                    <div key={league.name} className="mb-4 border border-white rounded-lg">
-                      <button onClick={() => toggleLeague(league.name)} className="flex items-center gap-3 w-full px-4 py-3 font-semibold hover:bg-[#203275] transition">
-                        <img src={league.logo} alt={league.name} className="w-6 h-6 object-contain" />
-                        {league.name}
-                        <svg className={`ml-auto h-5 w-5 transition-transform ${openLeagues[league.name] ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </button>
+             {openCountries[group.country] && (
+  <div className="px-4 pb-4">
+    {group.leagues.map((league) => (
+      <div key={league.name} className="mb-4 border border-white rounded-lg">
+        <button
+          onClick={() => toggleLeague(league.name)}
+          className="flex items-center gap-3 w-full px-4 py-3 font-semibold hover:bg-[#203275] transition"
+          type="button"
+        >
+          <img
+            src={league.logo}
+            alt={`${league.name} logo`}
+            className="w-6 h-6 object-contain"
+            loading="lazy"
+          />
+          {league.name}
+          <svg
+            className={`ml-auto h-5 w-5 transition-transform ${
+              openLeagues[league.name] ? "rotate-180" : ""
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
 
-                      {openLeagues[league.name] && (
-                        <div className="grid gap-3 p-3 bg-[#0a1024]">
-                          {league.matches.map((match, i) => (
-                            <div key={i} className="flex justify-between items-center border border-white rounded-lg p-3">
-                              <div className="flex-1">
-                                <div className="font-semibold text-white">{match.teams}</div>
-                                <div className="text-sm text-gray-400">{match.date} {match.time}</div>
-                              </div>
-
-                              <div className="flex gap-2 text-center text-xs">
-                                {["home", "draw", "away"].map(type => {
-                                  const id = `${match.teams}-${type}`;
-                                  const fractional = match.odds[type];
-                                  const decimal = fractionalToDecimal(fractional);
-                                  const isSelected = selections.includes(id);
-                                  return (
-                                    <div key={type} className="flex flex-col items-center">
-                                      <button
-                                        onClick={() => toggleSelection(id)}
-                                        className={`border px-3 py-1 rounded font-medium transition ${
-                                          isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
-                                        }`}
-                                      >
-                                        {fractional}
-                                      </button>
-                                      <span className="text-softText mt-1">
-                                        {type === "home" ? "Home" : type === "draw" ? "Draw" : "Away"}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+        {openLeagues[league.name] && (
+          <div className="grid gap-3 p-3 bg-[#0a1024]">
+            {league.matches.map((match, i) => {
+              return (
+                <div
+                  key={i}
+                  className="flex justify-between items-center border border-white rounded-lg p-3"
+                >
+                  <div className="flex-1">
+                    <div className="font-semibold text-white">{match.teams}</div>
+                    <div className="text-sm text-gray-400">
+                      {match.date} {match.time}
                     </div>
-                  ))}
+                  </div>
+
+                  <div className="flex gap-2 text-center text-xs">
+                    {["home", "draw", "away"].map((type) => {
+                      const id = `${match.teams}-${type}`;
+                      const fractional = match.odds[type];
+                      const decimal = fractionalToDecimal(fractional);
+                      const isSelected = selections.includes(id);
+                      return (
+                        <div key={type} className="flex flex-col items-center">
+                          <button
+                            onClick={() => toggleSelection(id)}
+                            type="button"
+                            className={`border px-3 py-1 rounded font-medium transition ${
+                              isSelected
+                                ? "bg-white text-cyan-700 border-white"
+                                : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                            }`}
+                          >
+                            {fractional}
+                          </button>
+                          <span className="text-softText mt-1">
+                            {type === "home"
+                              ? "Home"
+                              : type === "draw"
+                              ? "Draw"
+                              : "Away"}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              )}
+              );
+            })}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+)}
+
             </div>
           ))}
         </div>
