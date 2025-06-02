@@ -136,27 +136,34 @@ export default function InPlayPage() {
                 </svg>
               </summary>
 
-              <div className="px-4 py-4 space-y-4">
-                {matches.map(match => {
-                  const convertedOdds: Record<string, number> = {};
-                  for (const key in match.odds) {
-                    convertedOdds[key] = fractionalToDecimal(match.odds[key]);
-                  }
-                  return (
-                    <MatchCard
-                      key={match.id}
-                      match={{
-                        slug: `${match.match}-${match.timeElapsed}`,
-                        teams: match.match,
-                        time: `Live ${match.timeElapsed}'`,
-                        odds: convertedOdds,
-                      }}
-                      selections={selections}
-                      toggleSelection={toggleSelection}
-                    />
-                  );
-                })}
-              </div>
+             <div className="px-4 py-4 space-y-4">
+  {matches.map(match => {
+    // Define allowed keys explicitly
+    type OddsKey = "home" | "draw" | "away";
+    const convertedOdds: Partial<Record<OddsKey, number>> = {};
+
+    for (const key in match.odds) {
+      if (key === "home" || key === "draw" || key === "away") {
+        convertedOdds[key] = fractionalToDecimal(match.odds[key]);
+      }
+    }
+
+    return (
+      <MatchCard
+        key={match.id}
+        match={{
+          slug: `${match.match}-${match.timeElapsed}`,
+          teams: match.match,
+          time: `Live ${match.timeElapsed}'`,
+          odds: convertedOdds as Record<OddsKey, number>, // cast for MatchCard prop
+        }}
+        selections={selections}
+        toggleSelection={toggleSelection}
+      />
+    );
+  })}
+</div>
+
             </details>
           ))}
         </div>
