@@ -167,7 +167,8 @@ export default function Home() {
                             return (
                               <div key={type} className="flex flex-col items-center">
                                 <button
-                                  onClick={() => handleToggleFootball(betId, teams, price)}
+                               onClick={() => handleToggleFootball(betId, teams, String(price))}
+
                                   className={`px-3 py-1 rounded border ${selected ? "border-[#00ffd5] bg-white text-black" : "border-white bg-gray-900 text-white hover:bg-white hover:text-black"}`}
                                 >
                                   {price}
