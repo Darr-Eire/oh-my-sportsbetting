@@ -64,7 +64,7 @@ export default function AccaBuilderPage() {
 if (activeBetType === "Over/Under") {
   return (
     <div className="flex gap-2">
-      {["over", "under"].map((type) => {
+      {(["over", "under"] as const).map((type) => {
         const id = `${matchId}-ou-${type}`;
         const isSelected = selectedBets.includes(id);
         return (
