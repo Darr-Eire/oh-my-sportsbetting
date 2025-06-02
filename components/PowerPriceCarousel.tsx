@@ -1,64 +1,75 @@
 "use client";
-import { useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const powerPrices = [
-  {
-    match: "New York Knicks @ Indiana Pacers",
-    description: "Jalen Brunson & Haliburton to Score 25+ Each",
-    oldOdds: "11/4",
-    newOdds: "4/1",
-  },
-  {
-    match: "Manchester City vs Arsenal",
-    description: "Both Teams to Score & Over 2.5 Goals",
-    oldOdds: "2/1",
-    newOdds: "3/1",
-  },
-  {
-    match: "Real Madrid vs Barcelona",
-    description: "Bellingham to Score & Madrid to Win",
-    oldOdds: "3/1",
-    newOdds: "9/2",
-  },
-  {
-    match: "UFC 302 – Main Event",
-    description: "Jones to Win in Round 1 or 2",
-    oldOdds: "5/1",
-    newOdds: "7/1",
-  },
+import React from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { useBetSlip } from "../context/BetSlipContext";
+
+const promoOffers = [
+  { match: "Man City vs Arsenal", promo: "City Win + Haaland Goal", odds: "9/4" },
+  { match: "Liverpool vs Chelsea", promo: "Liverpool Win & BTTS", odds: "7/2" },
+  { match: "Real Madrid vs Barca", promo: "Bellingham Anytime", odds: "5/2" },
+  { match: "Bayern vs Dortmund", promo: "Bayern Win & Over 3.5", odds: "3/1" },
 ];
 
-export default function PowerPriceCarousel() {
-  const [index, setIndex] = useState(0);
+const responsive = {
+  desktop: { breakpoint: { max: 4000, min: 1024 }, items: 2 },
+  tablet: { breakpoint: { max: 1024, min: 640 }, items: 1 },
+  mobile: { breakpoint: { max: 640, min: 0 }, items: 1 },
+};
 
-  const next = () => setIndex(prev => (prev + 1) % powerPrices.length);
-  const prev = () => setIndex(prev => (prev - 1 + powerPrices.length) % powerPrices.length);
-  const p = powerPrices[index];
+
+export default function PromoCarousel() {
+  const { selections, addSelection, removeSelection } = useBetSlip();
+
+  const handleToggle = (promo: any) => {
+    const id = `${promo.match}-${promo.promo}`;
+    const exists = selections.find(sel => sel.id === id);
+
+    if (exists) {
+      removeSelection(id);
+    } else {
+      addSelection({
+        id: id,
+        event: promo.match,
+        type: promo.promo,
+        odds: promo.odds,
+      });
+    }
+  };
 
   return (
-   <section className="w-full max-w-3xl mx-auto mb-8">
-  <h2 className="text-white font-semibold text-lg mb-4 text-center">🔥 Power Prices</h2>
+    <section className="w-full max-w-3xl mx-auto mt-8 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+      <h2 className="text-lg font-bold text-white mb-4 text-center">🔥 Promo Power Prices</h2>
 
-  <div className="bg-[#0a1024] border border-gray-700 px-6 py-6 rounded-lg text-center relative shadow-lg">
-    <div className="font-semibold text-base text-white mb-1">{p.match}</div>
-    <div className="text-gray-400 text-sm mb-2">{p.description}</div>
-    <div className="flex justify-center items-center gap-4 mt-3">
-      <span className="text-white line-through text-base">{p.oldOdds}</span>
-      <span className="bg-electricCyan text-white px-5 py-1.5 rounded-full text-base font-bold shadow">
-        {p.newOdds}
-      </span>
-    </div>
+      <Carousel 
+        responsive={responsive} 
+        infinite 
+        arrows 
+        autoPlay 
+        autoPlaySpeed={7000} 
+        containerClass="carousel-container" 
+        itemClass="px-2"
+      >
+        {promoOffers.map((promo, idx) => {
+          const id = `${promo.match}-${promo.promo}`;
+          const isSelected = selections.some(sel => sel.id === id);
 
-    {/* Arrows */}
-    <div className="absolute top-1/2 left-4 -translate-y-1/2 cursor-pointer">
-      <FaArrowLeft onClick={prev} className="text-white text-xl opacity-60 hover:opacity-100 transition" />
-    </div>
-    <div className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer">
-      <FaArrowRight onClick={next} className="text-white text-xl opacity-60 hover:opacity-100 transition" />
-    </div>
-  </div>
-</section>
-
+          return (
+            <div
+              key={idx}
+              className={`bg-gradient-to-br from-[#1c2b4a] to-[#0b132b] border rounded-lg p-5 flex flex-col justify-center items-center text-center transition-shadow duration-300 cursor-pointer 
+              ${isSelected ? "border-[#00ffd5] shadow-neon" : "border-white hover:shadow-neon"}`}
+              onClick={() => handleToggle(promo)}
+            >
+              <div className="text-md font-bold text-white">{promo.match}</div>
+              <div className="text-sm italic text-blue-400 mt-1">{promo.promo}</div>
+              <div className="mt-3 text-white text-lg font-bold">{promo.odds}</div>
+              {isSelected && <div className="mt-1 text-green-400 text-xs font-bold">Added to Bet Slip</div>}
+            </div>
+          );
+        })}
+      </Carousel>
+    </section>
   );
 }

@@ -4,7 +4,6 @@ import {
   MdSportsSoccer,
   MdAccessTime,
   MdOutlineCasino,
-
   MdOutlineSportsBasketball,
   MdOutlineSportsMma,
   MdSportsEsports,
@@ -17,18 +16,17 @@ const sports = [
   { name: "Football", icon: MdSportsSoccer, slug: "football" },
   { name: "Horse Racing", icon: FaHorse, slug: "horse-racing" },
   { name: "In-Play", icon: MdAccessTime, slug: "in-play" },
- 
   { name: "Greyhound Racing", icon: FaDog, slug: "greyhound-racing" },
-  
   { name: "Basketball", icon: MdOutlineSportsBasketball, slug: "basketball" },
   { name: "UFC", icon: MdOutlineSportsMma, slug: "ufc" },
   { name: "eSports", icon: MdSportsEsports, slug: "esports" },
   { name: "A–Z", icon: MdOutlineListAlt, slug: "all-sports" },
 ];
+
 export default function SportsCarousel() {
   return (
-    <div className="w-full max-w-6xl mx-auto px-4">
-      <nav className="flex overflow-x-auto gap-3 py-2 scrollbar-hide">
+    <div className="w-full flex justify-center">
+      <nav className="flex flex-wrap justify-center gap-4 py-4">
         {sports.map(({ name, icon: Icon, slug }) => (
           <Link
             key={slug}

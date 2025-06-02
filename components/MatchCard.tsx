@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useBetSlip } from "../context/BetSlipContext";
 
-// Define missing types
+// Types
 type OddsKey = "home" | "away" | "draw";
 
 type SelectionType = {
@@ -22,27 +22,43 @@ type Match = {
 
 type MatchCardProps = {
   match: Match;
-  selections: SelectionType[];
-  toggleSelection: (id: string, event: string, type: string, odds: number) => void;
 };
 
-// Corrected props usage
-export default function MatchCard({ match }: { match: Match }) {
-  const { slug, teams, time, odds } = match;
-  const { addSelection, selections } = useBetSlip();
+// Decimal to fractional converter
+function decimalToFraction(decimal: number): string {
+  if (!decimal || decimal <= 1) return "1/1";
 
-  const handleAdd = (type: string, oddsValue: number) => {
+  const numerator = Math.round((decimal - 1) * 100);
+  const denominator = 100;
+
+  const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
+  const divisor = gcd(numerator, denominator);
+
+  return `${numerator / divisor}/${denominator / divisor}`;
+}
+
+export default function MatchCard({ match }: MatchCardProps) {
+  const { slug, teams, time, odds } = match;
+  const { addSelection, removeSelection, selections } = useBetSlip();
+
+  const toggleSelection = (type: string, oddsValue: number) => {
     const id = `${slug}-${type.toLowerCase()}`;
-    addSelection({
-      id,
-      event: teams,
-      type,
-      odds: oddsValue,
-    });
+    const exists = selections.some(sel => sel.id === id);
+
+    if (exists) {
+      removeSelection(id);
+    } else {
+      addSelection({
+        id,
+        event: teams,
+        type,
+        odds: oddsValue,
+      });
+    }
   };
 
   const isSelected = (type: string) =>
-    selections.some((sel) => sel.id === `${slug}-${type.toLowerCase()}`);
+    selections.some(sel => sel.id === `${slug}-${type.toLowerCase()}`);
 
   return (
     <div className="cursor-pointer bg-deepCard p-3 rounded-lg border border-white hover:scale-[1.01] transition-transform duration-150">
@@ -59,19 +75,19 @@ export default function MatchCard({ match }: { match: Match }) {
             <OddsButton
               label="Home"
               odds={odds.home}
-              onClick={() => handleAdd("Home", odds.home)}
+              onClick={() => toggleSelection("Home", odds.home)}
               isSelected={isSelected("Home")}
             />
             <OddsButton
               label="Draw"
               odds={odds.draw}
-              onClick={() => handleAdd("Draw", odds.draw)}
+              onClick={() => toggleSelection("Draw", odds.draw)}
               isSelected={isSelected("Draw")}
             />
             <OddsButton
               label="Away"
               odds={odds.away}
-              onClick={() => handleAdd("Away", odds.away)}
+              onClick={() => toggleSelection("Away", odds.away)}
               isSelected={isSelected("Away")}
             />
           </div>
@@ -81,20 +97,6 @@ export default function MatchCard({ match }: { match: Match }) {
       </div>
     </div>
   );
-}
-
-// Utility function: decimal to fractional conversion
-function decimalToFraction(decimal: number): string {
-  if (!decimal || decimal <= 1) return "1/1";
-
-  const numerator = Math.round((decimal - 1) * 100);
-  const denominator = 100;
-
-  const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
-
-  const divisor = gcd(numerator, denominator);
-
-  return `${numerator / divisor}/${denominator / divisor}`;
 }
 
 type OddsButtonProps = {

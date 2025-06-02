@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { liveGames } from "../data/liveGames";
+import { useBetSlip } from "../context/BetSlipContext";
 
 type OddsType = {
   home: string;
@@ -35,6 +36,14 @@ const sportEmojis: Record<string, string> = {
   Volleyball: "🏐",
 };
 
+const fractionToDecimal = (fraction: string): number => {
+  if (fraction.includes("/")) {
+    const [num, denom] = fraction.split("/").map(Number);
+    return num / denom + 1;
+  }
+  return parseFloat(fraction);
+};
+
 // Group the games by sport
 const grouped = liveGames.reduce((acc: Record<string, Game[]>, game: Game) => {
   if (!acc[game.sport]) acc[game.sport] = [];
@@ -47,11 +56,27 @@ export default function LiveGamesFeed() {
     Object.fromEntries(Object.keys(grouped).map((sport) => [sport, false]))
   );
 
+  const { selections, addSelection, removeSelection } = useBetSlip();
+
   const toggleSection = (sport: string) => {
     setOpenSections((prev) => ({
       ...prev,
       [sport]: !prev[sport],
     }));
+  };
+
+  const handleToggleBet = (id: string, event: string, type: string, odds: string) => {
+    const exists = selections.find(sel => sel.id === id);
+    if (exists) {
+      removeSelection(id);
+    } else {
+      addSelection({
+        id,
+        event,
+        type,
+        odds: fractionToDecimal(odds)
+      });
+    }
   };
 
   return (
@@ -63,8 +88,6 @@ export default function LiveGamesFeed() {
           <button
             onClick={() => toggleSection(sport)}
             className="flex items-center gap-3 w-full px-4 py-2 text-left text-white font-semibold hover:bg-[#14215c] transition rounded-t-lg"
-            aria-expanded={openSections[sport]}
-            aria-controls={`live-${sport}`}
           >
             <span className="flex items-center gap-2">
               <span>{sportEmojis[sport] || "🎮"} {sport}</span>
@@ -72,38 +95,32 @@ export default function LiveGamesFeed() {
           </button>
 
           {openSections[sport] && (
-            <div
-              id={`live-${sport}`}
-              className="px-4 pb-4 space-y-4 border-t border-gray-700 rounded-b-lg bg-[#0a1024]"
-            >
+            <div className="px-4 pb-4 space-y-4 border-t border-gray-700 rounded-b-lg bg-[#0a1024]">
               {games.map((game, idx) => (
-                <div key={idx}>
-                  <div className="flex flex-col bg-[#12182f] p-3 rounded-lg border border-white hover:shadow-neon transition-shadow duration-300">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <div className="text-sm font-semibold text-white">{game.match}</div>
-                        <div className="text-xs text-gray-400">Time: {game.time}&apos;</div>
-                      </div>
-                      <div className="flex gap-3 text-sm font-medium text-center">
-                        <div className="flex flex-col items-center">
-                          <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-                            {game.odds?.home ?? "—"}
+                <div key={idx} className="flex flex-col bg-[#12182f] p-3 rounded-lg border border-white">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="text-sm font-semibold text-white">{game.match}</div>
+                      <div className="text-xs text-gray-400">Time: {game.time}&apos;</div>
+                    </div>
+                    <div className="flex gap-3 text-sm font-medium text-center">
+                      {(["home", "draw", "away"] as const).map(type => {
+                        const price = game.odds?.[type] ?? "—";
+                        const id = `${game.match}-${type}`;
+                        const selected = selections.some(sel => sel.id === id);
+                        return (
+                          <div key={type} className="flex flex-col items-center">
+                            <button
+                              onClick={() => handleToggleBet(id, game.match, type, price)}
+                              className={`px-3 py-1 rounded border ${selected ? "border-[#00ffd5] bg-white text-black" : "border-white bg-gray-900 text-white hover:bg-white hover:text-black"}`}
+                              disabled={price === "—"}
+                            >
+                              {price}
+                            </button>
+                            <span className="text-xs mt-1">{type === "draw" ? "Draw" : type.charAt(0).toUpperCase() + type.slice(1)}</span>
                           </div>
-                          <span className="text-xs text-softText mt-1">Home</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-                            {game.odds?.draw ?? "—"}
-                          </div>
-                          <span className="text-xs text-softText mt-1">Draw</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <div className="bg-gray-900 rounded px-3 py-1 text-white border border-white">
-                            {game.odds?.away ?? "—"}
-                          </div>
-                          <span className="text-xs text-softText mt-1">Away</span>
-                        </div>
-                      </div>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -120,7 +137,7 @@ export default function LiveGamesFeed() {
       ))}
 
       <div className="mt-6 flex justify-center">
-        <button className="text-sm px-6 py-2 border border-cyan-400 text-cyan-400 rounded-full hover:bg-cyan-400 hover:text-black transition">
+        <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
           View All In-Play Markets
         </button>
       </div>
