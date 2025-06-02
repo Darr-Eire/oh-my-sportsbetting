@@ -8,6 +8,9 @@ import Link from "next/link";
 import Image from "next/image";
 import MatchCard from "../../components/MatchCard";
 
+// Type for odds conversion
+type OddsKey = "home" | "away" | "draw";
+
 // Fractional odds converter
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
@@ -20,7 +23,7 @@ const liveGames: Record<string, {
   match: string;
   countryCode: string;
   timeElapsed: number;
-  odds: Partial<Record<"home" | "away" | "draw", string>>;
+  odds: Partial<Record<OddsKey, string>>;
 }[]> = {
   Football: [
     { id: 1, match: "Man City vs Arsenal", countryCode: "gb", timeElapsed: 37, odds: { home: "4/5", draw: "21/10", away: "7/2" } },
@@ -41,7 +44,7 @@ export default function InPlayPage() {
   const sportsList = ["All", ...Object.keys(liveGames)];
   const [activeSport, setActiveSport] = useState<string>("All");
 
-  // All games flattened for All tab
+  // Flattened games for "All" tab
   const allGames = Object.entries(liveGames).flatMap(([sport, matches]) =>
     matches.map(match => ({ ...match, sport }))
   );
@@ -50,15 +53,13 @@ export default function InPlayPage() {
     ? allGames
     : liveGames[activeSport]?.map(match => ({ ...match, sport: activeSport })) ?? [];
 
-  // Grouped games by sport for dropdowns
+  // Grouped display for dropdowns
   const groupedDisplay = activeSport === "All"
-    ? Object.entries(
-        allGames.reduce((acc, game) => {
-          acc[game.sport] = acc[game.sport] || [];
-          acc[game.sport].push(game);
-          return acc;
-        }, {} as Record<string, typeof allGames>)
-      )
+    ? Object.entries(allGames.reduce<Record<string, typeof allGames>>((acc, game) => {
+        if (!acc[game.sport]) acc[game.sport] = [];
+        acc[game.sport].push(game);
+        return acc;
+      }, {}))
     : [[activeSport, displayGames]];
 
   return (
@@ -110,37 +111,37 @@ export default function InPlayPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </summary>
-<div className="p-4 space-y-4">
-  {matches.map((match) => {
-    const convertedOdds = {
-      home: match.odds.home ? fractionalToDecimal(match.odds.home) : 0,
-      away: match.odds.away ? fractionalToDecimal(match.odds.away) : 0,
-      draw: match.odds.draw ? fractionalToDecimal(match.odds.draw) : 0,
-    };
 
-    return (
-      <div key={`${sport}-${match.id}`} className="border border-white rounded-lg p-4 bg-[#0a1024]">
-        <div className="flex justify-between items-center mb-3">
-          <div className="font-semibold text-white">{match.match}</div>
-          <div className="flex items-center gap-2">
-            <span className="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded">LIVE</span>
-            <span className="text-xs text-softText">{match.timeElapsed}'</span>
-          </div>
-        </div>
+              <div className="p-4 space-y-4">
+                {matches.map((match) => {
+                  const convertedOdds = {
+                    home: match.odds.home ? fractionalToDecimal(match.odds.home) : 0,
+                    away: match.odds.away ? fractionalToDecimal(match.odds.away) : 0,
+                    draw: match.odds.draw ? fractionalToDecimal(match.odds.draw) : 0,
+                  };
 
-        <MatchCard
-          match={{
-            slug: `${match.match}-${match.timeElapsed}`,
-            teams: match.match,
-            time: `Live ${match.timeElapsed}'`,
-            odds: convertedOdds,
-          }}
-        />
-      </div>
-    );
-  })}
-</div>
+                  return (
+                    <div key={`${sport}-${match.id}`} className="border border-white rounded-lg p-4 bg-[#0a1024]">
+                      <div className="flex justify-between items-center mb-3">
+                        <div className="font-semibold text-white">{match.match}</div>
+                        <div className="flex items-center gap-2">
+                          <span className="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded">LIVE</span>
+                          <span className="text-xs text-softText">{match.timeElapsed}&apos;</span>
+                        </div>
+                      </div>
 
+                      <MatchCard
+                        match={{
+                          slug: `${match.match}-${match.timeElapsed}`,
+                          teams: match.match,
+                          time: `Live ${match.timeElapsed}'`,
+                          odds: convertedOdds,
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </details>
           ))}
         </div>

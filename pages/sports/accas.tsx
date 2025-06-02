@@ -10,6 +10,14 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { accaMatches } from "../../data/acca-data";
 
+// Odds type safety
+type OddsType = {
+  winDrawWin: Record<"home" | "draw" | "away", string>;
+  btts: Record<"yes" | "no", string>;
+  overUnder: Record<"over" | "under", string>;
+  correctScore: Record<string, string>;
+};
+
 // Fractional Odds Converter
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
@@ -29,11 +37,11 @@ export default function AccaBuilderPage() {
     );
   };
 
-  const renderOddsButtons = (odds: any, matchId: string) => {
+  const renderOddsButtons = (odds: OddsType, matchId: string) => {
     if (activeBetType === "Win-Draw-Win") {
       return (
         <div className="flex gap-2">
-          {["home", "draw", "away"].map((type) => {
+          {(["home", "draw", "away"] as const).map((type) => {
             const id = `${matchId}-${type}`;
             const isSelected = selectedBets.includes(id);
             return (
@@ -41,9 +49,7 @@ export default function AccaBuilderPage() {
                 key={type}
                 onClick={() => toggleSelection(id)}
                 className={`border px-3 py-2 rounded font-semibold transition ${
-                  isSelected
-                    ? "bg-white text-cyan-700 border-white"
-                    : "border-white text-white hover:bg-white hover:text-black"
+                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
                 }`}
               >
                 {odds.winDrawWin[type]}
@@ -58,7 +64,7 @@ export default function AccaBuilderPage() {
     if (activeBetType === "BTTS") {
       return (
         <div className="flex gap-2">
-          {["yes", "no"].map((type) => {
+          {(["yes", "no"] as const).map((type) => {
             const id = `${matchId}-btts-${type}`;
             const isSelected = selectedBets.includes(id);
             return (
@@ -66,9 +72,7 @@ export default function AccaBuilderPage() {
                 key={type}
                 onClick={() => toggleSelection(id)}
                 className={`border px-4 py-2 rounded font-semibold transition ${
-                  isSelected
-                    ? "bg-white text-cyan-700 border-white"
-                    : "border-white text-white hover:bg-white hover:text-black"
+                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
                 }`}
               >
                 {odds.btts[type]}
@@ -83,7 +87,7 @@ export default function AccaBuilderPage() {
     if (activeBetType === "Over/Under") {
       return (
         <div className="flex gap-2">
-          {["over", "under"].map((type) => {
+          {(["over", "under"] as const).map((type) => {
             const id = `${matchId}-ou-${type}`;
             const isSelected = selectedBets.includes(id);
             return (
@@ -91,9 +95,7 @@ export default function AccaBuilderPage() {
                 key={type}
                 onClick={() => toggleSelection(id)}
                 className={`border px-4 py-2 rounded font-semibold transition ${
-                  isSelected
-                    ? "bg-white text-cyan-700 border-white"
-                    : "border-white text-white hover:bg-white hover:text-black"
+                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
                 }`}
               >
                 {odds.overUnder[type]}
@@ -116,9 +118,7 @@ export default function AccaBuilderPage() {
                 key={score}
                 onClick={() => toggleSelection(id)}
                 className={`border px-3 py-2 rounded font-semibold transition ${
-                  isSelected
-                    ? "bg-white text-cyan-700 border-white"
-                    : "border-white text-white hover:bg-white hover:text-black"
+                  isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white hover:bg-white hover:text-black"
                 }`}
               >
                 {price}
@@ -156,9 +156,7 @@ export default function AccaBuilderPage() {
               key={tab}
               onClick={() => setActiveBetType(tab)}
               className={`px-4 py-2 rounded-full border text-sm font-semibold transition ${
-                activeBetType === tab
-                  ? "bg-white text-black border-white shadow"
-                  : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
+                activeBetType === tab ? "bg-white text-black border-white shadow" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-black"
               }`}
             >
               {tab}
@@ -182,10 +180,7 @@ export default function AccaBuilderPage() {
 
               <div className="space-y-4 px-4 py-3">
                 {matches.map((match) => (
-                  <div
-                    key={match.id}
-                    className="flex justify-between items-center border border-white rounded-lg p-4 bg-[#10182f]"
-                  >
+                  <div key={match.id} className="flex justify-between items-center border border-white rounded-lg p-4 bg-[#10182f]">
                     <div className="flex items-center gap-4">
                       <Image src={match.logo} alt="logo" width={40} height={40} />
                       <div>
