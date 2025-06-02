@@ -17,7 +17,7 @@ import { useBetSlip } from "../context/BetSlipContext";
 import PromotionsBanner from "../components/PromotionsBanner";
 import { greyhoundRaces } from "../data/greyhoundRaces";
 import HorseRacingSection from "@/components/HorseRacingSection";
-import GreyhoundRacingSection from "@/components/GreyhoundRacingSection";
+import GreyhoundRacingSection from "@/components/GreyHoundRacingSection";
 
 import premierLeague from "../data/leagues/premier_league.json";
 import laLiga from "../data/leagues/la_liga.json";
