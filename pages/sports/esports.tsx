@@ -52,6 +52,18 @@ const esportsMatches = {
   "Overwatch League": [],
   "Call of Duty League": []
 };
+const tournaments = [
+  "CS:GO Major",
+  "Valorant Champions Tour",
+  "League of Legends Worlds",
+  "Dota 2 The International",
+  "Rainbow Six Major",
+  "FIFA eWorld Cup",
+  "eFootball Pro",
+  "Rocket League Championships",
+  "Overwatch League",
+  "Call of Duty League"
+];
 
 const logoMap = {
   "CS:GO Major": "/logos/esports/csgo.png",
