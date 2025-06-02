@@ -1,5 +1,4 @@
-"use client";
-
+// imports
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,19 +15,27 @@ import Footer from "../components/Footer";
 import { horseRaces } from "../data/horseRaces";
 import { useBetSlip } from "../context/BetSlipContext";
 
-// League data imports
+// league data imports
 import premierLeague from "../data/leagues/premier_league.json";
 import laLiga from "../data/leagues/la_liga.json";
 import bundesliga from "../data/leagues/bundesliga.json";
 import serieA from "../data/leagues/serie_a.json";
 import ligue1 from "../data/leagues/ligue_1.json";
+
+// ✅ DROP THIS TYPE RIGHT HERE, OUTSIDE OF EVERYTHING
 type Accumulator = {
   id: string;
   event: string;
   type: string;
   odds: number;
 };
+
+// ✅ Then your actual component code starts below this
+
 const todayMatches = [
+  // your matches...
+
+
   {
     league: "Premier League",
     countryCode: "gb",
