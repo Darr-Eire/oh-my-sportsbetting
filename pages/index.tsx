@@ -1,4 +1,5 @@
-// imports
+"use client";
+
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
@@ -15,14 +16,20 @@ import Footer from "../components/Footer";
 import { horseRaces } from "../data/horseRaces";
 import { useBetSlip } from "../context/BetSlipContext";
 
-// league data imports
 import premierLeague from "../data/leagues/premier_league.json";
 import laLiga from "../data/leagues/la_liga.json";
 import bundesliga from "../data/leagues/bundesliga.json";
 import serieA from "../data/leagues/serie_a.json";
 import ligue1 from "../data/leagues/ligue_1.json";
 
+// ✅ Types declared right here — correct placement
 type Accumulator = {
+  id: string;
+  teams: string;
+  odds: string;
+};
+
+type MatchSelection = {
   id: string;
   event: string;
   type: string;
@@ -30,36 +37,11 @@ type Accumulator = {
 };
 
 const todayMatches = [
-  {
-    league: "Premier League",
-    countryCode: "gb",
-    leagueLogo: "/logos/premier_league.png",
-    matches: premierLeague
-  },
-  {
-    league: "La Liga",
-    countryCode: "es",
-    leagueLogo: "/logos/la_liga.png",
-    matches: laLiga
-  },
-  {
-    league: "Bundesliga",
-    countryCode: "de",
-    leagueLogo: "/logos/bundesliga.png",
-    matches: bundesliga
-  },
-  {
-    league: "Serie A",
-    countryCode: "it",
-    leagueLogo: "/logos/serie_a.png",
-    matches: serieA
-  },
-  {
-    league: "Ligue 1",
-    countryCode: "fr",
-    leagueLogo: "/logos/ligue_1.png",
-    matches: ligue1
-  }
+  { league: "Premier League", countryCode: "gb", leagueLogo: "/logos/premier_league.png", matches: premierLeague },
+  { league: "La Liga", countryCode: "es", leagueLogo: "/logos/la_liga.png", matches: laLiga },
+  { league: "Bundesliga", countryCode: "de", leagueLogo: "/logos/bundesliga.png", matches: bundesliga },
+  { league: "Serie A", countryCode: "it", leagueLogo: "/logos/serie_a.png", matches: serieA },
+  { league: "Ligue 1", countryCode: "fr", leagueLogo: "/logos/ligue_1.png", matches: ligue1 }
 ];
 
 export default function Home() {
@@ -73,49 +55,40 @@ export default function Home() {
 
   const toggleHorseRacing = () => setOpenHorseRacing(prev => !prev);
 
-  const accumulators = [
+  const accumulators: Accumulator[] = [
     { id: "acc1", teams: "Man City & Liverpool & Chelsea", odds: "6/1" },
     { id: "acc2", teams: "PSG & Barcelona & Real Madrid", odds: "15/2" },
     { id: "acc3", teams: "Bayern & Juventus & AC Milan", odds: "4/1" },
   ];
 
+  const handleToggleAccumulator = (acc: Accumulator) => {
+    const exists = selections.find(sel => sel.id === acc.id);
+    if (exists) {
+      removeSelection(acc.id);
+    } else {
+      addSelection({
+        id: acc.id,
+        event: acc.teams,
+        type: "Accumulator",
+        odds: fractionToDecimal(acc.odds),
+      });
+    }
+  };
 
-
-  const exists = selections.find(sel => sel.id === acc.id);
-  if (exists) {
-    removeSelection(acc.id);
-  } else {
-    addSelection({
-      id: acc.id,
-      event: acc.teams,
-      type: "Accumulator",
-      odds: fractionToDecimal(acc.odds),
-    });
-  }
-};
-
-type MatchSelection = {
-  id: string;
-  event: string;
-  type: "Match Odds";
-  odds: number;
-};
-
-const handleToggleFootball = (matchId: string, team: string, odds: string) => {
-  const exists = selections.find((sel) => sel.id === matchId);
-  if (exists) {
-    removeSelection(matchId);
-  } else {
-    const decimalOdds = fractionToDecimal(odds);
-    addSelection({
-      id: matchId,
-      event: team,
-      type: "Match Odds",
-      odds: decimalOdds,
-    });
-  }
-};
-
+  const handleToggleFootball = (matchId: string, team: string, odds: string) => {
+    const exists = selections.find((sel) => sel.id === matchId);
+    if (exists) {
+      removeSelection(matchId);
+    } else {
+      const decimalOdds = fractionToDecimal(odds);
+      addSelection({
+        id: matchId,
+        event: team,
+        type: "Match Odds",
+        odds: decimalOdds,
+      });
+    }
+  };
 
   const handleToggleHorse = (id: string, horseName: string, odds: string) => {
     const exists = selections.find(sel => sel.id === id);
@@ -130,7 +103,6 @@ const handleToggleFootball = (matchId: string, team: string, odds: string) => {
       });
     }
   };
-
   return (
     <>
       <Head><title>Oh My Sportsbets</title></Head>
@@ -143,7 +115,8 @@ const handleToggleFootball = (matchId: string, team: string, odds: string) => {
           <PromoCarousel />
           <SportsCarousel />
           <PowerPriceCarousel />
-  {/* Accumulators */}
+
+          {/* Accumulators */}
           <section className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
             <h2 className="text-lg font-bold text-white mb-4">Popular Accumulators</h2>
             <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1} adaptiveHeight className="text-center mx-auto max-w-md">
@@ -162,179 +135,160 @@ const handleToggleFootball = (matchId: string, team: string, odds: string) => {
               })}
             </Slider>
           </section>
-         {/* Today’s Football Matches */}
-<section className="w-full max-w-3xl space-y-4">
-  <h2 className="text-lg font-bold mb-3">Today’s Football Matches</h2>
-  {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
-    <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
-      <button onClick={() => toggleLeague(league)} className="flex items-center gap-3 w-full px-4 py-2 text-left font-semibold hover:bg-[#14215c] transition rounded-t-lg">
-        <Image src={leagueLogo} alt={`${league} logo`} width={32} height={32} unoptimized />
-        <span className="flex items-center gap-2">{league}
-          <Image src={`https://flagcdn.com/w20/${countryCode}.png`} alt="flag" width={20} height={14} className="rounded-sm" unoptimized />
-        </span>
-        <svg className={`ml-auto h-5 w-5 transition-transform ${openLeague === league ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
 
-      {openLeague === league && (
-        <div className="px-4 pb-4 pt-2 space-y-3 border-t border-gray-700 rounded-b-lg">
-          {matches.map(({ teams, time, odds }, idx) => (
-            <div key={idx} className="flex justify-between items-center bg-[#12182f] p-3 rounded-lg border border-white">
-              <div>
-                <div className="text-sm font-semibold">{teams}</div>
-                <div className="text-xs text-gray-400">Kickoff: {time}</div>
+          {/* Today’s Football Matches */}
+          <section className="w-full max-w-3xl space-y-4">
+            <h2 className="text-lg font-bold mb-3">Today’s Football Matches</h2>
+            {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
+              <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
+                <button onClick={() => toggleLeague(league)} className="flex items-center gap-3 w-full px-4 py-2 text-left font-semibold hover:bg-[#14215c] transition rounded-t-lg">
+                  <Image src={leagueLogo} alt={`${league} logo`} width={32} height={32} unoptimized />
+                  <span className="flex items-center gap-2">{league}
+                    <Image src={`https://flagcdn.com/w20/${countryCode}.png`} alt="flag" width={20} height={14} className="rounded-sm" unoptimized />
+                  </span>
+                  <svg className={`ml-auto h-5 w-5 transition-transform ${openLeague === league ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {openLeague === league && (
+                  <div className="px-4 pb-4 pt-2 space-y-3 border-t border-gray-700 rounded-b-lg">
+                    {matches.map(({ teams, time, odds }, idx) => (
+                      <div key={idx} className="flex justify-between items-center bg-[#12182f] p-3 rounded-lg border border-white">
+                        <div>
+                          <div className="text-sm font-semibold">{teams}</div>
+                          <div className="text-xs text-gray-400">Kickoff: {time}</div>
+                        </div>
+                        <div className="flex gap-3 text-sm text-center">
+                          {(["home", "draw", "away"] as const).map(type => {
+                            const price = odds[type] || "—";
+                            const betId = `${teams}-${type}`;
+                            const selected = selections.some(sel => sel.id === betId);
+                            return (
+                              <div key={type} className="flex flex-col items-center">
+                                <button
+                                  onClick={() => handleToggleFootball(betId, teams, price)}
+                                  className={`px-3 py-1 rounded border ${selected ? "border-[#00ffd5] bg-white text-black" : "border-white bg-gray-900 text-white hover:bg-white hover:text-black"}`}
+                                >
+                                  {price}
+                                </button>
+                                <span className="text-xs mt-1">{type === "draw" ? "Draw" : type.charAt(0).toUpperCase() + type.slice(1)}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              <div className="flex gap-3 text-sm text-center">
-                {(["home", "draw", "away"] as const).map(type => {
-                  const price = odds[type] || "—";
-                  const betId = `${teams}-${type}`;
-                  const selected = selections.some(sel => sel.id === betId);
-                  return (
-                    <div key={type} className="flex flex-col items-center">
-                      <button
-                        onClick={() => handleToggleFootball(betId, teams, price)}
-                        className={`px-3 py-1 rounded border ${selected ? "border-[#00ffd5] bg-white text-black" : "border-white bg-gray-900 text-white hover:bg-white hover:text-black"}`}
-                      >
-                        {price}
-                      </button>
-                      <span className="text-xs mt-1">{type === "draw" ? "Draw" : type.charAt(0).toUpperCase() + type.slice(1)}</span>
-                    </div>
-                  );
-                })}
-              </div>
+            ))}
+            <div className="mt-6 flex justify-center">
+              <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
+                View More Football Matches
+              </button>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-  ))}
-
-  {/* ✅ View More Button */}
-  <div className="mt-6 flex justify-center">
-    <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
-      View More Football Matches
-    </button>
-  </div>
-</section>
-
+          </section>
 
           <BetBuilderCarousel />
           <LiveGamesFeed />
+          {/* Popular Horse Racing Bets */}
+          <section className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+            <h2 className="text-lg font-bold text-white mb-4">Popular Horse Racing Bets</h2>
+            <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1} adaptiveHeight className="text-center mx-auto max-w-md">
+              {[
+                { id: "horse1", race: "Cheltenham 3:15", horse: "Mighty Thunder", odds: "7/2" },
+                { id: "horse2", race: "Aintree 4:00", horse: "Red Rum Jr", odds: "5/1" },
+                { id: "horse3", race: "Ascot 2:45", horse: "Royal Glory", odds: "9/4" }
+              ].map((bet, idx) => {
+                const isSelected = selections.some(sel => sel.id === bet.id);
+                return (
+                  <div key={idx}
+                    className={`p-6 rounded-lg border ${isSelected ? "border-[#00ffd5] shadow-neon" : "border-gray-700"} bg-gradient-to-tr from-[#1c2b4a] to-[#0b132b] cursor-pointer`}
+                    onClick={() => handleToggleHorse(bet.id, bet.horse, bet.odds)}
+                  >
+                    <div className="text-lg font-semibold">{bet.horse}</div>
+                    <div className="text-sm text-gray-400 mt-1">{bet.race}</div>
+                    <div className="mt-3 text-lg font-bold">{bet.odds}</div>
+                    {isSelected && <div className="mt-2 text-green-400 font-bold text-xs">Added to Bet Slip</div>}
+                  </div>
+                );
+              })}
+            </Slider>
+          </section>
 
-         
-{/* Popular Horse Racing Bets */}
-<section className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
-  <h2 className="text-lg font-bold text-white mb-4">Popular Horse Racing Bets</h2>
-  <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1} adaptiveHeight className="text-center mx-auto max-w-md">
-    {[
-      { id: "horse1", race: "Cheltenham 3:15", horse: "Mighty Thunder", odds: "7/2" },
-      { id: "horse2", race: "Aintree 4:00", horse: "Red Rum Jr", odds: "5/1" },
-      { id: "horse3", race: "Ascot 2:45", horse: "Royal Glory", odds: "9/4" }
-    ].map((bet, idx) => {
-      const isSelected = selections.some(sel => sel.id === bet.id);
-      return (
-        <div key={idx}
-          className={`p-6 rounded-lg border ${isSelected ? "border-[#00ffd5] shadow-neon" : "border-gray-700"} bg-gradient-to-tr from-[#1c2b4a] to-[#0b132b] cursor-pointer`}
-          onClick={() => {
-            const exists = selections.find(sel => sel.id === bet.id);
-            if (exists) {
-              removeSelection(bet.id);
-            } else {
-              addSelection({
-                id: bet.id,
-                event: `${bet.horse} - ${bet.race}`,
-                type: "Horse Racing",
-                odds: fractionToDecimal(bet.odds),
-              });
-            }
-          }}
-        >
-          <div className="text-lg font-semibold">{bet.horse}</div>
-          <div className="text-sm text-gray-400 mt-1">{bet.race}</div>
-          <div className="mt-3 text-lg font-bold">{bet.odds}</div>
-          {isSelected && <div className="mt-2 text-green-400 font-bold text-xs">Added to Bet Slip</div>}
-        </div>
-      );
-    })}
-  </Slider>
-</section>
+          {/* Horse Racing Full Course View */}
+          <section className="w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg mt-10">
+            <button onClick={toggleHorseRacing} className="flex items-center gap-3 w-full px-4 py-3 text-left font-semibold hover:bg-[#14215c] transition rounded-t-lg">
+              <span>Horse Racing Courses</span>
+              <svg className={`ml-auto h-5 w-5 transition-transform ${openHorseRacing ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
+            {openHorseRacing && (
+              <div className="p-4 space-y-6 border-t border-gray-700">
+                {Object.entries(
+                  horseRaces.reduce((acc: Record<string, typeof horseRaces>, race) => {
+                    if (!acc[race.track]) acc[race.track] = [];
+                    acc[race.track].push(race);
+                    return acc;
+                  }, {})
+                ).map(([track, races], i) => (
+                  <details key={i} className="border border-gray-700 rounded-lg bg-[#0a1024]">
+                    <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold hover:bg-[#14215c] transition">
+                      <span>{track}</span>
+                      <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </summary>
 
-       {/* Horse Racing Section */}
-<section className="w-full max-w-3xl border border-gray-700 bg-[#0a1024] rounded-lg mt-10">
-  <button onClick={toggleHorseRacing} className="flex items-center gap-3 w-full px-4 py-3 text-left font-semibold hover:bg-[#14215c] transition rounded-t-lg">
-    <span>Horse Racing Courses</span>
-    <svg className={`ml-auto h-5 w-5 transition-transform ${openHorseRacing ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
+                    <div className="space-y-6 px-4 py-4">
+                      {races.map(({ raceTime, raceName, runners }, j) => (
+                        <div key={j} className="border border-gray-700 rounded-lg bg-[#0a1024] p-4 space-y-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-white font-bold text-base">{raceName}</h3>
+                            <span className="text-sm text-white font-medium">{raceTime}</span>
+                          </div>
 
-  {openHorseRacing && (
-    <div className="p-4 space-y-6 border-t border-gray-700">
-      {Object.entries(
-        horseRaces.reduce((acc: Record<string, typeof horseRaces>, race) => {
-          if (!acc[race.track]) acc[race.track] = [];
-          acc[race.track].push(race);
-          return acc;
-        }, {})
-      ).map(([track, races], i) => (
-        <details key={i} className="border border-gray-700 rounded-lg bg-[#0a1024]">
-          <summary className="cursor-pointer px-4 py-3 flex justify-between items-center font-semibold hover:bg-[#14215c] transition">
-            <span>{track}</span>
-            <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
+                          <div className="divide-y divide-gray-700">
+                            {runners.map(({ number, name, jockey, trainer, form, odds }, idx) => (
+                              <div key={idx} className="flex items-center py-3 text-sm">
+                                <div className="flex items-center gap-3 w-10 font-bold text-white">
+                                  <span>{number}</span>
+                                  <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-white font-semibold">{number}</div>
+                                </div>
 
-          <div className="space-y-6 px-4 py-4">
-            {races.map(({ raceTime, raceName, runners }, j) => (
-              <div key={j} className="border border-gray-700 rounded-lg bg-[#0a1024] p-4 space-y-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-white font-bold text-base">{raceName}</h3>
-                  <span className="text-sm text-white font-medium">{raceTime}</span>
-                </div>
+                                <div className="flex flex-col flex-grow ml-2 text-left">
+                                  <span className="font-semibold text-white">{name}</span>
+                                  <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
+                                    <span>J: {jockey}</span>
+                                    <span>T: {trainer}</span>
+                                    <span>F: {form}</span>
+                                  </div>
+                                </div>
 
-                <div className="divide-y divide-gray-700">
-                  {runners.map(({ number, name, jockey, trainer, form, odds }, idx) => (
-                    <div key={idx} className="flex items-center py-3 text-sm">
-                      <div className="flex items-center gap-3 w-10 font-bold text-white">
-                        <span>{number}</span>
-                        <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-white font-semibold">{number}</div>
-                      </div>
-
-                      <div className="flex flex-col flex-grow ml-2 text-left">
-                        <span className="font-semibold text-white">{name}</span>
-                        <div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-0.5">
-                          <span>J: {jockey}</span>
-                          <span>T: {trainer}</span>
-                          <span>F: {form}</span>
+                                <div className="ml-auto font-semibold text-green-400 bg-green-900 bg-opacity-20 px-3 py-1 rounded-md">
+                                  {odds}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-
-                      <div className="ml-auto font-semibold text-green-400 bg-green-900 bg-opacity-20 px-3 py-1 rounded-md">
-                        {odds}
-                      </div>
+                      ))}
                     </div>
-                  ))}
+                  </details>
+                ))}
+                <div className="mt-6 flex justify-center">
+                  <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
+                    View More Horse Races
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-        </details>
-      ))}
-      {/* New View More Horse Races Button */}
-      <div className="mt-6 flex justify-center">
-        <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-cyan-400 hover:text-black transition">
-          View More Horse Races
-        </button>
-      </div>
-    </div>
-  )}
-</section>
+            )}
+          </section>
 
         </main>
-
         <Footer />
       </div>
     </>
