@@ -11,6 +11,7 @@ import MatchCard from "../../components/MatchCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// --- Types ---
 type SelectionType = {
   id: string;
   event: string;
@@ -18,11 +19,13 @@ type SelectionType = {
   odds: number;
 };
 
+// --- Fractional odds converter ---
 function fractionalToDecimal(fraction: string): number {
   const [num, denom] = fraction.split("/").map(Number);
   return num / denom + 1;
 }
 
+// --- In-play game data ---
 const liveGames = {
   Football: [
     { id: 1, match: "Man City vs Arsenal", countryCode: "gb", timeElapsed: 37, odds: { home: "4/5", draw: "21/10", away: "7/2" } },
@@ -43,6 +46,7 @@ const liveGames = {
   ],
 };
 
+// --- Popular In-Play Bets ---
 const popularInPlayBets = [
   { title: "Man City vs Arsenal", market: "Next Goal: Arsenal", odds: "2/1" },
   { title: "Djokovic vs Nadal", market: "Over 4.5 Sets", odds: "6/5" },
@@ -71,32 +75,26 @@ export default function InPlayPage() {
 
   return (
     <>
-    <Head><title>In-Play – OhMySports</title></Head>
+      <Head><title>In-Play – OhMySports</title></Head>
 
-<div className="min-h-screen bg-[#0a1024] text-white font-sans">
-  <Header />
+      <div className="min-h-screen bg-[#0a1024] text-white font-sans">
+        <Header />
 
-  <div className="mx-4 mt-4 mb-6 p-4 rounded-lg shadow text-center">
-    <h1 className="text-3xl font-bold">In-Play Sports Betting</h1>
-    <p className="text-sm mt-2 max-w-xl mx-auto">
-      In-Play From Around The World, Real-time odds, game momentum, and watch live action across sports.
-    </p>
+        {/* Banner */}
+        <div className="mx-4 mt-4 mb-6 p-4 rounded-lg shadow text-center">
+          <h1 className="text-3xl font-bold">In-Play Sports Betting</h1>
+          <p className="text-sm mt-2 max-w-xl mx-auto">
+            In-Play From Around The World, Real-time odds, game momentum, and watch live action across sports.
+          </p>
 
-    <div className="flex justify-center flex-wrap gap-3 mt-4">
-      <Image src={`https://flagcdn.com/w40/gb.png`} alt="UK" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/es.png`} alt="Spain" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/it.png`} alt="Italy" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/fr.png`} alt="France" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/us.png`} alt="USA" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/jp.png`} alt="Japan" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/br.png`} alt="Brazil" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/kr.png`} alt="South Korea" width={40} height={30} className="rounded shadow" />
-      <Image src={`https://flagcdn.com/w40/au.png`} alt="Australia" width={40} height={30} className="rounded shadow" />
-    </div>
-  </div>
+          <div className="flex justify-center flex-wrap gap-3 mt-4">
+            {["gb", "es", "it", "fr", "us", "jp", "br", "kr", "au"].map(code => (
+              <Image key={code} src={`https://flagcdn.com/w40/${code}.png`} alt={code} width={40} height={30} className="rounded shadow" />
+            ))}
+          </div>
+        </div>
 
-
-        {/* Popular Bets */}
+        {/* Popular In-Play Bets */}
         <div className="max-w-5xl mx-auto px-4 pb-10">
           <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Popular In-Play Bets</h2>
           <Slider {...carouselSettings}>
@@ -112,9 +110,7 @@ export default function InPlayPage() {
                     <button
                       onClick={() => toggleSelection(betId, bet.title, bet.market, decimalOdds)}
                       className={`font-bold text-lg px-4 py-2 rounded border transition ${
-                        isSelected
-                          ? "bg-white text-cyan-700 border-white"
-                          : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
+                        isSelected ? "bg-white text-cyan-700 border-white" : "border-white text-white bg-transparent hover:bg-white hover:text-cyan-700"
                       }`}
                     >
                       {bet.odds}
@@ -126,7 +122,7 @@ export default function InPlayPage() {
           </Slider>
         </div>
 
-        {/* Live Sports */}
+        {/* Live In-Play */}
         <div className="max-w-5xl mx-auto px-4 pb-12">
           {Object.entries(liveGames).map(([sport, matches], i) => (
             <details key={i} className="border border-white rounded-lg bg-[#0a1024] mb-4 shadow-md group">
@@ -138,12 +134,11 @@ export default function InPlayPage() {
               </summary>
 
               <div className="px-4 py-4 space-y-4">
-                {matches.map((match) => {
-                  const convertedOdds: any = {};
+                {matches.map(match => {
+                  const convertedOdds: Record<string, number> = {};
                   for (const key in match.odds) {
                     convertedOdds[key] = fractionalToDecimal(match.odds[key]);
                   }
-
                   return (
                     <MatchCard
                       key={match.id}
@@ -151,7 +146,7 @@ export default function InPlayPage() {
                         slug: `${match.match}-${match.timeElapsed}`,
                         teams: match.match,
                         time: `Live ${match.timeElapsed}'`,
-                        odds: convertedOdds
+                        odds: convertedOdds,
                       }}
                       selections={selections}
                       toggleSelection={toggleSelection}
@@ -163,6 +158,7 @@ export default function InPlayPage() {
           ))}
         </div>
 
+        {/* Back To Home */}
         <div className="flex justify-center mb-8">
           <Link href="/" passHref legacyBehavior>
             <a className="inline-block border border-white text-white px-6 py-2 rounded-lg text-sm hover:bg-white hover:text-black transition">
