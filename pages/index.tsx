@@ -73,7 +73,13 @@ export default function Home() {
     { id: "acc3", teams: "Bayern & Juventus & AC Milan", odds: "4/1" },
   ];
 
-const handleToggleAccumulator = (acc: Accumulator) => {
+type Accumulator = {
+  id: string;
+  event: string;
+  type: string;
+  odds: number;
+};
+
   const exists = selections.find(sel => sel.id === acc.id);
   if (exists) {
     removeSelection(acc.id);
