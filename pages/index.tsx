@@ -127,7 +127,7 @@ export default function Home() {
         <HeaderLayout />
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
 
-      <section className="w-full">
+  <section className="w-full mt-6">
   <PromotionsBanner />
 </section>
 
@@ -143,7 +143,7 @@ export default function Home() {
          
 
           {/* Football Matches */}
-        <section className="w-full max-w-3xl mt-8 space-y-4">
+       <section className="w-full mt-6">
             <h2 className="text-lg font-bold mb-3">Today’s Football Matches</h2>
             {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
               <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
@@ -196,7 +196,7 @@ export default function Home() {
             </div>
           </section>
  {/* Accumulators */}
-         <section className="w-full max-w-3xl mt-10 mb-8">
+       <section className="w-full mt-6">
             <h2 className="text-white font-bold text-lg mb-4 text-center">Popular Accumulators</h2>
             <div className="relative bg-gradient-to-br from-[#1c2b4a] to-[#0b132b] p-5 rounded-lg text-white text-center shadow-lg border border-[#00c6ff]">
               <h3 className="font-bold mb-2 text-base">{currentAcc.teams}</h3>
@@ -220,16 +220,16 @@ export default function Home() {
             </div>
           </section>
           
-         <section className="w-full mt-10">
+  <section className="w-full mt-6">
   <LiveGamesFeed />
 </section>
-<section className="w-full mt-10">
+<section className="w-full mt-6">
   <BetBuilderCarousel />
 </section>
-<section className="w-full mt-10">
+<section className="w-full mt-6">
   <HorseRacingSection />
 </section>
-<section className="w-full mt-10">
+<section className="w-full mt-6">
   <GreyhoundRacingSection />
 </section>
 
