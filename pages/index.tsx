@@ -127,14 +127,23 @@ export default function Home() {
         <HeaderLayout />
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
 
-          <PromotionsBanner />
-          <SportsCarousel />
-          <PowerPriceCarousel />
+      <section className="w-full">
+  <PromotionsBanner />
+</section>
+
+      <section className="w-full mt-6">
+  <SportsCarousel />
+</section>
+
+    <section className="w-full mt-6">
+  <PowerPriceCarousel />
+</section>
+
 
          
 
           {/* Football Matches */}
-          <section className="w-full max-w-3xl space-y-4">
+        <section className="w-full max-w-3xl mt-8 space-y-4">
             <h2 className="text-lg font-bold mb-3">Today’s Football Matches</h2>
             {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
               <div key={league} className="border border-gray-700 rounded-lg bg-[#0a1024]">
@@ -187,7 +196,7 @@ export default function Home() {
             </div>
           </section>
  {/* Accumulators */}
-          <section className="w-full max-w-3xl mx-auto mt-6 mb-6 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+         <section className="w-full max-w-3xl mt-10 mb-8">
             <h2 className="text-white font-bold text-lg mb-4 text-center">Popular Accumulators</h2>
             <div className="relative bg-gradient-to-br from-[#1c2b4a] to-[#0b132b] p-5 rounded-lg text-white text-center shadow-lg border border-[#00c6ff]">
               <h3 className="font-bold mb-2 text-base">{currentAcc.teams}</h3>
@@ -211,7 +220,19 @@ export default function Home() {
             </div>
           </section>
           
-          <LiveGamesFeed /><BetBuilderCarousel />    <HorseRacingSection /> <GreyhoundRacingSection />
+         <section className="w-full mt-10">
+  <LiveGamesFeed />
+</section>
+<section className="w-full mt-10">
+  <BetBuilderCarousel />
+</section>
+<section className="w-full mt-10">
+  <HorseRacingSection />
+</section>
+<section className="w-full mt-10">
+  <GreyhoundRacingSection />
+</section>
+
 
       
          
