@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { greyhoundRaces } from "../../data/greyhoundRaces";
+import { greyhoundRaces, GreyhoundRace } from "@/data/greyhoundRaces";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -31,7 +31,7 @@ export default function GreyhoundRacing() {
   };
 
   // Group the races by track
-const groupedRaces = greyhoundRaces.Today.reduce((acc: Record<string, any[]>, race) => {
+const groupedRaces = greyhoundRaces.Today.reduce((acc: Record<string, GreyhoundRace[]>, race) => {
   if (!acc[race.track]) acc[race.track] = [];
   acc[race.track].push(race);
   return acc;
