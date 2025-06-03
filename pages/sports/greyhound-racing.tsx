@@ -31,11 +31,12 @@ export default function GreyhoundRacing() {
   };
 
   // Group the races by track
- const groupedRaces = greyhoundRaces.Today.reduce((acc, race) => {
+const groupedRaces = greyhoundRaces.Today.reduce((acc: Record<string, any[]>, race) => {
   if (!acc[race.track]) acc[race.track] = [];
   acc[race.track].push(race);
   return acc;
 }, {});
+
 
 
   const popularGreyhoundBets = [
