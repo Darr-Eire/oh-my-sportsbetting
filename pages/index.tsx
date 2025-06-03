@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 
+import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
@@ -15,9 +15,9 @@ import Footer from "../components/Footer";
 import { horseRaces } from "../data/horseRaces";
 import { useBetSlip } from "../context/BetSlipContext";
 import PromotionsBanner from "../components/PromotionsBanner";
-import { greyhoundRaces } from "../data/greyhoundRaces";
 import HorseRacingSection from "@/components/HorseRacingSection";
 import GreyhoundRacingSection from "@/components/GreyHoundRacingSection";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 import premierLeague from "../data/leagues/premier_league.json";
 import laLiga from "../data/leagues/la_liga.json";
@@ -25,18 +25,12 @@ import bundesliga from "../data/leagues/bundesliga.json";
 import serieA from "../data/leagues/serie_a.json";
 import ligue1 from "../data/leagues/ligue_1.json";
 
-// ✅ Types declared right here — correct placement
+// Types
 type Accumulator = {
   id: string;
   teams: string;
+  legs: string[];
   odds: string;
-};
-
-type MatchSelection = {
-  id: string;
-  event: string;
-  type: string;
-  odds: number;
 };
 
 const todayMatches = [
@@ -48,37 +42,53 @@ const todayMatches = [
 ];
 
 export default function Home() {
-  const [openLeague, setOpenLeague] = useState<string | null>(null);
-  const [openHorseRacing, setOpenHorseRacing] = useState(false);
-  const [openGreyhound, setOpenGreyhound] = useState(false);
   const { selections, addSelection, removeSelection } = useBetSlip();
 
-
+  const [openLeague, setOpenLeague] = useState<string | null>(null);
   const toggleLeague = (leagueName: string) => {
     setOpenLeague((prev) => (prev === leagueName ? null : leagueName));
   };
 
-  const toggleHorseRacing = () => setOpenHorseRacing(prev => !prev);
-
   const accumulators: Accumulator[] = [
-    { id: "acc1", teams: "Man City & Liverpool & Chelsea", odds: "6/1" },
-    { id: "acc2", teams: "PSG & Barcelona & Real Madrid", odds: "15/2" },
-    { id: "acc3", teams: "Bayern & Juventus & AC Milan", odds: "4/1" },
+    {
+      id: "acc1",
+      teams: "Man City & Liverpool & Chelsea",
+      legs: ["Man City to Win", "Liverpool BTTS", "Chelsea Clean Sheet"],
+      odds: "6/1",
+    },
+    {
+      id: "acc2",
+      teams: "PSG & Barcelona & Real Madrid",
+      legs: ["PSG Handicap -1", "Barcelona Over 2.5", "Real Madrid Both Teams To Score"],
+      odds: "15/2",
+    },
+    {
+      id: "acc3",
+      teams: "Bayern & Juventus & AC Milan",
+      legs: ["Bayern Win + Over 3.5", "Juventus Draw No Bet", "AC Milan BTTS"],
+      odds: "4/1",
+    }
   ];
 
-  const handleToggleAccumulator = (acc: Accumulator) => {
-    const exists = selections.find(sel => sel.id === acc.id);
-    if (exists) {
-      removeSelection(acc.id);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentAcc = accumulators[currentIndex];
+  const isSelected = selections.some(sel => sel.id === currentAcc.id);
+
+  const toggleSelection = () => {
+    if (isSelected) {
+      removeSelection(currentAcc.id);
     } else {
       addSelection({
-        id: acc.id,
-        event: acc.teams,
+        id: currentAcc.id,
+        event: currentAcc.teams,
         type: "Accumulator",
-        odds: fractionToDecimal(acc.odds),
+        odds: fractionToDecimal(currentAcc.odds),
       });
     }
   };
+
+  const next = () => setCurrentIndex((prev) => (prev + 1) % accumulators.length);
+  const prev = () => setCurrentIndex((prev) => (prev - 1 + accumulators.length) % accumulators.length);
 
   const handleToggleFootball = (matchId: string, team: string, odds: string) => {
     const exists = selections.find((sel) => sel.id === matchId);
@@ -108,29 +118,6 @@ export default function Home() {
       });
     }
   };
-  const greyhoundRaces = [
-  {
-    track: "Shelbourne Park",
-    raceTime: "18:45",
-    raceName: "Sprint Stakes",
-    runners: [
-      { number: 1, name: "Rapid Bullet", form: "121", odds: "2/1" },
-      { number: 2, name: "Speedster", form: "132", odds: "5/2" },
-      { number: 3, name: "Lightning Dash", form: "213", odds: "3/1" },
-      { number: 4, name: "Sonic Boom", form: "334", odds: "9/2" }
-    ]
-  },
-  {
-    track: "Romford",
-    raceTime: "19:30",
-    raceName: "Evening Chase",
-    runners: [
-      { number: 1, name: "Fast Rocket", form: "322", odds: "7/2" },
-      { number: 2, name: "Night Fury", form: "413", odds: "4/1" },
-      { number: 3, name: "Blazing Comet", form: "231", odds: "5/1" }
-    ]
-  }
-];
 
   return (
     <>
@@ -138,36 +125,15 @@ export default function Home() {
 
       <div className="flex flex-col min-h-screen bg-[#0a1024] text-white font-sans">
         <HeaderLayout />
-
         <main className="flex-1 px-4 py-4 pb-24 flex flex-col items-center text-center space-y-6 sm:space-y-8">
 
-  <PromotionsBanner />
-
-
+          <PromotionsBanner />
           <SportsCarousel />
           <PowerPriceCarousel />
 
-          {/* Accumulators */}
-          <section className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
-            <h2 className="text-lg font-bold text-white mb-4">Popular Accumulators</h2>
-            <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1} adaptiveHeight className="text-center mx-auto max-w-md">
-              {accumulators.map((acc, idx) => {
-                const isSelected = selections.some(sel => sel.id === acc.id);
-                return (
-                  <div key={idx}
-                    className={`p-6 rounded-lg border ${isSelected ? "border-[#00ffd5] shadow-neon" : "border-gray-700"} bg-gradient-to-tr from-[#1c2b4a] to-[#0b132b] cursor-pointer`}
-                    onClick={() => handleToggleAccumulator(acc)}
-                  >
-                    <div className="text-lg font-semibold">{acc.teams}</div>
-                    <div className="text-sm text-gray-400 mt-1">Odds: {acc.odds}</div>
-                    {isSelected && <div className="mt-2 text-green-400 font-bold text-xs">Added to Bet Slip</div>}
-                  </div>
-                );
-              })}
-            </Slider>
-          </section>
+         
 
-          {/* Today’s Football Matches */}
+          {/* Football Matches */}
           <section className="w-full max-w-3xl space-y-4">
             <h2 className="text-lg font-bold mb-3">Today’s Football Matches</h2>
             {todayMatches.map(({ league, countryCode, leagueLogo, matches }) => (
@@ -197,11 +163,8 @@ export default function Home() {
                             const selected = selections.some(sel => sel.id === betId);
                             return (
                               <div key={type} className="flex flex-col items-center">
-                                <button
-                               onClick={() => handleToggleFootball(betId, teams, String(price))}
-
-                                  className={`px-3 py-1 rounded border ${selected ? "border-[#00ffd5] bg-white text-black" : "border-white bg-gray-900 text-white hover:bg-white hover:text-black"}`}
-                                >
+                                <button onClick={() => handleToggleFootball(betId, teams, String(price))}
+                                  className={`px-3 py-1 rounded border ${selected ? "border-[#00ffd5] bg-white text-black" : "border-white bg-gray-900 text-white hover:bg-white hover:text-black"}`}>
                                   {price}
                                 </button>
                                 <span className="text-xs mt-1">{type === "draw" ? "Draw" : type.charAt(0).toUpperCase() + type.slice(1)}</span>
@@ -215,46 +178,43 @@ export default function Home() {
                 )}
               </div>
             ))}
-          <div className="mt-6 flex justify-center">
-  <Link href="/sports/football">
-    <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition">
-      View More Football Matches
-    </button>
-  </Link>
-</div>
-
+            <div className="mt-6 flex justify-center">
+              <Link href="/sports/football">
+                <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition">
+                  View More Football Matches
+                </button>
+              </Link>
+            </div>
           </section>
-
-          <BetBuilderCarousel />
-          <LiveGamesFeed />
-           
-          {/* Popular Horse Racing Bets */}
-          <section className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg bg-[#0a1024] p-6">
-            <h2 className="text-lg font-bold text-white mb-4">Popular Horse Racing Bets</h2>
-            <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1} adaptiveHeight className="text-center mx-auto max-w-md">
-              {[
-                { id: "horse1", race: "Cheltenham 3:15", horse: "Mighty Thunder", odds: "7/2" },
-                { id: "horse2", race: "Aintree 4:00", horse: "Red Rum Jr", odds: "5/1" },
-                { id: "horse3", race: "Ascot 2:45", horse: "Royal Glory", odds: "9/4" }
-              ].map((bet, idx) => {
-                const isSelected = selections.some(sel => sel.id === bet.id);
-                return (
-                  <div key={idx}
-                    className={`p-6 rounded-lg border ${isSelected ? "border-[#00ffd5] shadow-neon" : "border-gray-700"} bg-gradient-to-tr from-[#1c2b4a] to-[#0b132b] cursor-pointer`}
-                    onClick={() => handleToggleHorse(bet.id, bet.horse, bet.odds)}
-                  >
-                    <div className="text-lg font-semibold">{bet.horse}</div>
-                    <div className="text-sm text-gray-400 mt-1">{bet.race}</div>
-                    <div className="mt-3 text-lg font-bold">{bet.odds}</div>
-                    {isSelected && <div className="mt-2 text-green-400 font-bold text-xs">Added to Bet Slip</div>}
-                  </div>
-                );
-              })}
-            </Slider>
+ {/* Accumulators */}
+          <section className="w-full max-w-3xl mx-auto mt-6 mb-6 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
+            <h2 className="text-white font-bold text-lg mb-4 text-center">Popular Accumulators</h2>
+            <div className="relative bg-gradient-to-br from-[#1c2b4a] to-[#0b132b] p-5 rounded-lg text-white text-center shadow-lg border border-[#00c6ff]">
+              <h3 className="font-bold mb-2 text-base">{currentAcc.teams}</h3>
+              <ul className="text-sm text-white mb-3 space-y-1">
+                {currentAcc.legs.map((leg, i) => (<li key={i}>{leg}</li>))}
+              </ul>
+              <div className="mb-4">
+                <button onClick={toggleSelection}
+                  className={`px-6 py-2 text-sm font-bold shadow border rounded-xl transition duration-200 
+                  ${isSelected ? "bg-white text-[#00c6ff] border-white" : "bg-[#0a1024] text-white border-white hover:bg-white hover:text-[#00c6ff]"}`}>
+                  {currentAcc.odds}
+                </button>
+                {isSelected && (<div className="mt-2 text-green-400 font-bold text-xs">Added to Bet Slip</div>)}
+              </div>
+              <div className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer">
+                <FaArrowLeft onClick={prev} className="text-white opacity-60 hover:opacity-100 text-lg transition" />
+              </div>
+              <div className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer">
+                <FaArrowRight onClick={next} className="text-white opacity-60 hover:opacity-100 text-lg transition" />
+              </div>
+            </div>
           </section>
- <HorseRacingSection />
-<GreyhoundRacingSection />
+          
+          <LiveGamesFeed /><BetBuilderCarousel />    <HorseRacingSection /> <GreyhoundRacingSection />
 
+      
+         
         </main>
         <Footer />
       </div>

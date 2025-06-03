@@ -103,7 +103,7 @@ export default function GreyhoundRacingSection() {
 
           {/* View All Greyhounds */}
           <div className="mt-6 flex justify-center">
-            <Link href="/sports/greyhoundracing">
+            <Link href="/sports/harlow/A5-415m-Harlow">
               <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition">
                 View All Greyhounds
               </button>
@@ -114,7 +114,7 @@ export default function GreyhoundRacingSection() {
 
       {/* View All Greyhound Racing */}
       <div className="mt-8 flex justify-center">
-        <Link href="/sports/greyhoundracing">
+        <Link href="/sports/greyhound-racing">
           <button className="text-sm px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition">
             View All Greyhound Racing
           </button>

@@ -51,7 +51,7 @@ export default function PromoCarousel() {
 
   return (
     <section className="w-full max-w-3xl mx-auto mt-8 border border-gray-700 rounded-lg bg-[#0a1024] p-6">
-      <h2 className="text-lg font-bold text-white mb-4 text-center">🔥 Promo Power Prices</h2>
+      <h2 className="text-lg font-bold text-white mb-4 text-center"> Promo Power Prices</h2>
 
       <Carousel 
         responsive={responsive} 
