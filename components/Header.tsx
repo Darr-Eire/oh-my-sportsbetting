@@ -73,36 +73,33 @@ export default function Header() {
   }, []);
 
   // Pi Login handler - replace with actual Pi SDK login flow
-  async function handlePiLogin() {
-    setLoading(true);
-    try {
-      // This example assumes you get accessToken from Pi SDK here
-      const accessToken = await getPiAccessToken(); // Implement this function yourself
+ async function handlePiLogin() {
+  setLoading(true);
+  try {
+    const accessToken = await getPiAccessToken();
 
-      if (!accessToken) throw new Error("No Pi access token");
+    if (!accessToken) throw new Error("No Pi access token");
 
-      const res = await fetch("/api/auth/pi-login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ accessToken }),
-      });
+    const res = await fetch("/api/auth/pi-login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accessToken }),
+    });
 
-      if (!res.ok) {
-        throw new Error("Pi login failed");
-      }
-
-      const data = await res.json();
-      setUser(data.user);
-    }catch (error) {
-  const message = error instanceof Error ? error.message : String(error);
-  alert("Login failed: " + message);
-  setUser(null);
-}
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      throw new Error("Pi login failed");
     }
-  }
 
+    const data = await res.json();
+    setUser(data.user);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    alert("Login failed: " + message);
+    setUser(null);
+  } finally {
+    setLoading(false);
+  }
+}
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
     setUser(null);
