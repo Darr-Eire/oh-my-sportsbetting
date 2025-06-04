@@ -2,6 +2,25 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
+// Add this import if you have a separate utility for Pi login
+// import { getPiAccessToken } from 'path-to-pi-sdk-or-utils';
+
+// Placeholder for getPiAccessToken — replace with actual Pi SDK login call
+async function getPiAccessToken() {
+  if (typeof window === "undefined" || !window.Pi) {
+    console.error("Pi wallet not loaded");
+    return null;
+  }
+  try {
+    await window.Pi.wallet.requestAccess();
+    const tokenResponse = await window.Pi.wallet.makePiNetworkRequest();
+    return tokenResponse?.accessToken || null;
+  } catch (err) {
+    console.error("Pi wallet access error:", err);
+    return null;
+  }
+}
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [sportsOpen, setSportsOpen] = useState(false);
@@ -10,6 +29,9 @@ export default function Header() {
   const [competitionsOpen, setCompetitionsOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+
+  const [user, setUser] = useState(null); // Store logged-in user info
+  const [loading, setLoading] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -37,6 +59,56 @@ export default function Header() {
     };
   }, [menuOpen]);
 
+  // Check if user already logged in on mount
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data.user);
+        }
+      } catch (error) {
+        setUser(null);
+      }
+    }
+    fetchUser();
+  }, []);
+
+  // Pi Login handler - replace with actual Pi SDK login flow
+  async function handlePiLogin() {
+    setLoading(true);
+    try {
+      // This example assumes you get accessToken from Pi SDK here
+      const accessToken = await getPiAccessToken(); // Implement this function yourself
+
+      if (!accessToken) throw new Error("No Pi access token");
+
+      const res = await fetch("/api/auth/pi-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accessToken }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Pi login failed");
+      }
+
+      const data = await res.json();
+      setUser(data.user);
+    } catch (error) {
+      alert("Login failed: " + error.message);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setUser(null);
+  }
+
   return (
     <header className="bg-[#0a1024] border-b border-white shadow-md fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -52,12 +124,26 @@ export default function Header() {
           OhMySportsbetting
         </h1>
 
-        <Link href="/login">
-          <button className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full hover:brightness-110 transition">
-            Login
+        {!user ? (
+          <button
+            onClick={handlePiLogin}
+            disabled={loading}
+            className="text-sm px-4 py-1 bg-electricCyan text-white font-semibold rounded-full hover:brightness-110 transition"
+          >
+            {loading ? "Logging in..." : "Login with Pi"}
           </button>
-        </Link>
-      </div>
+        ) : (
+          <div className="flex items-center gap-4 text-white">
+            <span>Welcome, {user.username || user.uid}</span>
+            <button
+              onClick={handleLogout}
+              className="text-sm px-4 py-1 bg-red-600 rounded-full hover:brightness-110 transition"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div
 
       {menuOpen && (
         <nav

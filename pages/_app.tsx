@@ -6,7 +6,6 @@ import { BetSlipProvider } from "../context/BetSlipContext";
 import BetSlip from "../components/BetSlip";
 import Header from "../components/Header";
 
-
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <BetSlipProvider>
@@ -18,7 +17,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </main>
 
- 
         <BetSlip />
       </>
     </BetSlipProvider>
