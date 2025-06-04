@@ -148,95 +148,95 @@ export default function Header() {
         )}
       </div>
 
-      {menuOpen && (
-        <nav
-          ref={menuRef}
-          className="absolute top-full left-0 w-48 bg-[#12182f] border-r border-gray-700 shadow-lg rounded-br-lg p-4"
-        >
+     {menuOpen && (
+  <nav
+    ref={menuRef}
+    className="absolute top-full left-0 w-48 bg-[#12182f] border-r border-gray-700 shadow-lg rounded-br-lg p-4"
+  >
+    <ul className="space-y-3">
+      <Dropdown
+        label="Account"
+        open={accountOpen}
+        setOpen={setAccountOpen}
+        links={[
+          { href: "/my-bets", label: "📋 My Bets" },
+          { href: "/deposit", label: "💰 Deposit" },
+          { href: "/withdraw", label: "💸 Withdraw" },
+          { href: "/history", label: "📊 Bet History" },
+          { href: "/settings", label: "⚙️ Settings" },
+        ]}
+      />
 
-            <Dropdown
-              label="Account"
-              open={accountOpen}
-              setOpen={setAccountOpen}
-              links={[
-                { href: "/my-bets", label: "📋 My Bets" },
-                { href: "/deposit", label: "💰 Deposit" },
-                { href: "/withdraw", label: "💸 Withdraw" },
-                { href: "/history", label: "📊 Bet History" },
-                { href: "/settings", label: "⚙️ Settings" },
-              ]}
-            />
+      <Dropdown
+        label="Sports"
+        open={sportsOpen}
+        setOpen={setSportsOpen}
+        links={[
+          { href: "/sports/football", label: "⚽ Football" },
+          { href: "/sports/basketball", label: "🏀 Basketball" },
+          { href: "/sports/ufc", label: "🥊 UFC / MMA" },
+          { href: "/sports/tennis", label: "🎾 Tennis" },
+          { href: "/sports/esports", label: "🎮 eSports" },
+          { href: "/sports/greyhound-racing", label: "🐕 Greyhounds" },
+          { href: "/sports/horse-racing", label: "🏇 Horse Racing" },
+          { href: "/sports/in-play", label: "🎮 In-Play" },
+        ]}
+      />
 
-            <Dropdown
-              label="Sports"
-              open={sportsOpen}
-              setOpen={setSportsOpen}
-              links={[
-                { href: "/sports/football", label: "⚽ Football" },
-                { href: "/sports/basketball", label: "🏀 Basketball" },
-                { href: "/sports/ufc", label: "🥊 UFC / MMA" },
-                { href: "/sports/tennis", label: "🎾 Tennis" },
-                { href: "/sports/esports", label: "🎮 eSports" },
-                { href: "/sports/greyhound-racing", label: "🐕 Greyhounds" },
-                { href: "/sports/horse-racing", label: "🏇 Horse Racing" },
-                { href: "/sports/in-play", label: "🎮 In-Play" },
-              ]}
-            />
+      <Dropdown
+        label="Promotions"
+        open={promotionsOpen}
+        setOpen={setPromotionsOpen}
+        links={[
+          { href: "/promotions/welcome", label: "🎁 Welcome Offer" },
+          { href: "/promotions/free-bets", label: "🎯 Free Bets" },
+          { href: "/promotions/cashback", label: "💸 Cashback Offers" },
+          { href: "/promotions/odds-boosts", label: "🚀 Odds Boosts" },
+          { href: "/promotions/loyalty", label: "🎖 Loyalty Club" },
+        ]}
+      />
 
-            <Dropdown
-              label="Promotions"
-              open={promotionsOpen}
-              setOpen={setPromotionsOpen}
-              links={[
-                { href: "/promotions/welcome", label: "🎁 Welcome Offer" },
-                { href: "/promotions/free-bets", label: "🎯 Free Bets" },
-                { href: "/promotions/cashback", label: "💸 Cashback Offers" },
-                { href: "/promotions/odds-boosts", label: "🚀 Odds Boosts" },
-                { href: "/promotions/loyalty", label: "🎖 Loyalty Club" },
-              ]}
-            />
+      <Dropdown
+        label="Competitions"
+        open={competitionsOpen}
+        setOpen={setCompetitionsOpen}
+        links={[
+          { href: "/competitions/weekly-leaderboard", label: "🏅 Leaderboard" },
+          { href: "/competitions/monthly-jackpot", label: "💎 Monthly Jackpot" },
+          { href: "/competitions/free-to-play", label: "🎮 Free-to-Play" },
+          { href: "/competitions/predictor-challenges", label: "📊 Predictor" },
+        ]}
+      />
 
-            <Dropdown
-              label="Competitions"
-              open={competitionsOpen}
-              setOpen={setCompetitionsOpen}
-              links={[
-                { href: "/competitions/weekly-leaderboard", label: "🏅 Leaderboard" },
-                { href: "/competitions/monthly-jackpot", label: "💎 Monthly Jackpot" },
-                { href: "/competitions/free-to-play", label: "🎮 Free-to-Play" },
-                { href: "/competitions/predictor-challenges", label: "📊 Predictor" },
-              ]}
-            />
+      <Dropdown
+        label="Support"
+        open={supportOpen}
+        setOpen={setSupportOpen}
+        links={[
+          { href: "/support/help", label: "🛠 Help Center" },
+          { href: "/support/contact", label: "💬 Contact Us" },
+          { href: "/support/faq", label: "❓ FAQs" },
+          { href: "/support/terms", label: "📄 Terms & Conditions" },
+          { href: "/support/privacy", label: "🔒 Privacy Policy" },
+        ]}
+      />
 
-            <Dropdown
-              label="Support"
-              open={supportOpen}
-              setOpen={setSupportOpen}
-              links={[
-                { href: "/support/help", label: "🛠 Help Center" },
-                { href: "/support/contact", label: "💬 Contact Us" },
-                { href: "/support/faq", label: "❓ FAQs" },
-                { href: "/support/terms", label: "📄 Terms & Conditions" },
-                { href: "/support/privacy", label: "🔒 Privacy Policy" },
-              ]}
-            />
+      <Dropdown
+        label="About"
+        open={aboutOpen}
+        setOpen={setAboutOpen}
+        links={[
+          { href: "/support/about-us", label: "ℹ️ About Us" },
+          { href: "/support/licensing", label: "📄 Licensing" },
+          { href: "/support/partners", label: "🤝 Partners" },
+          { href: "/support/affiliates", label: "💼 Affiliates" },
+          { href: "/support/developer", label: "🧩 Developer" },
+        ]}
+      />
+    </ul>
+  </nav>
+)}
 
-            <Dropdown
-              label="About"
-              open={aboutOpen}
-              setOpen={setAboutOpen}
-              links={[
-                { href: "/support/about-us", label: "ℹ️ About Us" },
-                { href: "/support/licensing", label: "📄 Licensing" },
-                { href: "/support/partners", label: "🤝 Partners" },
-                { href: "/support/affiliates", label: "💼 Affiliates" },
-                { href: "/support/developer", label: "🧩 Developer" },
-              ]}
-            />
-
-          </ul>
-        </nav>
-      )}
     </header>
   );
 }
