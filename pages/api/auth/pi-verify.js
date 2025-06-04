@@ -25,7 +25,14 @@ export default async function handler(
 
     // Echo back the Pi user
     return res.status(200).json(data);
-  } catch (e: any) {
+} catch (e: unknown) {
+  if (axios.isAxiosError(e) && e.response?.status === 401) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
+  console.error(e);
+  return res.status(500).json({ error: 'Internal error' });
+}
+
     if (axios.isAxiosError(e) && e.response?.status === 401) {
       return res.status(401).json({ error: 'Invalid or expired token' });
     }
