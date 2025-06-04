@@ -2,6 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
+interface User {
+  username?: string;
+  uid?: string;
+  // add other user properties here if needed
+}
+
 // Only one declaration here
 async function getPiAccessToken() {
   if (typeof window === "undefined" || !window.Pi) {
@@ -27,7 +33,7 @@ export default function Header() {
   const [supportOpen, setSupportOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  const [user, setUser] = useState(null); // Store logged-in user info
+  const [user, setUser] = useState<User | null>(null); // typed user state
   const [loading, setLoading] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -56,7 +62,6 @@ export default function Header() {
     };
   }, [menuOpen]);
 
-  // Check if user already logged in on mount
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -65,41 +70,41 @@ export default function Header() {
           const data = await res.json();
           setUser(data.user);
         }
-      } catch (error) {
+      } catch {
         setUser(null);
       }
     }
     fetchUser();
   }, []);
 
-  // Pi Login handler - replace with actual Pi SDK login flow
- async function handlePiLogin() {
-  setLoading(true);
-  try {
-    const accessToken = await getPiAccessToken();
+  async function handlePiLogin() {
+    setLoading(true);
+    try {
+      const accessToken = await getPiAccessToken();
 
-    if (!accessToken) throw new Error("No Pi access token");
+      if (!accessToken) throw new Error("No Pi access token");
 
-    const res = await fetch("/api/auth/pi-login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ accessToken }),
-    });
+      const res = await fetch("/api/auth/pi-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accessToken }),
+      });
 
-    if (!res.ok) {
-      throw new Error("Pi login failed");
+      if (!res.ok) {
+        throw new Error("Pi login failed");
+      }
+
+      const data = await res.json();
+      setUser(data.user);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      alert("Login failed: " + message);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
-
-    const data = await res.json();
-    setUser(data.user);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    alert("Login failed: " + message);
-    setUser(null);
-  } finally {
-    setLoading(false);
   }
-}
+
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
     setUser(null);
@@ -130,7 +135,9 @@ export default function Header() {
           </button>
         ) : (
           <div className="flex items-center gap-4 text-white">
-            <span>Welcome, {user.username || user.uid}</span>
+            <span>
+              Welcome, {user.username || user.uid}
+            </span>
             <button
               onClick={handleLogout}
               className="text-sm px-4 py-1 bg-red-600 rounded-full hover:brightness-110 transition"
@@ -146,11 +153,6 @@ export default function Header() {
           ref={menuRef}
           className="absolute top-full left-0 w-48 bg-[#12182f] border-r border-gray-700 shadow-lg rounded-br-lg p-4"
         >
-          <ul className="space-y-3">
-
-            <li>
-              <Link href="/" className="underline hover:text-electricCyan transition">Home</Link>
-            </li>
 
             <Dropdown
               label="Account"
