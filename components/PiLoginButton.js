@@ -1,21 +1,52 @@
-import React from 'react';
-import usePiWallet from '../hooks/usePiWallet';
+import { useState } from 'react';
 
 export default function PiLoginButton() {
-  const { user, error, piLogin } = usePiWallet();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+
+  async function handleLogin() {
+    setLoading(true);
+    setError(null);
+    try {
+      const scopes = ['username', 'payments'];
+      const { accessToken, user } = await window.Pi.authenticate(scopes);
+      
+      const res = await fetch('/api/auth/pi-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken }),
+      });
+
+      if (!res.ok) throw new Error('Pi login failed');
+
+      const data = await res.json();
+      setUser(data.user);
+
+      // Redirect or do whatever you need here
+      window.location.href = '/account';
+
+    } catch (e) {
+      setError(e.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (user) {
+    return <div>Welcome, {user.username}</div>;
+  }
 
   return (
-    <div>
-      {user ? (
-        <div>Welcome, {user.username}</div>
-      ) : (
-        <>
-          <button onClick={piLogin} className="btn-pi-login">
-            Login with Pi Wallet
-          </button>
-          {error && <p className="text-red-500 mt-2">{error}</p>}
-        </>
-      )}
-    </div>
+    <>
+      <button
+        onClick={handleLogin}
+        disabled={loading}
+        className="btn-pi-login"
+      >
+        {loading ? 'Logging in…' : 'Login with Pi Wallet'}
+      </button>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
+    </>
   );
 }

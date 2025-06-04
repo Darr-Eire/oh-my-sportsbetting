@@ -19,7 +19,7 @@
 
 # production
 /build
-
+generate-secret.js
 # misc
 .DS_Store
 *.pem
