@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export default NextAuth({
@@ -9,13 +9,14 @@ export default NextAuth({
         username: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-     async authorize(credentials) {
-        // Validate against environment variables
+      async authorize(
+        credentials: Record<'username' | 'password', string> | undefined
+      ): Promise<User | null> {
         if (
           credentials?.username === process.env.ADMIN_USERNAME &&
           credentials?.password === process.env.ADMIN_PASSWORD
         ) {
-          return { id: 1, name: 'Admin' };
+          return { id: '1', name: 'Admin' }; // id must be string
         }
         return null;
       },
@@ -23,7 +24,7 @@ export default NextAuth({
   ],
   session: { strategy: 'jwt' },
   pages: {
-    signIn: '/admin/login', // Optional: you can set your admin login page
+    signIn: '/admin/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
