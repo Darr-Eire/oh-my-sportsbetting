@@ -93,9 +93,11 @@ export default function Header() {
 
       const data = await res.json();
       setUser(data.user);
-    } catch (error) {
-      alert("Login failed: " + error.message);
-      setUser(null);
+    }catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
+  alert("Login failed: " + message);
+  setUser(null);
+}
     } finally {
       setLoading(false);
     }
