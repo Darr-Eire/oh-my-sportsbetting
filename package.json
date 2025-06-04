@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "framer-motion": "^12.14.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.0",
     "next": "15.4.0-canary.51",
     "react": "19.1.0",
