@@ -2,26 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-async function getPiAccessToken() {
-  if (typeof window === "undefined" || !window.Pi) {
-    console.error("Pi wallet not loaded");
-    return null;
-  }
-  try {
-    await window.Pi.wallet.requestAccess();
-    const tokenResponse = await window.Pi.wallet.makePiNetworkRequest();
-    return tokenResponse?.accessToken || null;
-  } catch (err) {
-    console.error("Pi wallet access error:", err);
-    return null;
-  }
-}
-
-
-// Add this import if you have a separate utility for Pi login
-// import { getPiAccessToken } from 'path-to-pi-sdk-or-utils';
-
-// Placeholder for getPiAccessToken — replace with actual Pi SDK login call
+// Only one declaration here
 async function getPiAccessToken() {
   if (typeof window === "undefined" || !window.Pi) {
     console.error("Pi wallet not loaded");
