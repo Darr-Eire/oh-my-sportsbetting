@@ -1,10 +1,20 @@
-// pages/api/auth/pi-login.js
-
+import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-dev-secret-key';
 
-export default async function handler(req, res) {
+type User = {
+  uid: string;
+  username: string;
+  // add other user fields as needed
+};
+
+type ErrorResponse = { error: string };
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<{ user: User } | ErrorResponse>
+) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -20,9 +30,8 @@ export default async function handler(req, res) {
   console.log('AccessToken:', accessToken);
 
   try {
-  const piRes = await fetch('https://api.minepi.com/v2/me', {
-  method: 'GET',
-
+    const piRes = await fetch('https://api.minepi.com/v2/me', {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -35,7 +44,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid Pi token' });
     }
 
-    const user = await piRes.json();
+    const user: User = await piRes.json();
     console.log('[✅] Pi user verified:', user);
 
     const sessionToken = jwt.sign(
@@ -50,7 +59,7 @@ export default async function handler(req, res) {
     );
 
     return res.status(200).json({ user });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('[🔥] Internal server error during Pi login:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }

@@ -1,5 +1,11 @@
-// pages/api/auth/logout.js
-export default function handler(req, res) {
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+type ResponseData = { message: string };
+
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>
+) {
   if (req.method !== 'POST' && req.method !== 'GET') {
     res.setHeader('Allow', ['POST', 'GET']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);

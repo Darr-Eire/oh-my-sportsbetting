@@ -1,9 +1,9 @@
-// src/pages/api/auth/[...nextauth].js
+// src/pages/api/auth/[...nextauth].ts
 
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export default NextAuth({
+const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Admin Login',
@@ -12,7 +12,6 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // Validate against environment variables
         if (
           credentials?.username === process.env.ADMIN_USERNAME &&
           credentials?.password === process.env.ADMIN_PASSWORD
@@ -25,7 +24,9 @@ export default NextAuth({
   ],
   session: { strategy: 'jwt' },
   pages: {
-    signIn: '/admin/login', // Optional: you can set your admin login page
+    signIn: '/admin/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+export default NextAuth(options);
