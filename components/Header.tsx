@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+declare global {
+  interface Window {
+    Pi?: any; // or a more specific type if you have it
+  }
+}
 
 // Add this import if you have a separate utility for Pi login
 // import { getPiAccessToken } from 'path-to-pi-sdk-or-utils';

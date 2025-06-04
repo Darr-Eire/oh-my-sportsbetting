@@ -1,8 +1,21 @@
+// hooks/usePiWallet.ts
 import { useState } from 'react';
 
+// Declare the Pi wallet on the global window object to satisfy TypeScript
+declare global {
+  interface Window {
+    Pi?: {
+      wallet: {
+        requestAccess: () => Promise<void>;
+        makePiNetworkRequest: () => Promise<{ accessToken: string }>;
+      };
+    };
+  }
+}
+
 export default function usePiWallet() {
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const [user, setUser] = useState<any | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   async function piLogin() {
     if (typeof window === 'undefined' || !window.Pi) {
@@ -12,6 +25,7 @@ export default function usePiWallet() {
 
     try {
       await window.Pi.wallet.requestAccess();
+
       const tokenResponse = await window.Pi.wallet.makePiNetworkRequest();
       const accessToken = tokenResponse?.accessToken;
 
@@ -20,7 +34,6 @@ export default function usePiWallet() {
         return null;
       }
 
-      // Call your API to login
       const res = await fetch('/api/auth/pi-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,16 +41,16 @@ export default function usePiWallet() {
       });
 
       if (!res.ok) {
-        const { error } = await res.json();
-        setError(error || 'Login failed');
+        const data = await res.json();
+        setError(data.error || 'Login failed');
         return null;
       }
 
-      const { user } = await res.json();
-      setUser(user);
+      const data = await res.json();
+      setUser(data.user);
       setError(null);
-      return user;
-    } catch (err) {
+      return data.user;
+    } catch (err: any) {
       setError(err.message || 'Unexpected error');
       return null;
     }
