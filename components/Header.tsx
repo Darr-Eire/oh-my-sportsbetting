@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-declare global {
-  interface Window {
-    Pi?: {
-      wallet: {
-        requestAccess: () => Promise<void>;
-        makePiNetworkRequest: () => Promise<{ accessToken?: string }>;
-      };
-    };
+
+async function getPiAccessToken() {
+  if (typeof window === "undefined" || !window.Pi) {
+    console.error("Pi wallet not loaded");
+    return null;
+  }
+  try {
+    await window.Pi.wallet.requestAccess();
+    const tokenResponse = await window.Pi.wallet.makePiNetworkRequest();
+    return tokenResponse?.accessToken || null;
+  } catch (err) {
+    console.error("Pi wallet access error:", err);
+    return null;
   }
 }
 

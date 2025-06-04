@@ -2,16 +2,7 @@
 import { useState } from 'react';
 
 // Declare the Pi wallet on the global window object to satisfy TypeScript
-declare global {
-  interface Window {
-    Pi?: {
-      wallet: {
-        requestAccess: () => Promise<void>;
-        makePiNetworkRequest: () => Promise<{ accessToken: string }>;
-      };
-    };
-  }
-}
+
 
 export default function usePiWallet() {
   const [user, setUser] = useState<any | null>(null);
